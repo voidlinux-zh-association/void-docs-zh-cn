@@ -128,7 +128,7 @@ Chroot 到新系统中：
 ### 安装配置
 
 [locales](../../config/locales.md).
-在 `/etc/hostname` 中指定 hostname。检查一下 [`/etc/rc.conf`]((../../config/rc-files.md#rcconf)) 中的选项。如果安装 glibc 版本，编辑 `/etc/default/libc-locales`，按需取消掉 [locale](../../config/locales.md) 前的注释
+在 `/etc/hostname` 中指定 hostname。检查一下 [`/etc/rc.conf`](../../config/rc-files.md#rcconf) 中的选项。如果安装 glibc 版本，编辑 `/etc/default/libc-locales`，按需取消掉 [locale](../../config/locales.md) 前的注释
 
 [nvi(1)](https://man.voidlinux.org/nvi.1) 在 chroot 中可用，但你此时可能希望安装您喜欢的文本编辑器
 
