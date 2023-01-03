@@ -18,9 +18,4 @@ GNOME 面和 GNOME 应用程序的一个子集。额外的应用程序可以通�
 
 ## 启动 GNOME
 
-The `gdm` package provides the `gdm` service for the GNOME Display Manager;
-[test the service](../services/index.md#testing-services) before enabling it.
-GDM defaults to providing a Wayland session via the `mutter` window manager, but
-an X session can be chosen instead.
-
 `gdm` 软件包为 GNOME 显示管理器，提供了 gdm [服务](../services/index.md#testing-services)；在启用该服务之前，请对其进行测试。GDM 默认为通过 `mutter` 窗口管理器提供 Wayland 会话，但也可以选择 X 会话。
