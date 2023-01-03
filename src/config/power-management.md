@@ -2,11 +2,6 @@
 
 ## acpid
 
-The `acpid` service for [acpid(8)](https://man.voidlinux.org/acpid.8) is
-installed and, if Void was installed from a live image using the local source,
-will be enabled by default. ACPI events are handled by `/etc/acpi/handler.sh`,
-which uses [zzz(8)](https://man.voidlinux.org/zzz.8) for suspend-to-RAM events.
-
 [acpid(8)](https://man.voidlinux.org/acpid.8) 的 `acpid` 服务已经安装，如果Void是从使用 本地源 的 live 镜像中安装的，那么默认情况下会被启用。ACPI 事件由 `/etc/acpi/handler.sh` 处理，它使用 [zzz(8)](https://man.voidlinux.org/zzz.8) 来处理 suspend-to-RAM 事件.
 
 ## elogind
