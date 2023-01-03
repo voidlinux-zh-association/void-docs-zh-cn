@@ -1,29 +1,26 @@
 # GNOME
 
-## Pre-installation
+## 安装前
 
-GNOME supports both X and Wayland sessions. Follow the "[Wayland](./wayland.md)"
-or "[Xorg](./xorg.md)" sections to setup your preferred environment.
+GNOME 同时支持 X 和 Wayland Session。按照 "[Wayland](./wayland.md) "或 "[Xorg](./xorg.md)" 部分来设置你喜欢的环境。
 
-Install the `dbus` package, ensure the `dbus` service is enabled, and reboot for
-the changes to take effect.
+安装 `dbus` 软件包，确保 `dbus` 服务被启用，并重新启动以使变化生效。
 
-## Installation
+## 安装
 
-Install the `gnome` package for a GNOME environment which includes the base
-GNOME desktop and a subset of GNOME applications. Additional applications are
-available via the `gnome-apps` package.
+安装 `gnome` 包以获得一个 GNOME 面环境，其中包括基本的
+GNOME 面和 GNOME 应用程序的一个子集。额外的应用程序可以通过
+可通过 `gnome-apps` 包获得
 
-A minimal GNOME environment can be created by installing the `gnome-core`
-package. Note, however, that not all GNOME features may be present or
-functional.
+一个最小的 GNOME 桌面环境可以通过安装 `gnome-core` 包来创建。然而，请注意，并不是所有的 GNOME 的功能都会存在或发挥作用。
 
-If you require [ZeroConf](http://www.zeroconf.org/) support, install the `avahi`
-package and enable the `avahi-daemon` service.
+如果你需要 [ZeroConf](http://www.zeroconf.org/) 支持，请安装 `avahi` 软件包并启用 `avahi-daemon` 服务。
 
-## Starting GNOME
+## 启动 GNOME
 
 The `gdm` package provides the `gdm` service for the GNOME Display Manager;
 [test the service](../services/index.md#testing-services) before enabling it.
 GDM defaults to providing a Wayland session via the `mutter` window manager, but
 an X session can be chosen instead.
+
+`gdm` 软件包为 GNOME 显示管理器，提供了 gdm [服务](../services/index.md#testing-services)；在启用该服务之前，请对其进行测试。GDM 默认为通过 `mutter` 窗口管理器提供 Wayland 会话，但也可以选择 X 会话。
