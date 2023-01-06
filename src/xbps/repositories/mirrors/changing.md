@@ -1,12 +1,8 @@
-# Changing Mirrors
+# 更换镜像
 
-Each repository has a file defining the URL for the mirror used. For official
-repositories, these files are installed by the package manager in
-`/usr/share/xbps.d`, but if duplicate files are found in `/etc/xbps.d`, those
-values are used instead.
+每个软件库都有一个文件定义了所使用的镜像的 URL 。对于官方软件库，这些文件由软件包管理器安装在 `/usr/share/xbps.d` 中，但如果在 `/etc/xbps.d` 中发现重复的文件，就会使用这些值来代替。
 
-To modify mirror URLs cleanly, copy all the repository configuration files to
-`/etc/xbps.d` and change the URLs in each copied repository file.
+为了干净利落地修改镜像URL，把所有版本库的配置文件复制到 `/etc/xbps.d`，并修改每个复制的版本库文件中的 URL。
 
 ```
 # mkdir -p /etc/xbps.d
