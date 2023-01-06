@@ -10,15 +10,13 @@
 # sed -i 's|https://repo-default.voidlinux.org|<repository>|g' /etc/xbps.d/*-repository-*.conf
 ```
 
-After changing the URLs, you must synchronize xbps with the new mirrors:
+在更改 URL 后，你必须将 xbps 与新的镜像同步：
 
 ```
 # xbps-install -S
 ```
 
-You should see the new repository URLs while synchronizing. You can also use
-`xbps-query` to verify the repository URLs, but only after they have been
-synchronized:
+您应该在同步时看到新的存储库 URL。 您也可以使用 `xbps-query` 验证存储库 URL，但只有在它们被验证之后同步： 
 
 ```
 $ xbps-query -L
@@ -29,5 +27,4 @@ $ xbps-query -L
  5368 https://repo-default.voidlinux.org/current/debug (RSA signed)
 ```
 
-Remember that repositories added afterwards will also need to be changed, or
-they will use the default mirror.
+请记住，之后添加的存储库也需要改变，否则它们将使用默认的镜像。
