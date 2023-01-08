@@ -191,11 +191,6 @@ GRUB_ENABLE_CRYPTODISK=y
 135f3c06-26a0-437f-a05e-287b036440a4
 ```
 
-Edit the `GRUB_CMDLINE_LINUX_DEFAULT=` line in `/etc/default/grub` and add
-`rd.lvm.vg=voidvm rd.luks.uuid=<UUID>` to it. Make sure the UUID matches the one
-for the `sda1` device found in the output of the
-[blkid(8)](https://man.voidlinux.org/blkid.8) command above.
-
 编辑 `/etc/default/grub` 中的 `GRUB_CMDLINE_LINUX_DEFAULT=` 行，并在其中加入 `rd.lvm.vg=voidvm rd.luks.uuid=<UUID>`。确保 UUID 与上面 [blkid(8)](https://man.voidlinux.org/blkid.8)  命令的输出中发现的 `sda1` 设备的 UUID 一致。
 
 ## LUKS 密钥设置
