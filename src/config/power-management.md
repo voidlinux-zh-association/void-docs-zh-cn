@@ -6,16 +6,6 @@
 
 ## elogind
 
-The `elogind` service is provided by the `elogind` package. By default,
-[elogind(8)](https://man.voidlinux.org/elogind.8) listens for, and processes,
-ACPI events related to lid-switch activation and the *power*, *suspend* and
-*hibernate* keys. This will conflict with the `acpid` service if it is installed
-and enabled. Either disable `acpid` when enabling `elogind`, or configure
-`elogind` to `ignore` ACPI events in
-[logind.conf(5)](https://man.voidlinux.org/logind.conf.5). There are several
-configuration options, all starting with the keyword `Handle`, that should be
-set to `ignore` to avoid interfering with `acpid`.
-
 `elogind` 服务是由 `elogind` 软件包提供的。默认情况下，[elogind(8)](https://man.voidlinux.org/elogind.8) 监听并处理与 lid-switch 激活 以及*电源*、*暂停*和*休眠键* 有关的 ACPI 事件。如果 `acpid` 服务被安装并启用，这将与它发生冲突。要么在启用 elogind 时禁用 acpid ，要么在 [logind.conf(5)](https://man.voidlinux.org/logind.conf.5) 中把elogind 配置为忽略 ACPI 事件。有几个配置选项，都以关键字 `Handle` 开头，应该设置为忽略，以避免与acpid发生干扰。
 
 
