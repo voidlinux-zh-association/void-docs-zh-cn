@@ -1,22 +1,13 @@
-# XBPS Package Manager
+# XBPS 软件包管理
 
-The X Binary Package System (XBPS) is a fast package manager that has been
-designed and implemented from scratch. XBPS is managed by the Void Linux team
-and developed at <https://github.com/void-linux/xbps>.
+X Binary Package System（XBPS）是一个快速的软件包管理器，它是从头开始设计和实现。XBPS 由 Void Linux 团队管理，在 https://github.com/void-linux/xbps
 
-Most general package management is done with the following commands:
+大多数通用包管理是使用以下命令完成的： 
 
-- [xbps-query(1)](https://man.voidlinux.org/xbps-query.1) searches for and
-   displays information about packages installed locally, or, if used with the
-   `-R` flag, packages contained in repositories.
-- [xbps-install(1)](https://man.voidlinux.org/xbps-install.1) installs and
-   updates packages, and syncs repository indexes.
-- [xbps-remove(1)](https://man.voidlinux.org/xbps-remove.1) removes installed
-   packages, and can also remove orphaned packages and cached package files.
-- [xbps-reconfigure(1)](https://man.voidlinux.org/xbps-reconfigure.1) runs the
-   configuration steps for installed packages, and can be used to reconfigure
-   certain packages after changes in their configuration files. The latter
-   usually requires the `--force` flag.
+- [xbps-query(1)](https://man.voidlinux.org/xbps-query.1) 搜索并显示本地安装的软件包的信息，如果与 `-R` 标志一起使用，则显示存储库中的软件包。
+- [xbps-install(1)](https://man.voidlinux.org/xbps-install.1) 安装和更新软件包，并同步存储库的索引。
+- [xbps-remove(1)](https://man.voidlinux.org/xbps-remove.1) 可以删除已安装的软件包， 也可以删除孤立的软件包和缓存的软件包文件。
+- [xbps-reconfigure(1)](https://man.voidlinux.org/xbps-reconfigure.1) 运行已安装包的配置，可用于重新配置更改配置文件后的某些软件包。 后者通常需要 `--force` 标志。 
 - [xbps-alternatives(1)](https://man.voidlinux.org/xbps-alternatives.1) lists or
    sets the alternatives provided by installed packages. Alternatives is a
    system which allows multiple packages to provide common functionality through
