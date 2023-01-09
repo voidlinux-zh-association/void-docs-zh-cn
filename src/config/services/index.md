@@ -1,48 +1,39 @@
-# Services and Daemons - runit
+# 服务和守护进程 - runit
 
-Void uses the [runit(8)](https://man.voidlinux.org/runit.8) supervision suite to
-run system services and daemons.
+Void 使用 [runit(8)](https://man.voidlinux.org/runit.8) 监督组件来运行系统服务和守护程序。
 
-Some advantages of using runit include:
+使用 runit 的一些优势包括：
 
-- a small code base, making it easier to audit for bugs and security issues.
-- each service is given a clean process state, regardless of how the service was
-   started or restarted: it will be started with the same environment, resource
-   limits, open file descriptors, and controlling terminals.
-- a reliable logging facility for services, where the log service stays up as
-   long as the relevant service is running and possibly writing to the log.
+- 一个小的基础代码，可以更容易地审计错误和安全问题。 
+- 每个服务都被赋予一个干净的进程状态，无论该服务是如何启动或重启：它将以相同的环境、资源限制、开放的文件描述符和控制终端启动。
+- 可靠的服务日志记录工具，只要相关的服务在运行并写入日志，日志服务就会保持运行。
 
-If you don't need a program to be running constantly, but would like it to run
-at regular intervals, you might like to consider using a [cron
-daemon](../cron.md).
+如果你不需要一个程序持续运行，但希望它定期运行，你可以考虑使用 [cron daemon](../cron.md)
 
-## Section Contents
+## 章节内容
 
-- [Per-User Services](./user-services.md)
-- [Logging](./logging.md)
+- [每个用户的服务](./user-services.md)
+- [日志](./logging.md)
 
-## Service Directories
+## 服务目录
 
-Each service managed by runit has an associated *service directory*.
+每个由 runit 管理的服务都有一个相关的*服务目录*。
 
-A service directory requires only one file: an executable named `run`, which is
-expected to exec a process in the foreground.
+一个服务目录只需要一个文件：一个名为 `run` 的可执行文件，这是希望在前台执行一个进程。
 
-Optionally, a service directory may contain:
+可选的，一个服务目录可以包含：
 
-- an executable named `check`, which will be run to check whether the service is
-   up and available; it's considered available if `check` exits with 0.
-- an executable named `finish`, which will be run on shutdown/process stop.
-- a `conf` file; this can contain environment variables to be sourced and
-   referenced in `run`.
-- a directory named `log`; a pipe will be opened from the output of the `run`
-   process in the service directory to the input of the `run` process in the
-   `log` directory.
+- 一个名为 `check` 的可执行文件，它将被运行以检查服务是否启动和可用；如果 `check` 退出时为0，则认为它是可用的。
+- 一个名为 `finish` 的可执行文件，它将在关机/进程停止时运行。
+- 一个 `conf` 文件；它可以包含环境变量，并在 `run` 被引用。
+- 一个名为的目录 `log`; pipe 将从 `run` 服务目录中的进程到输入的 `run` 过程中 `log` 目录。 
 
 When a new service is created, a `supervise` folder will be automatically
 created on the first run.
 
-### Configuring Services
+当一个新的服务被创建时，在第一次运行时将会自动创建一个 `supervise` 文件夹。
+
+### 配置服务
 
 Most services can take configuration options set by a `conf` file in the service
 directory. This allows service customization without modifying the service
