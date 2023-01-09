@@ -1,53 +1,46 @@
-# rc.conf, rc.local and rc.shutdown
+# rc.conf, rc.local 还有 rc.shutdown
 
-The files `/etc/rc.conf`, `/etc/rc.local` and `/etc/rc.shutdown` can be used to
-configure certain parts of your Void system. `rc.conf` is often configured by
-`void-installer`.
-
+文件 `/etc/rc.conf` 、`/etc/rc.local` 和 `/etc/rc.shutdown` 可以用来配置 Void 系统的某些部分。`rc.conf` 通常由 `void-installer` 配置。
 ## rc.conf
 
-Sourced in runit stages 1 and 3. This file can be used to set variables,
-including the following:
+来源于 runit stage 1 和 3。这个文件可以用来设置变量，包括以下内容：
 
-### KEYMAP
+### 键盘
 
-Specifies which keymap to use for the Linux console. Available keymaps are
-listed in `/usr/share/kbd/keymaps`. For example:
+指定在Linux控制台使用哪一个键盘类型。可用的键盘类型中列于 `/usr/share/kbd/keymaps` 如说：
 
 ```
 KEYMAP=fr
 ```
 
-For further details, refer to
-[loadkeys(1)](https://man.voidlinux.org/loadkeys.1).
+有关详细信息，请参阅 [loadkeys(1)](https://man.voidlinux.org/loadkeys.1).
 
-### HARDWARECLOCK
+### 硬件时间
 
-Specifies whether the hardware clock is set to UTC or local time.
+指定硬件时钟是设置为 UTC 还是本地时间。
 
 By default this is set to `utc`. However, Windows sets the hardware clock to
 local time, so if you are dual-booting with Windows, you need to either
 configure Windows to use UTC, or set this variable to `localtime`.
 
-For further details, refer to [hwclock(8)](https://man.voidlinux.org/hwclock.8).
+默认情况下，它被设置为 `utc`。然而，Windows 将硬件时钟设置为本地时间，所以如果你用 Windows 进行双系统，你需要将Windows配置为使用UTC，或者将这个变量设置为 `localtime`。
 
-### FONT
+有关详细信息，请参阅 [hwclock(8)](https://man.voidlinux.org/hwclock.8).
 
-Specifies which font to use for the Linux console. Available fonts are listed in
-`/usr/share/kbd/consolefonts`. For example:
+### 字体
+
+指定用于 Linux 控制台的字体。 可用字体列在 `/usr/share/kbd/consolefonts`。 例如：
 
 ```
 FONT=eurlatgr
 ```
 
-For further details, refer to [setfont(8)](https://man.voidlinux.org/setfont.8).
+有关详细信息，请参阅  [setfont(8)](https://man.voidlinux.org/setfont.8).
 
 ## rc.local
 
-Sourced in runit stage 2. A shell script which can be used to specify
-configuration to be done prior to login.
+源于runit stage 2 。一个shell脚本，可以用来指定在登录前要做的配置。
 
 ## rc.shutdown
 
-Sourced in runit stage 3. A shell script which can be used to specify tasks to
-be done during shutdown.
+源于 runit stage 3。一个 shell 脚本，可以用来指定在关机时要完成的任务。
