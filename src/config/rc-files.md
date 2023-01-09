@@ -19,10 +19,6 @@ KEYMAP=fr
 
 指定硬件时钟是设置为 UTC 还是本地时间。
 
-By default this is set to `utc`. However, Windows sets the hardware clock to
-local time, so if you are dual-booting with Windows, you need to either
-configure Windows to use UTC, or set this variable to `localtime`.
-
 默认情况下，它被设置为 `utc`。然而，Windows 将硬件时钟设置为本地时间，所以如果你用 Windows 进行双系统，你需要将Windows配置为使用UTC，或者将这个变量设置为 `localtime`。
 
 有关详细信息，请参阅 [hwclock(8)](https://man.voidlinux.org/hwclock.8).
