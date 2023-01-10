@@ -119,7 +119,7 @@ zpool trim yourpoolname
 
 ### 自动 trim
 
-设置 autotrim  `yourpoolname`, 运行:
+设置 autotrim  `yourpoolname`, 请运行:
 
 ```
 # zpool set autotrim=on yourpoolname
