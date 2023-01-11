@@ -1,21 +1,16 @@
-# Network
+# 网络
 
-Network configuration in Void Linux can be done in several ways. The default
-installation comes with the [dhcpcd(8)](https://man.voidlinux.org/dhcpcd.8)
-service enabled.
+Void Linux 中的网络配置可以通过几种方式进行。默认安装时启用了 [dhcpcd(8)](https://man.voidlinux.org/dhcpcd.8) 服务。
 
-## Interface Names
+## 接口名称
 
-Newer versions of [udev(7)](https://man.voidlinux.org/udev.7) no longer use the
-traditional Linux naming scheme for interfaces (`eth0`, `eth1`, `wlan0`, ...).
+新版本的 [udev(7)](https://man.voidlinux.org/udev.7) 不再使用传统的 Linux 接口命名方案（eth0, eth1, wlan0, ...）。
 
-This behavior can be reverted by adding `net.ifnames=0` to the [kernel
-cmdline](../kernel.md#cmdline).
+这种行为可以通过在[内核 cmdline](https://docs.voidlinux.org/config/kernel.html#cmdline) 中加入 `net.ifnames=0` 来恢复。
 
-## Static Configuration
+## 静态配置
 
-A simple way to configure a static network at boot is to add the necessary
-[ip(8)](https://man.voidlinux.org/ip.8) commands to the `/etc/rc.local` file:
+在启动时配置静态网络的一个简单方法是在 `/etc/rc.local` 文件中添加必要的 [ip(8)](https://man.voidlinux.org/ip.8) 命令：
 
 ```
 ip link set dev eth0 up
@@ -25,11 +20,9 @@ ip route add default via 192.168.1.1
 
 ## dhcpcd
 
-To run [dhcpcd(8)](https://man.voidlinux.org/dhcpcd.8) on all interfaces, enable
-the `dhcpcd` service.
+要在所有接口上运行 [dhcpcd(8)](https://man.voidlinux.org/dhcpcd.8) ，请启用 `dhcpcd` 服务。
 
-To run `dhcpcd` only on a specific interface, copy the `dhcpcd-eth0` service and
-modify it to match your interface:
+要想只在一个特定的接口上运行 `dhcpcd` ，请复制 `dhcpcd-eth0` 服务，并修改它以匹配你的接口。
 
 ```
 $ ip link show
@@ -42,16 +35,13 @@ $ ip link show
 # ln -s /etc/sv/dhcpcd-enp3s0 /var/service/
 ```
 
-For more information on configuring `dhcpcd`, refer to
-[dhcpcd.conf(5)](https://man.voidlinux.org/dhcpcd.conf.5)
+关于配置 dhcpcd 的更多信息，请参考 [dhcpcd.conf(5)](https://man.voidlinux.org/dhcpcd.conf.5)
 
-## Wireless
+## 无线网络
 
-Before using wireless networking, use
-[rfkill(8)](https://man.voidlinux.org/rfkill.8) to check whether the relevant
-interfaces are soft- or hard-blocked.
+在使用无线网络之前，使用 [rfkill(8)](https://man.voidlinux.org/rfkill.8)  检查相关接口是否被软禁或硬禁。
 
-Void provides several ways to connect to wireless networks:
+Void 提供了几种连接到无线网络的方法：
 
 - [wpa_supplicant](./wpa_supplicant.md)
 - [iwd](./iwd.md)
