@@ -1,37 +1,26 @@
 # IWD
 
-[IWD](https://iwd.wiki.kernel.org/) (iNet Wireless Daemon) is a wireless daemon
-for Linux that aims to replace [WPA supplicant](./wpa_supplicant.md).
+[IWD](https://iwd.wiki.kernel.org/)（iNet Wireless Daemon）是一个 Linux 的无线守护进程，旨在取代 [WPA supplicant](./wpa_supplicant.md)。
 
-## Installation
+## 安装
 
-Install the `iwd` package and enable the `dbus` and `iwd` services.
+安装 `iwd` 软件包并启用 `dbus` 和 `iwd` 服务。 
 
-## Usage
+## 用法
 
-The command-line client [iwctl(1)](https://man.voidlinux.org/iwctl.1) can be
-used to add, remove, and configure network connections. Commands can be passed
-as arguments; when run without arguments, it provides an interactive session. To
-list available commands, run `iwctl help`, or run `iwctl` and enter `help` at
-the interactive prompt.
+命令行客户端 [iwctl(1)](https://man.voidlinux.org/iwctl.1) 可以用来添加、删除和配置网络连接。命令可以作为参数传递；当运行时没有参数，它提供一个交互式会话。要列出可用的命令，可以运行 `iwctl help`，或者运行 `iwctl` 并在交互提示符下输入 `help`。
 
-By default, only the root user and those in the `wheel` group have permission to
-operate `iwctl`.
+默认情况下，只有 root 用户和 `wheel` 组中的用户有权限操作 `iwctl`。
 
-## Configuration
+## 配置
 
-Configuration options and examples are described below. Consult the relevant
-manual pages and the [upstream
-documentation](https://iwd.wiki.kernel.org/networkconfigurationsettings) for
-further information.
+配置选项和例子描述如下。更多信息请查阅相关手册页面和[上游文件](https://iwd.wiki.kernel.org/networkconfigurationsettings))。
 
-### Daemon configuration
+### 守护进程配置
 
-The main configuration file is located in `/etc/iwd/main.conf`. If it does not
-exist, you may create it. It is documented in
-[iwd.config(5)](https://man.voidlinux.org/iwd.config.5).
+主配置文件位于 `/etc/iwd/main.conf` 中。如果它不存在，你可以创建它。它在 [iwd.config(5)](https://man.voidlinux.org/iwd.config.5) 中有详细说明。
 
-### Network configuration
+### 网络配置
 
 Network configuration, including examples, is documented in
 [iwd.network(5)](https://man.voidlinux.org/iwd.network.5). IWD stores
