@@ -2,7 +2,7 @@
 
 [libvirt](https://libvirt.org/) 是一个虚拟化管理平台的 API 和守护程序，支持 LXC、KVM、QEMU、Bhyve、Xen、VMWare 和 Hyper-V 等虚拟化技术。
 
-要使用 libvirt，请安装 `libvirt` 软件包，确保已安装 `dbus` 包，并[启用]](../services/index.md) `dbus`、`libvirtd`、`virtlockd` 和 `virtlogd` 服务。`libvirtd` 守护程序可以在运行时通过 [virt-admin(1)](https://man.voidlinux.org/virt-admin.1) 重新配置。
+要使用 libvirt，请安装 `libvirt` 软件包，确保已安装 `dbus` 包，并[启用](../services/index.md) `dbus`、`libvirtd`、`virtlockd` 和 `virtlogd` 服务。`libvirtd` 守护程序可以在运行时通过 [virt-admin(1)](https://man.voidlinux.org/virt-admin.1) 重新配置。
 
 `libvirt` 包为 libvirtd 提供了 [virsh(1)](https://man.voidlinux.org/virsh.1) 接口。`virsh` 是一个交互式 shell 和批处理脚本工具，用于执行管理任务，包括创建、配置和运行虚拟机，以及管理网络和存储。注意，`virsh` 通常需要以 root 身份运行，如 `virsh` man 页中所述。
 
