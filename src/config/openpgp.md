@@ -1,14 +1,12 @@
 # GnuPG
 
-Void ships both GnuPG legacy (as `gnupg1`) and GnuPG stable (as `gnupg`).
+Void 同时提供了GnuPG legacy 版（作为 `gnupg1` ）和 GnuPG 稳定版（作为 `gnupg`）。
 
-## Smartcards
+## 智能卡
 
-For using smartcards such as Yubikeys with GnuPG, there are two backends for
-communicating with them through GnuPG: The internal CCID driver of GnuPG's
-scdaemon, or the PC/SC driver.
+对于用 GnuPG 使用 Yubikeys 等智能卡，有两个后端可以通过 GnuPG 与它们进行通信：GnuPG 的 scdaemon 的内部 CCID 驱动，或 PC/SC 驱动。
 
-## scdaemon with internal CCID driver
+## 带有内部 CCID 驱动的 scdaemon
 
 By default, scdaemon, which is required for using smartcards with GnuPG, uses
 its internal CCID driver. For this to work, your smartcard needs to be one of
