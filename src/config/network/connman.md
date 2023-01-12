@@ -28,10 +28,6 @@ connman 软件包包括一个命令行工具，[connmanctl(1)](https://man.voidl
 
 ### ConnMan 前端工具
 
-There are many other front-ends to ConnMan, including `connman-ui` for system
-trays, `connman-gtk` for GTK, `cmst` for QT and `connman-ncurses` for ncurses
-based UI.
-
 ConnMan 还有许多其他的前端，包括用于系统托盘的 `connman-ui` 、用于 GTK 的 `connman-gtk`、用于 QT 的 `cmst` 和用于基于 ncurses 的用户界面的 `connman-ncurses`。
 
 ## 防止 DNS 被 ConnMan 覆盖 
