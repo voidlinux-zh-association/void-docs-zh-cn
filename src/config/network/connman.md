@@ -1,29 +1,20 @@
 # ConnMan
 
-[ConnMan(8)](https://man.voidlinux.org/connman.8) is a daemon that manages
-network connections, is designed to be slim and to use as few resources as
-possible. The `connman` package contains the basic utilities to run ConnMan.
+[ConnMan(8)](https://man.voidlinux.org/connman.8) 是一个管理网络连接的守护程序，它被设计得很纤细，并尽可能少地使用资源。`connman` 软件包包含运行 `ConnMan` 的基本工具。
 
-## Starting ConnMan
+## 启动 ConnMan
 
-To enable the ConnMan daemon, first [disable](../services/index.md) any other
-network managing services like [dhcpcd](./index.md#dhcpcd),
-[wpa_supplicant](./wpa_supplicant.md), or `wicd`. These services all control
-network interface configuration, and interfere with each other.
+要启用 ConnMan 守护进程，首先要[禁用](../services/index.md)任何其他网络管理服务，如 [dhcpcd](./index.md#dhcpcd)、[wpa_supplicant](./wpa_supplicant.md) 或 `wicd` 。这些服务都控制着网络接口的配置，并且相互干扰。
 
-Finally, enable the `connmand` service.
+最后启用 `connmand` 服务。
 
-## Configuring ConnMan
+## 配置 ConnMan
 
 ### ConnMan CLI
 
-The `connman` package includes a command line tool,
-[connmanctl(1)](https://man.voidlinux.org/connmanctl.1) to control network
-settings. If you do not provide any commands, `connmanctl` starts as an
-interactive shell.
+connman 软件包包括一个命令行工具，[connmanctl(1)](https://man.voidlinux.org/connmanctl.1) ，用来控制网络设置。如果你不提供任何命令，`connmanctl` 会以交互式 shell 的形式启动。
 
-Establishing a connection to an access point using the `connmanctl` interactive
-shell might look as follows:
+使用 `connmanctl` 交互式 shell 建立与接入点的连接可能看起来如下:
 
 ```
 # connmanctl
@@ -35,15 +26,17 @@ shell might look as follows:
 > exit
 ```
 
-### ConnMan Front-End Tools
+### ConnMan 前端工具
 
 There are many other front-ends to ConnMan, including `connman-ui` for system
 trays, `connman-gtk` for GTK, `cmst` for QT and `connman-ncurses` for ncurses
 based UI.
 
-## Preventing DNS overrides by ConnMan
+ConnMan 还有许多其他的前端，包括用于系统托盘的 `connman-ui` 、用于 GTK 的 `connman-gtk`、用于 QT 的 `cmst` 和用于基于 ncurses 的用户界面的 `connman-ncurses`。
 
-Create `/etc/sv/connmand/conf` with the following content:
+## 防止 DNS 被 ConnMan 覆盖 
+
+创建 `/etc/sv/connmand/conf` 内容如下:
 
 ```
 OPTS="--nodnsproxy"
