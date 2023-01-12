@@ -1,48 +1,29 @@
 # Intel
 
-Intel GPU support requires the `linux-firmware-intel` package. If you have
-installed the `linux` or `linux-lts` packages, it will be installed as a
-dependency. If you installed a version-specific kernel package (e.g.,
-`linux5.4`), it may be necessary to manually install `linux-firmware-intel`.
+英特尔 GPU 支持需要 `linux-firmware-intel` 软件包。如果你已经安装了 `linux` 或 `linux-lts` 软件包，它将作为一个依赖项被安装。如果你安装了一个特定版本的内核包（例如，linux5.4），可能需要手动安装`linux-firmware-intel`。
 
 ## OpenGL
 
-OpenGL requires the Mesa DRI package, `mesa-dri`. This is provided by the `xorg`
-meta-package, but will need to be installed manually when using the
-`xorg-minimal` package or running a Wayland compositor.
+OpenGL 需要 `mesa-dri`包。这是由 `xorg` 元包提供的，但在使用 `xorg-minimal` 包或运行 Wayland 合成器时，需要手动安装。
 
 ## Vulkan
 
-Install the Khronos Vulkan Loader and the Mesa Intel Vulkan driver packages,
-respectively `vulkan-loader` and `mesa-vulkan-intel`.
+安装 Khronos Vulkan Loader 和 Mesa Intel Vulkan 驱动包，分别是 `vulkan-loader` 和 `mesa-vulkan-intel`。
 
-## Video acceleration
+## 视频加速
 
-Install the `intel-video-accel` meta-package:
+安装 `intel-video-accel` 元包:
 
-This will install all the Intel VA-API drivers. `intel-media-driver` will be
-used by default, but this choice can be overridden at runtime via the
-environment variable `LIBVA_DRIVER_NAME`:
+这将安装所有英特尔 VA-API 驱动，将默认使用 `intel-media-driver`，以下选择可以在运行时通过环境变量 `LIBVA_DRIVER_NAME` 覆盖。
 
-| Driver Package       | Supported GPU Gen | Explicit selection       |
+| 驱动包      | 支持的 GPU Gen |   Explicit selection    |
 |----------------------|-------------------|--------------------------|
 | `libva-intel-driver` | up to Coffee Lake | `LIBVA_DRIVER_NAME=i965` |
 | `intel-media-driver` | from Broadwell    | `LIBVA_DRIVER_NAME=iHD`  |
 
-## Troubleshooting
+## 故障排除
 
-The kernels packaged by Void are configured with
-`CONFIG_INTEL_IOMMU_DEFAULT_ON=y`, which can lead to issues with their graphics
-drivers, as reported by the [kernel
-documentation](https://www.kernel.org/doc/html/latest/x86/intel-iommu.html#graphics-problems).
-To fix this, it is necessary to disable IOMMU for the integrated GPU. This can
-be done by adding `intel_iommu=igfx_off` to your [kernel
-cmdline](../../kernel.md#cmdline). This problem is expected to happen on the
-Broadwell generation of internal GPUs. If you have another internal GPU and your
-issues are fixed by this kernel option, you should file a bug reporting the
-problem to kernel developers.
+Void 打包的内核被配置为 `CONFIG_INTEL_IOMMU_DEFAULT_ON=y`，这可能导致其图形驱动的问题，正如[内核文档](https://www.kernel.org/doc/html/latest/x86/intel-iommu.html#graphics-problems)所报告的。为了解决这个问题，有必要禁用集成 GPU 的 IOMMU。这可以通过在你的[内核 cmdline](../../kernel.md#cmdline) 中添加 `intel_iommu=igfx_off`来完成。这个问题预计会发生在 Broadwell 一代的内部 GPU 上。如果你有另一个内部 GPU，而你的问题被这个内核选项修复了，你应该提交一个 bug，向内核开发者报告这个问题。
 
-For newer Intel chipsets, the [DDX](../xorg.md#ddx) drivers may interfere with
-correct operation. This is characterized by graphical acceleration not working
-and general graphical instability. If this is the case, try removing all
-`xf86-video-*` packages.
+对于较新的英特尔芯片组，[DDX](../xorg.md#ddx) 驱动程序可能会干扰正确的操作。表现为图形加速不工作和一般图形不稳定。如果是这种情况，请尝试删除所有 `xf86-video-*` 软件包。
+
