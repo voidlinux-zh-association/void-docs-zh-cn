@@ -1,9 +1,6 @@
-# Bluetooth
+# 蓝牙
 
-Ensure the Bluetooth controller is not blocked. Use `rfkill` to check whether
-there are any blocks and to remove soft blocks. If there is a hard block, there
-is likely either a physical hardware switch or an option in the BIOS to enable
-the Bluetooth controller.
+确保蓝牙控制器没有被封锁。使用 `rfkill` 检查是否有任何 blocks，并删除soft blocks。如果有 hard block，很可能有一个物理硬件开关或 BIOS 中的一个选项来启用蓝牙控制器。
 
 ```
 $ rfkill
@@ -14,26 +11,18 @@ ID TYPE     DEVICE      SOFT      HARD
 # rfkill unblock bluetooth
 ```
 
-## Installation
+## 安装
 
-Install the `bluez` package and enable the `bluetoothd` and `dbus` services.
-Then, add your user to the `bluetooth` group and restart the `dbus` service, or
-simply reboot the system. Note that restarting the `dbus` service may kill
-processes making use of it.
+安装 `bluez` 软件包并启用 `bluetoothd` 和 `dbus` 服务。然后，将你的用户加入 `bluetooth`用户组，重启 `dbus` 服务，或者直接重启系统。注意，重启 `dbus` 服务可能会杀死使用该服务的进程。
 
-To use an audio device such as a wireless speaker or headset, ALSA users need to
-install the `bluez-alsa` package. [PulseAudio](./media/pulseaudio.md) users do
-not need any additional software. [PipeWire](./media/pipewire.md) users need
-`libspa-bluetooth`.
+为了使用音频设备，如无线扬声器或耳机，ALSA 用户需要安装 `bluez-alsa` 软件包。[PulseAudio](./media/pulseaudio.md) 用户不需要任何额外的软件。[PipeWire](./media/pipewire.md) 用户需要 `libspa-bluetooth`。
 
-## Usage
+## 用法
 
-Manage Bluetooth connections and controllers using `bluetoothctl`, which
-provides a command line interface and also accepts commands on standard input.
+使用 `bluetoothctl` 管理蓝牙连接和控制器，它提供一个命令行界面，也接受标准输入的命令。
 
-Consult the [Arch Wiki](https://wiki.archlinux.org/index.php/Bluetooth#Pairing)
-for an example of how to pair a device.
+查阅 [Arch Wiki](https://wiki.archlinux.org/index.php/Bluetooth#Pairing) 有关如何配对设备的示例。 
 
-## Configuration
+## 配置
 
-The main configuration file is `/etc/bluetooth/main.conf`.
+主要配置文件是 `/etc/bluetooth/main.conf`.
