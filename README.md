@@ -1,6 +1,6 @@
 # Void 文档
 
-欢迎来到 Void Linux文档。本仓库是 <https://docs.voidlinux.org/> 文档的中文汉化版本。对这个仓库的贡献遵循与软件包相同的协议。详情请参阅[CONTRIBUTING](./CONTRIBUTING.md).
+欢迎来到 Void Linux文档。本仓库是 <https://docs.voidlinux.org/> 文档的中文汉化版本。对这个仓库的贡献遵循与软件包相同的协议。详情请参阅 [CONTRIBUTING](./CONTRIBUTING.md) 。
 
 ## 构建
 
