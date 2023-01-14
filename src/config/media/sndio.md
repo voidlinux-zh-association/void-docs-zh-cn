@@ -1,25 +1,20 @@
 # sndio
 
-Install the `sndio` package and enable the
-[sndiod(8)](https://man.voidlinux.org/sndiod.8) service.
+安装 `sndio` 软件包并启用 [sndiod(8)](https://man.voidlinux.org/sndiod.8) 服务。
 
-## Configuration
+## 配置
 
-The service can be configured by adding
-[sndiod(8)](https://man.voidlinux.org/sndiod.8) flags to the `OPTS` variable in
-the service configuration file (`/etc/sv/sndiod/conf`).
+服务可以通过向配置文件 (`/etc/sv/sndiod/conf`) 的变量 `OPTS` 中添加 [sndiod(8)](https://man.voidlinux.org/sndiod.8) 标志来配置。 
 
-### Default device
+### 默认设备
 
-[sndiod(8)](https://man.voidlinux.org/sndiod.8) uses the first ALSA device by
-default. To use another ALSA device for sndio's default device `snd/0` add the
-flags to use specific devices to the service configuration file.
+[sndiod(8)](https://man.voidlinux.org/sndiod.8) 默认使用第一个alsa设备。欲将另外的alsa设备设为默认的 `snd/0` ，向配置文件中添加标志：
 
 ```
 # echo 'OPTS="-f rsnd/Speaker"' >/etc/sv/sndiod/conf
 ```
 
-Use the `-f` flag to chooses a device by its ALSA device index or its ALSA
+使用 `-f` Use the `-f` flag to chooses a device by its ALSA device index or its ALSA
 device name.
 
 ## Volume control
