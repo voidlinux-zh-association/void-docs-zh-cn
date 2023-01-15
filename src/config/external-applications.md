@@ -1,102 +1,61 @@
-# External Applications
+# 更多程序
 
-## Programming Languages
+## 编程语言
 
-The Void repositories have a number of Python and Lua packages. If possible,
-install packages from the Void repositories or consider packaging the library or
-application you need. Packaging your application allows for easier system
-maintenance and can benefit other Void Linux users, so consider making a pull
-request for it. The contribution instructions can be found
-[here](https://github.com/void-linux/void-packages/blob/master/CONTRIBUTING.md).
+Void 仓库有许多 Python 和 Lua 软件包。如果可能的话，从 Void 仓库安装软件包，或者考虑打包你需要的库或应用程序。将你的应用程序打包可以使系统维护更容易，并能使其他 Void Linux 用户受益，所以考虑为它提出一个拉动请求。贡献说明可以在[这里](https://github.com/void-linux/void-packages/blob/master/CONTRIBUTING.md))找到。
 
-To keep packages smaller, Void has separate `devel` packages for header files
-and development tools. If you install a library or application via a language's
-package manager (e.g. `pip`, `gem`), or compile one from source, you may need to
-install the programming language's `-devel` package. This is specially relevant
-for `musl` libc users, due to pre-built binaries usually targeting `glibc`
-instead.
+为了使软件包更小，Void 为头文件和开发工具提供了单独的 `devel` 包。如果你通过一种语言的包管理器（如 `pip`，`gem`）安装一个库或应用程序，或从源代码编译一个库或应用程序，你可能需要安装编程语言的  `-devel` 包。这对 `musl libc` 用户来说特别重要，因为预建的二进制文件通常以  `glibc` 为目标。
 
-| Language | Package Manager                | Void Package    |
+
+| 编程语言 | 软件包管理器                | Void 软件包    |
 |----------|--------------------------------|-----------------|
 | Python3  | pip, anaconda, virtualenv, etc | `python3-devel` |
 | Python2  | pip, anaconda, virtualenv, etc | `python2-devel` |
 | Ruby     | gem                            | `ruby-devel`    |
 | lua      | luarocks                       | `lua-devel`     |
 
-## Restricted Packages
+## 受限制的软件
 
-Some packages have legal restrictions on their distribution (e.g. Discord), may
-be too large, or have another condition that makes it difficult for Void to
-distribute. These packages have build templates, but the packages themselves are
-not built or distributed. As such, they must be built locally. For more
-information see the page on [restricted
-packages](../xbps/repositories/restricted.md).
+有些软件包在分发上有法律限制（例如 Discord），或者可能太大，或者有其他条件使 Void 难以分发。这些软件包有构建模板，但软件包本身没有被构建或分发。因此，它们必须在本地构建。更多信息请参见[受限制的软件包](../xbps/repositories/restricted.md)的页面。
 
-## Non-x86_64 Arch
 
-The Void build system runs on x86_64 servers, both for compiling and cross
-compiling packages. However, some packages (e.g. `libreoffice`) do not support
-cross-compilation. These packages have to be built locally on a computer running
-the same architecture and libc as the system on which the package is to be used.
-To learn how to build packages, refer to [the README for the void-packages
-repository](https://github.com/void-linux/void-packages/blob/master/README.md).
+## 非 x86_64 架构
+
+Void 构建系统在 x86_64 服务器上运行，既用于编译也用于交叉编译软件包。然而，有些软件包（如 `libreoffice`）不支持交叉编译。这些软件包必须在运行与使用该软件包的系统相同架构和 libc 的计算机上进行本地构建。要了解如何构建软件包，请参考 [void-packages 仓库的 README 文件](https://github.com/void-linux/void-packages/blob/master/README.md)。
 
 ## Flatpak
 
-Flatpak is another method for installing external proprietary applications on
-Linux. For information on using Flatpak with Void Linux, see the [official
-Flatpak documentation](https://flatpak.org/setup/Void%20Linux/).
+Flatpak 是另一种在 Linux 上安装外部专有应用程序的方法。有关在 Void Linux 上使用 Flatpak 的信息，请参见[官方Flatpak 文档](https://flatpak.org/setup/Void%20Linux/)。
 
-If sound is not working for programs installed using Flatpak,
-[PulseAudio](./media/pulseaudio.md) auto-activation might not be working
-correctly. Make sure PulseAudio is running before launching the program.
+如果使用 Flatpak 安装的程序没有声音，[PulseAudio](./media/pulseaudio.md) 的自动激活功能可能没有正常工作。在启动程序之前，请确保 PulseAudio 正在运行。
 
-Note that Flatpak's sandboxing will not necessarily protect you from any
-security and/or privacy-violating features of proprietary software.
+请注意，Flatpak 的沙箱不一定能保护你免受专利软件的任何安全和/或侵犯隐私的功能的影响。
 
-### Troubleshooting
+### 故障排除
 
-Some apps may not function properly (e.g. not being able to access the host
-system's files). Some of these issues can be fixed by installing one or more of
-the `xdg-desktop-portal`, `xdg-desktop-portal-gtk`, `xdg-user-dirs`,
-`xdg-user-dirs-gtk` or `xdg-utils` packages.
+一些应用程序可能无法正常运行（例如，无法访问主机系统的文件）。其中一些问题可以通过安装一个或多个 `xdg-desktop-portal`、`xdg-desktop-portal-gtk`、`xdg-user-dirs`、`xdg-user-dirs-gtk` 或 `xdg-utils` 软件包来解决。
 
-Some Flatpaks require [D-Bus](./session-management.md#d-bus) and/or
-[Pulseaudio](./media/pulseaudio.md).
+一些 Flatpaks 需要 [D-Bus](./session-management.md#d-bus) 和/或者 [Pulseaudio](./media/pulseaudio.md)。
+
 
 ## AppImages
 
-An [AppImage](https://appimage.org/) is a file that bundles an application with
-everything needed to run it. An AppImage can be used by making it executable and
-running it; installation is not required. AppImages can be run in a sandbox,
-such as [firejail](https://firejail.wordpress.com/).
+[AppImage](https://appimage.org/) 是一个文件，它将一个应用程序与运行它所需的一切捆绑在一起。一个 AppImage 可以通过使其可执行并运行来使用，不需要安装。AppImage 可以在沙盒中运行，如 [firejail](https://firejail.wordpress.com/)
 
-Some of the applications for which an AppImage is available can be found on
-[AppImageHub](https://appimage.github.io/).
+在 [AppImageHub](https://appimage.github.io/) 上可以找到一些可以使用 AppImage 的应用程序。
 
-AppImages do not yet work on musl installations.
+AppImages 尚不适用于 musl 安装。 
 
-## Octave Packages
+## Octave 软件包
 
-Some Octave packages require external dependencies to compile and run. For
-example, to build the control package, you must install the `openblas-devel`,
-`libgomp-devel`, `libgfortran-devel`, `gcc-fortran`, and `gcc` packages.
+一些 Octave 软件包需要外部依赖才能编译和运行。例如，为了构建控制包，你必须安装 `openblas-devel`、`libgomp-devel`、`libgfortran-devel`、`gcc-fortran` 和 `gcc` 包。
 
 ## MATLAB
 
-To use MATLAB's help browser, live scripts, add-on installer, and simulink,
-install the `libselinux` package.
+要使用 MATLAB 的 help browser、live 脚本、附加安装程序和 simulink，请安装 `libselinux` 包。
 
 ## Steam
 
-Steam can be installed either via a native package, which requires [enabling the
-"nonfree" repository](../xbps/repositories/index.md#nonfree), or via
-[Flatpak](#flatpak). The list of dependencies for different platforms and
-troubleshooting information for the native package can be found in its
-[Void-specific documentation](./package-documentation/index.html), while this
-section deals with potential issues faced by Flatpak users.
+Steam 可以通过本机包安装[需要启用 "非自由 "仓库](../xbps/repositories/index.md#nonfree)或 Flatpak 来安装。不同平台的依赖性列表和本地软件包的故障排除信息可以在其 [Void-specific文档](./package-documentation/index.html) 中找到，而这部分则是关于 Flatpak 用户面临的潜在问题。
 
-If you are using a different drive to store your game library, the
-`--filesystem` option from
-[flatpak-override(1)](https://man.voidlinux.org/flatpak-override.1) can prove
-useful.
+如果你使用不同的驱动器来存储你的游戏库，[flatpak-override(1)](https://man.voidlinux.org/flatpak-override.1) 的 `--filesystem`` 选项可以证明是有用的。
