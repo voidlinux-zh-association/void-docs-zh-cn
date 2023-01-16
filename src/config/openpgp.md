@@ -8,25 +8,13 @@ Void 同时提供了GnuPG legacy 版（作为 `gnupg1` ）和 GnuPG 稳定版（
 
 ## 带有内部 CCID 驱动的 scdaemon
 
-By default, scdaemon, which is required for using smartcards with GnuPG, uses
-its internal CCID driver. For this to work, your smartcard needs to be one of
-the smartcards in the udev rules
-[here](https://github.com/void-linux/void-packages/blob/master/srcpkgs/gnupg/files/60-scdaemon.rules)
-and you need to either be using elogind or be a member of the plugdev group. If
-these two condition are fulfilled and you don't have pcscd running, `gpg
---card-status` should successfully print your current card status.
+默认情况下，scdaemon（在 GnuPG 中使用智能卡时需要）使用其内部的 CCID 驱动。为了让它工作，你的智能卡需要是[这里](https://github.com/void-linux/void-packages/blob/master/srcpkgs/gnupg/files/60-scdaemon.rules)的 udev 规则中的智能卡之一，并且你需要使用 elogind 或成为 plugdev 组的成员。如果这两个条件都满足，而且你没有运行 pcscd，`gpg --card-status` 应该能成功地打印你当前的卡的状态。
 
-## scdaemon with pcscd backend
 
-If you need to use pcscd for other reasons, run `echo disable-ccid >>
-~/.gnupg/scdaemon.conf`. Now, assuming your pcscd setup works correctly, `gpg
---card-status` should print your card status.
+##  带有 pcscd 后端的 scdaemon
 
-# OpenPGP Card Tools
+如果你因为其他原因需要使用 pcscd，运行 `echo disable-ccid >> ~/.gnupg/scdaemon.conf`。现在，假设你的 pcscd 设置工作正常，`gpg --card-status` 应该会打印你的卡片状态。
 
-As an alternative to GnuPG with smartcards, Void also ships
-`openpgp-card-tools`, a Rust based utility not reliant on GnuPG. It requires
-using `pcscd` for interacting with smart cards, so if you want to use it in
-parallel with GnuPG, ou need to configure `scdaemon` to use the pcscd backend,
-as described above in "[scdaemon with pcscd
-backend](#scdaemon-with-pcscd-backend)".
+# OpenPGP card tools
+
+作为 GnuPG 和智能卡的替代品，Void 还提供了 `openpgp-card-tools`，这是一个基于Rust的工具，不依赖 GnuPG。它需要使用 `pcscd` 来与智能卡交互，所以如果你想与 GnuPG 并行使用它，你需要配置 `scdaemon` 来使用 pcscd 后台，如上文 "带有 pcscd 后端的 scdaemon" 所述。
