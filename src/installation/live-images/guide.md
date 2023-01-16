@@ -31,12 +31,6 @@
 
 选择你的主网络接口，如果你选择不使用 DHCP，你会被要求输入 IP 地址、网关和 DNS 服务器。
 
-If you choose a wireless network interface, you will be prompted to provide the
-SSID, encryption type (`wpa` or `wep`), and password. If `void-installer` fails
-to connect to your network, you may need to exit the installer and configure it
-manually using [wpa_supplicant](../../config/network/wpa_supplicant.md) and
-[dhcpcd](../../config/network/index.md#dhcpcd) before continuing.
-
 如果您选择无线网络接口，系统将提示您提供 SSID、加密类型(`wpa` 要么 `wep`), 和密码。果 `void-installer` 失败要连接到您的网络，您可能需要退出安装程序并进行配置手动使用 [wpa_supplicant](../../config/network/wpa_supplicant.md) 和 [dhcpcd](../../config/network/index.md#dhcpcd) 在继续之前。 
 
 ## 安装源
@@ -77,7 +71,7 @@ manually using [wpa_supplicant](../../config/network/wpa_supplicant.md) and
 
 如果使用 UEFI，建议你选择 GPT 作为分区表，创建一个类型为 `EFI System` 的分区（通常大小是 200MB-1GB），该分区会被挂载到 `/boot/efi`。
 
-如果使用 BIOS，建议你选择 MBR 作为分区表。进阶用户可能会想要用 GPT 作为分区表，记得为 GRUB [创建一个特殊的 BIOS 分区](/partitions.md#bios系统说明)
+如果使用 BIOS，建议你选择 MBR 作为分区表。进阶用户可能会想要用 GPT 作为分区表，记得为 GRUB [创建一个特殊的 BIOS 分区](./partitions.md#bios系统说明)
 
 ## 文件系统
 
