@@ -1,49 +1,21 @@
-# Installing Void on a ZFS Root
+# 全盘 ZFS
 
-Because the Void installer does not support ZFS, it is necessary to install via
-chroot. Aside from a few caveats regarding bootloader and initramfs support,
-installing Void on a ZFS root filesystem is not significantly different from any
-other advanced installation. [ZFSBootMenu](https://zfsbootmenu.org) is a
-bootloader designed from the ground up to support booting Linux distributions
-directly from a ZFS pool. However, it is also possible to use traditional
-bootloaders with a ZFS root.
+因为 Void 的安装程序不支持 ZFS，所以有必要通过 chroot 来安装。除了一些关于引导程序和 initramfs 支持的注意事项外，在 ZFS 根文件系统上安装 Void 与其他高级安装没有明显区别。[ZFSBootMenu](https://zfsbootmenu.org) 是一个从头开始设计的引导程序，支持直接从 ZFS 池中启动 Linux 发行版。然而，也可以使用传统的引导程序与ZFS根文件系统。
 
 ## ZFSBootMenu
 
-Although it will boot (and can be run atop) a wide variety of distributions,
-ZFSBootMenu officially considers Void a first-class distribution. ZFSBootMenu
-supports native ZFS encryption, offers a convenient recovery environment that
-can be used to clone prior snapshots or perform advanced manipulation in a
-pre-boot environment, and will support booting from any pool that is importable
-by modern ZFS drivers. The ZFSBootMenu documentation offers, among other
-content, several [step-by-step
-guides](https://docs.zfsbootmenu.org/en/latest/guides/void-linux.html) for
-installing a Void system from scratch. The [UEFI
-guide](https://docs.zfsbootmenu.org/en/latest/guides/void-linux/single-disk-uefi.html)
-describes the procedure of bootstrapping a Void system for modern systems. For
-legacy BIOS systems, the [syslinux
-guide](https://docs.zfsbootmenu.org/en/latest/guides/void-linux/single-disk-syslinux-mbr.html)
-provides comparable instructions.
+尽管它可以启动（并且可以在上面运行）各种各样的发行版，但 ZFSBootMenu 官方认为 Void 是一等的发行版。ZFSBootMenu 支持原生的 ZFS 加密，提供方便的恢复环境，可用于克隆先前的快照或在预启动环境中执行高级操作，并支持从任何可被现代 ZFS 驱动程序导入的池中启动。ZFSBootMenu 文档除其他内容外，还提供了几个从头开始安装 Void 系统的[步骤指南](https://docs.zfsbootmenu.org/en/latest/guides/void-linux.html)。[UEFI 指南](https://docs.zfsbootmenu.org/en/latest/guides/void-linux/single-disk-uefi.html)描述了现代系统引导 Void 系统的过程。对于传统的 BIOS 系统，[syslinux 指南](https://docs.zfsbootmenu.org/en/latest/guides/void-linux/single-disk-syslinux-mbr.html)提供了类似的说明。
 
-## Traditional bootloaders
 
-For those that wish to forego ZFSBootMenu, it is possible to bootstrap a Void
-system with another bootloader. To avoid unnecessary complexity, systems that
-use bootloaders other than ZFSBootMenu should plan to use a separate `/boot`
-that is located on an ext4 or xfs filesystem.
+## 传统引导程序
 
-### Installation media
+对于那些希望放弃 ZFSBootMenu 的人来说，可以用另一个引导程序来引导 Void 系统。为了避免不必要的复杂性，使用ZFSBootMenu 以外的引导程序的系统应该计划使用单独的 `/boot`，它位于ext4或xfs文件系统中。
 
-Installing Void to a ZFS root requires an installation medium with ZFS drivers.
-It is possible to build a custom image from the official
-[void-mklive](https://github.com/void-linux/void-mklive) repository by providing
-the command-line option `-p zfs` to the `mklive.sh` script. However, for
-`x86_64` systems, it may be more convenient to fetch a pre-built
-[hrmpf](https://github.com/leahneukirchen/hrmpf/releases) image. These images,
-maintained by a Void team member, are extensions of the standard Void live
-images that include pre-compiled ZFS modules in addition to other useful tools.
+### 安装媒介
 
-### Partition disks
+把 Void 安装到 ZFS 根目录下需要一个带有 ZFS 驱动的安装介质。可以从官方构建自定义镜像 [void-mklive](https://github.com/void-linux/void-mklive) 提供命令行选项 `-p zfs` 到 `mklive.sh` 脚本。对于 `x86_64` 系统来说，获取一个预先构建的 [hrmpf](https://github.com/leahneukirchen/hrmpf/releases) 镜像可能更方便。这些镜像由 Void 团队成员维护，是标准 Void Live 镜像的扩展，包括预编译的ZFS模块和其他有用的工具。
+
+### 磁盘分区
 
 After booting a live image with ZFS support, [partition your
 disks](../live-images/partitions.md). The considerations in the partitioning
