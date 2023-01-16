@@ -4,7 +4,7 @@
 
 ## ZFSBootMenu
 
-尽管它可以启动（并且可以在上面运行）各种各样的发行版，但 ZFSBootMenu 官方认为 Void 是一等的发行版。ZFSBootMenu 支持原生的 ZFS 加密，提供方便的恢复环境，可用于克隆先前的快照或在预启动环境中执行高级操作，并支持从任何可被现代 ZFS 驱动程序导入的池中启动。ZFSBootMenu 文档除其他内容外，还提供了几个从头开始安装 Void 系统的[步骤指南](https://docs.zfsbootmenu.org/en/latest/guides/void-linux.html)。[UEFI 指南](https://docs.zfsbootmenu.org/en/latest/guides/void-linux/single-disk-uefi.html)描述了现代系统引导 Void 系统的过程。对于传统的 BIOS 系统，[syslinux 指南](https://docs.zfsbootmenu.org/en/latest/guides/void-linux/single-disk-syslinux-mbr.html)提供了类似的说明。
+尽管它可以启动（并且可以在上面运行）各种各样的发行版，但 ZFSBootMenu 官方认为 Void 是一等的发行版。ZFSBootMenu 支持原生的 ZFS 加密，提供方便的恢复环境，可用于克隆先前的快照或在预启动环境中执行高级操作，并支持从任何可被现代 ZFS 驱动程序导入的池中启动。ZFSBootMenu 文档除其他内容外，还提供了几个从头开始安装 Void 系统的[步骤指南](https://docs.zfsbootmenu.org/en/latest/guides/void-linux.html)。[UEFI 指南](https://docs.zfsbootmenu.org/en/latest/guides/void-linux/uefi.html)描述了现代系统引导 Void 系统的过程。对于传统的 BIOS 系统，[syslinux 指南](https://docs.zfsbootmenu.org/en/latest/guides/void-linux/syslinux-mbr.html)提供了类似的说明。
 
 
 ## 传统引导程序
