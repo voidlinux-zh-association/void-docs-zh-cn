@@ -1,10 +1,3 @@
-# Contributing To void-docs
+# 为 void-docs 做贡献
 
-The sources for this handbook are hosted in the
-[void-docs](https://github.com/void-linux/void-docs) repository on
-[GitHub](https://github.com). If you would like to make a contribution, please
-read about [the purpose of the Handbook](../../about/about-this-handbook.md),
-follow our [style
-guide](https://github.com/void-linux/void-docs/blob/master/CONTRIBUTING.md#style-guide)
-and [submit a pull
-request](https://github.com/void-linux/void-docs/blob/master/CONTRIBUTING.md#submitting-changes).
+本手册的源代码托管在 GitHub 上的 [void-docs](https://github.com/void-linux/void-docs) 仓库。如果你想做出贡献，请阅读[本手册的目的](../../about/about-this-handbook.md)，遵循我们的[风格指南](https://github.com/void-linux/void-docs/blob/master/CONTRIBUTING.md#style-guide)，并[提交一个拉动请求](https://github.com/void-linux/void-docs/blob/master/CONTRIBUTING.md#submitting-changes)。
