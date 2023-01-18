@@ -1,37 +1,22 @@
-# Contributing
+# 贡献
 
-There's more to running a distribution than just writing code.
+运行一个发行版，不仅仅是写代码。
 
-To contribute to the Void packages repository, start by reading the
-[CONTRIBUTING](https://github.com/void-linux/void-packages/blob/master/CONTRIBUTING.md)
-document in the void-packages GitHub repository.
+要为Void软件包库做贡献，首先要阅读 void-packages GitHub 仓库中的 [CONTRIBUTING](https://github.com/void-linux/void-packages/blob/master/CONTRIBUTING.md) 文档。
 
-To contribute to this Handbook, read
-[CONTRIBUTING](https://github.com/void-linux/void-docs/blob/master/CONTRIBUTING.md)
-in the void-docs repository.
+要为本手册做出贡献，请阅读 void-docs 仓库中的 [CONTRIBUTING](https://github.com/void-linux/void-docs/blob/master/CONTRIBUTING.md)。
 
-If you have any questions, feel free to ask them via IRC in #voidlinux on
-irc.libera.chat, or in [the voidlinux
-subreddit](https://reddit.com/r/voidlinux).
+如果你有任何问题，欢迎通过 IRC 在 irc.libera.chat 的 #voidlinux 中提问，或者在 [the voidlinux subreddit](https://reddit.com/r/voidlinux) 中提问。
 
-## Usage Statistics
+## 使用情况统计
 
-If you would like to contribute usage reports, the
-[PopCorn](https://github.com/the-maldridge/popcorn) program reports installation
-statistics back to the Void project. These statistics are purely opt-in -
-PopCorn is *not* installed or enabled by default on any Void systems.
-Additionally, PopCorn requires that port 8001 not be blocked on your system.
+如果你想提供使用报告，[PopCorn](https://github.com/the-maldridge/popcorn)  程序会向 Void 项目报告安装统计数据。这些统计数据是 opt-in --PopCorn 在任何 Void 系统上都*没有*安装或默认启用。此外， PopCorn 要求在您的系统上不封锁 8001 端口。
 
-*PopCorn* only reports which packages are installed, their version, and the host
-CPU architecture (the output of `xuname`). This does not report which services
-are enabled, or any other personal information. Individual systems are tracked
-persistently by a random (client-generated) UUID, to ensure that each system is
-only counted once in each 24-hour sampling period.
+*PopCorn* 只报告哪些软件包被安装，它们的版本，以及主机 CPU 架构（`xuname` 的输出）。这并不报告哪些服务被启用，或任何其他个人信息。单个系统通过一个随机的（客户生成的）UUID 被持续跟踪，以确保每个系统在每个 24 小时的采样期只被计算一次。
 
-The data collected by *PopCorn* is available to view at
+收集的数据 *PopCorn* 可在以下位置查看
 <http://popcorn.voidlinux.org>
 
-### Setting up PopCorn
+### 设置 PopCorn
 
-First, install the `PopCorn` package. Then, enable the `popcorn` service, which
-will attempt to report statistics once per day.
+首先，安装 `PopCorn` 软件包。然后，启用 `popcorn` 服务，它将尝试每天报告一次统计数据。
