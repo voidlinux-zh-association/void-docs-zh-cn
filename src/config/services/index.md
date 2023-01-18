@@ -56,20 +56,17 @@ Void 使用 [runit(8)](https://man.voidlinux.org/runit.8) 监督组件来运行�
 - `default` 是运行系统的默认 runsvdir，除非[由内核命令行指定
    (#引导不同的 runsvdir)。
 
-Additional runsvdirs can be created in `/etc/runit/runsvdir/`.
+可以在 `/etc/runit/runsvdir/` 中创建额外的 runsvdirs.
 
-See [runsvdir(8)](https://man.voidlinux.org/runsvdir.8) and
-[runsvchdir(8)](https://man.voidlinux.org/runsvchdir.8) for further information.
+参见 [runsvdir(8)](https://man.voidlinux.org/runsvdir.8) 和 [runsvchdir(8)](https://man.voidlinux.org/runsvchdir.8) 以获得更多信息。 
 
-#### Booting A Different runsvdir
+#### 引导不同的 runsvdir
 
-To boot a runsvdir other than `default`, the name of the desired runsvdir can be
-added to the [kernel command-line](../kernel.md#cmdline). As an example, adding
-`single` to the kernel command line will boot the `single` runsvdir.
+要启动 `default` 以外的 runsvdir，可以在[内核 comand-line]((../kernel.md#cmdline))中加入所需的 runsvdir 的名称。作为一个例子，在内核命令行中加入 `single` 将启动 `single runsvdir`。
 
 ### 基本用法
 
-To start, stop, restart or get the status of a service:
+启动、停止、重启和获取一个服务的状态。
 
 ```
 # sv up <services>
@@ -78,64 +75,56 @@ To start, stop, restart or get the status of a service:
 # sv status <services>
 ```
 
-The `<services>` placeholder can be:
+`<services>` 占位符可以是:
 
-- Service names (service directory names) inside the `/var/service/` directory.
-- The full paths to the services.
+- `/var/service/` 目录内的服务名称（服务目录名称）。
+- 服务的完整路径。
 
-For example, the following commands show the status of a specific service and of
-all enabled services:
+例如，下面的命令显示了一个特定服务和所有启用的服务的状态:
 
 ```
 # sv status dhcpcd
 # sv status /var/service/*
 ```
 
-See [sv(8)](https://man.voidlinux.org/sv.8) for further information.
+有关详细信息，请参阅 [sv(8)](https://man.voidlinux.org/sv.8) 
 
 #### 启用服务
 
-Void Linux provides service directories for most daemons in `/etc/sv/`.
+Void Linux 在 `/etc/sv/` 中为大多数守护程序提供了服务目录。
 
-To enable a service on a booted system, create a symlink to the service
-directory in `/var/service/`:
+要在一个已启动的系统上启用一个服务，在 `/var/service/` 中创建一个服务目录的符号链接:
 
 ```
 # ln -s /etc/sv/<service> /var/service/
 ```
 
-If the system is not currently running, the service can be linked directly into
-the `default` [runsvdir](#runsvdirs):
+如果系统目前没有运行，服务可以直接链接到 `default` 的 [runsvdir](#runsvdirs):
 
 ```
 # ln -s /etc/sv/<service> /etc/runit/runsvdir/default/
 ```
 
-This will automatically start the service. Once a service is linked it will
-always start on boot and restart if it stops, unless administratively downed.
+这将自动启动该服务。一旦一个服务被链接，它将总是在启动时启动，并在停止时重新启动，除非被管理员关闭。
 
-To prevent a service from starting at boot while allowing runit to manage it,
-create a file named `down` in its service directory:
+为了防止一个服务在启动时启动，同时允许 runit 管理它，在其服务目录下创建一个名为 `down` 的文件:
 
 ```
 # touch /etc/sv/<service>/down
 ```
 
-The `down` file mechanism also makes it possible to disable services that are
-enabled by default, such as the [agetty(8)](https://man.voidlinux.org/agetty.8)
-services for ttys 1 to 6. This way, package updates which affect these services
-(in this case, the `runit-void` package) won't re-enable them.
+`down` 文件机制也使得禁用默认启用的服务成为可能，例如用于 ttys 1 到 6 的 [agetty(8)](https://man.voidlinux.org/agetty.8) 服务。这样，影响这些服务的软件包更新（在这种情况下，`runit-void` 软件包）就不会重新启用它们。
+
 
 #### 禁用服务
 
-To disable a service, remove the symlink from the running runsvdir:
+要禁用一个服务，从正在运行的 runsvdir 中删除符号链接:
 
 ```
 # rm /var/service/<service>
 ```
 
-Or, for example, from the `default` runsvdir, if either the specific runsvdir,
-or the system, is not currently running:
+或者，例如，从 `default` 的runsvdir，如果特定的 runsvdir 或系统目前没有运行:
 
 ```
 # rm /etc/runit/runsvdir/default/<service>
@@ -143,8 +132,7 @@ or the system, is not currently running:
 
 #### 测试服务
 
-To check if a service is working correctly when started by the service
-supervisor, run it once before fully enabling it:
+要检查一个服务在被服务监督员启动时是否正常工作，在完全启用它之前运行一次:
 
 ```
 # touch /etc/sv/<service>/down
@@ -152,4 +140,4 @@ supervisor, run it once before fully enabling it:
 # sv once <service>
 ```
 
-If everything works, remove the `down` file to enable the service.
+如果一切正常，删除 `down` 文件以启用服务。
