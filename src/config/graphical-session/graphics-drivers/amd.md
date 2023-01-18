@@ -12,13 +12,6 @@ AMD GPU支持需要 `linux-firmware-amd` 软件包。如果你已经安装了 `l
 
 ## Xorg
 
-Installing the `xorg` meta-package will pull in both `xf86-video-amdgpu` and,
-for older hardware, `xf86-video-ati`. If you install `xorg-minimal`, choose one
-of these Xorg driver packages to match your hardware. The `amdgpu` driver should
-support cards built on AMD's "Graphics Core Next 1.2" architecture, introduced
-circa 2012.
-
-
 安装 `xorg` 元包将安装`xf86-video-amdgpu` ，对于较旧的硬件，安装 `xf86-video-ati`。如果你安装了 `xorg-minimal` ，选择这些Xorg驱动包中的一个来匹配你的硬件。`amdgpu` 驱动应该支持AMD的 "Graphics Core Next 1.2 "架构的显卡，大约在2012年推出。
 
 ## 视频加速
