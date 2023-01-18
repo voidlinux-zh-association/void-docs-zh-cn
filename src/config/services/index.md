@@ -28,45 +28,33 @@ Void 使用 [runit(8)](https://man.voidlinux.org/runit.8) 监督组件来运行�
 - 一个 `conf` 文件；它可以包含环境变量，并在 `run` 被引用。
 - 一个名为的目录 `log`; pipe 将从 `run` 服务目录中的进程到输入的 `run` 过程中 `log` 目录。 
 
-When a new service is created, a `supervise` folder will be automatically
-created on the first run.
-
 当一个新的服务被创建时，在第一次运行时将会自动创建一个 `supervise` 文件夹。
 
 ### 配置服务
 
-Most services can take configuration options set by a `conf` file in the service
-directory. This allows service customization without modifying the service
-directory provided by the relevant package.
+大多数服务可以接受由服务目录中的 `conf` 文件设置的配置选项。这允许在不修改相关软件包提供的服务目录的情况下对服务进行定制。
 
-Check the service file for how to pass configuration parameters. A few services
-have a field like `OPTS="--value ..."` in their `conf` file.
+检查服务文件以了解如何传递配置参数。少数服务在其 `conf` 文件中有一个 `OPTS="--value ..."` 这样的字段。
 
-To make more complex customizations, you should [edit the
-service](#editing-services).
+要进行更复杂的定制，你应该[编辑该服务](#编辑服务)。
 
-### Editing Services
+### 编辑服务
 
-To edit a service, first copy its service directory to a different directory
-name. Otherwise, [xbps-install(1)](https://man.voidlinux.org/xbps-install.1) can
-overwrite the service directory. Then, edit the new service file as needed.
-Finally, the old service should be stopped and disabled, and the new one should
-be started.
+要编辑一个服务，首先要将其服务目录复制到一个不同的目录名下。否则， [xbps-install(1)](https://man.voidlinux.org/xbps-install.1) 会覆盖服务目录。然后，根据需要编辑新的服务文件。最后，旧的服务应该被停止和禁用，而新的服务应该被启动。
 
-## Managing Services
+## 管理服务
 
 ### Runsvdirs
 
-A **runsvdir** is a directory in `/etc/runit/runsvdir` containing enabled
-services in the form of symlinks to service directories. On a running system,
-the current runsvdir is accessible via the `/var/service` symlink.
+**runsvdir** 是 `/etc/runit/runsvdir` 中的一个目录，它包含了以服务目录符号链接形式出现的启用的服务。在一个运行中的系统中，当前的 runsvdir 可以通过 `/var/service` 符号链接访问。
 
-The `runit-void` package comes with two runsvdirs, `single` and `default`:
+`runit-void` 软件包带有两个 `runtvdirs` ，`single`和 `default`:
 
-- `single` just runs [sulogin(8)](https://man.voidlinux.org/sulogin.8) and the
-   necessary steps to rescue your system.
-- `default` is the default runsvdir on a running system, unless [specified
-   otherwise by the kernel command line](#booting-a-different-runsvdir).
+- `single` 只是运行 [sulogin(8)](https://man.voidlinux.org/sulogin.8)和 the
+   necessary steps to rescue your system. 
+   
+- `default` 是运行系统的默认 runsvdir，除非[由内核命令行指定
+   (#引导不同的 runsvdir)。
 
 Additional runsvdirs can be created in `/etc/runit/runsvdir/`.
 
@@ -79,7 +67,7 @@ To boot a runsvdir other than `default`, the name of the desired runsvdir can be
 added to the [kernel command-line](../kernel.md#cmdline). As an example, adding
 `single` to the kernel command line will boot the `single` runsvdir.
 
-### Basic Usage
+### 基本用法
 
 To start, stop, restart or get the status of a service:
 
@@ -105,7 +93,7 @@ all enabled services:
 
 See [sv(8)](https://man.voidlinux.org/sv.8) for further information.
 
-#### Enabling Services
+#### 启用服务
 
 Void Linux provides service directories for most daemons in `/etc/sv/`.
 
@@ -138,7 +126,7 @@ enabled by default, such as the [agetty(8)](https://man.voidlinux.org/agetty.8)
 services for ttys 1 to 6. This way, package updates which affect these services
 (in this case, the `runit-void` package) won't re-enable them.
 
-#### Disabling Services
+#### 禁用服务
 
 To disable a service, remove the symlink from the running runsvdir:
 
@@ -153,7 +141,7 @@ or the system, is not currently running:
 # rm /etc/runit/runsvdir/default/<service>
 ```
 
-#### Testing Services
+#### 测试服务
 
 To check if a service is working correctly when started by the service
 supervisor, run it once before fully enabling it:
