@@ -1,60 +1,40 @@
 # ARM 设备
 
-Void Linux provides packages and images for several ARM devices. Installing Void
-on such devices can be done in several ways:
+Void Linux 为几种 ARM 设备提供了软件包和镜像。在这些设备上安装 Void 可以通过几种方式进行：
 
-- [Pre-built images](#pre-built-images): images that can be flashed directly
-   onto an SD card or other storage medium, but which give you a limited
-   partition layout, and require manual expansion if you wish to increase the
-   size of the partitions;
-- [Tarball installation](#tarball-installation): PLATFORMFS and ROOTFS tarballs
-   that can be extracted to a previously prepared partition scheme; and
-- [Chroot installation](#chroot-installation): follows most of the steps
-   outlined in [the chroot guide](../chroot.md).
+- [预构建的镜像](预构建的镜像): 可以直接在 SD 卡或其他存储介质上刷镜像，但它给你的分区布局有限，如果你想增加分区的大小，需要手动扩展。
+   
+- [Tarball 安装](#tarball-安装): PLATFORMFS 和 ROOTFS tarballs，可以提取到先前准备好的分区方案。
+- [Chroot 安装](#chroot-安装): 遵循 [chroot 指南](https://docs.voidlinux.org/installation/guides/chroot.html)中概述的大部分步骤。
 
-This guide also outlines [configuration steps](#configuration) that are mostly
-specific to such devices.
+本指南还概述了主要针对此类设备的[配置步骤](#配置)。
 
-Since most of the commands in this guide will be run on external storage, it is
-important to run [sync(1)](https://man.voidlinux.org/sync.1) before removing the
-device.
+由于本指南中的大多数命令将在外部存储上运行，因此在移除设备之前运行 [sync(1)](https://man.voidlinux.org/sync.1) 是很重要的。
 
-## Installation
+## 安装
 
-If you are installing Void Linux on one of the ARM devices covered in the
-"[Supported platforms](./platforms.md)" page, make sure to read its section
-thoroughly.
+如果你要在 "[支持的平台](./platforms.md)" 页面中所涉及的 ARM 设备上安装 Void Linux，请确保彻底阅读其部分。
 
-### Pre-built images
+### 预构建的镜像
 
-After [downloading and verifying](../../index.md#downloading-installation-media)
-an image, it can be written to the relevant media with
-[cat(1)](https://man.voidlinux.org/cat.1),
-[pv(1)](https://man.voidlinux.org/pv.1), or
-[dd(1)](https://man.voidlinux.org/dd.1). For example, to flash it onto an SD
-card located at `/dev/mmcblk0`:
+在[下载并验证镜像](../../index.md)后，可以用 [cat(1)](https://man.voidlinux.org/cat.1) 、[pv(1)](https://man.voidlinux.org/pv.1) 或 [dd(1)](https://man.voidlinux.org/dd.1) 将其写入相关的媒体。例如，将其闪存到位于 `/dev/mmcblk0` 的SD卡上。
 
 ```
 # dd if=<image>.img of=/dev/mmcblk0 bs=4M status=progress
 ```
 
-### Custom partition layout
+### 自定义分区布置
 
-Customizing an installation - for example, with a custom partition layout -
-requires a more involved process. Two available options are:
+定制安装 -- 例如，定制分区布局 -- 需要一个更复杂的过程。两个可用的选项是：
 
-- [Tarball installation](#tarball-installation); and
-- [Chroot installation](#chroot-installation).
+- [Tarball 安装](#tarball-安装); 和
+- [Chroot 安装](#chroot-安装).
 
-To prepare the storage for these installation methods, it is necessary to
-partition the storage medium and then mount the partitions at the correct mount
-points.
+要为这些安装方法准备存储，需要对存储介质进行分区，然后将分区挂载到正确的挂载点。
 
-The usual partitioning scheme for ARM devices requires at least two partitions,
-on a drive formatted with an MS-DOS partition table:
+ARM 设备的常用分区方案需要至少两个分区，在使用 MS-DOS 分区表格式化的驱动器上：
 
-- one formatted as FAT32 with partition type `0c`, which will be mounted on
-   `/boot`;
+- 一个格式化为 `FAT32`，分区类型为 `0c`，将挂载在 `/boot`；
 - one that can be formatted as any file system that Linux can boot from, such as
    ext4, which will be mounted on `/`. If you're using an SD card, you can
    create the ext4 file system with the `^has_journal` option - this disables
@@ -75,7 +55,7 @@ below, replacing the device names with the appropriate ones for your setup:
 # mount /dev/mmcblk0p1 /mnt/boot
 ```
 
-#### Tarball installation
+#### Tarball 安装
 
 First, [download and verify](../../index.md#downloading-installation-media) a
 PLATFORMFS or ROOTFS tarball for your desired platform and [prepare your storage
@@ -86,7 +66,7 @@ using [tar(1)](https://man.voidlinux.org/tar.1):
 # tar xvfp <image>.tar.xz -C /mnt
 ```
 
-#### Chroot installation
+#### Chroot 安装
 
 It is also possible to perform a chroot installation, which can require the
 `qemu-user-static` package together with either the `binfmt-support` or `proot`
@@ -110,7 +90,7 @@ devices, and with `aarch64` for aarch64 devices:
 # proot -q qemu-<platform>-static -r /mnt -w /
 ```
 
-## Configuration
+## 配置
 
 Some additional configuration steps need to be followed to guarantee a working
 system. Configuring a [graphical
@@ -134,7 +114,7 @@ appropriate device path.
 /dev/mmcblk0p1 /boot vfat defaults 0 0
 ```
 
-### System time
+### 系统时间
 
 Several of the ARM devices supported by Void Linux don't have battery powered
 real time clocks (RTCs), which means they won't keep track of time once powered
@@ -163,7 +143,7 @@ chrony:x:997
 In order to fix this, it is necessary to reconfigure the `chrony` package using
 [xbps-reconfigure(1)](https://man.voidlinux.org/xbps-reconfigure).
 
-### Graphical session
+### 图形 session
 
 The `xf86-video-fbturbo` package ships a modified version of the [DDX Xorg
 driver](../../../config/graphical-session/xorg.md#ddx) found in the
