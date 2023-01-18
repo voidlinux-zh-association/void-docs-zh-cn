@@ -11,10 +11,7 @@ Void 附带了一些用于多种服务的默认配置文件，例如 `dhcpcd` �
 
 要完成第二步请看 [如何更改内核 cmdline](./../kernel.md#cmdline).
 
-The `APPARMOR` variable in `/etc/default/apparmor` controls how profiles will be
-loaded at boot, the value is set to `complain` by default and corresponds to
-AppArmor modes (`disable`, `complain`, `enforce`).
 
-`/etc/default/apparmor` 中的 `APPARMOR` 变量控制启动时如何加载配置文件，该值默认设置为 `complain` ，对应于 AppArmor模式（`disable`, `complain`, `enforce`）。
+`/etc/default/apparmor` 中的 `APPARMOR` 变量控制启动时如何加载配置文件，该值默认设置为 `complain` ，对应于 AppArmor 模式（`disable`, `complain`, `enforce`）。
 
 AppArmor 工具 [aa-genprof(8)](https://man.voidlinux.org/aa-genprof.8) 和 [aa-logprof(8)](https://man.voidlinux.org/aa-logprof.8) 需要配置 [syslog](../services/logging.md) 或运行 [auditd(8)](https://man.voidlinux.org/auditd.8) 服务。
