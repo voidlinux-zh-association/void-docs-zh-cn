@@ -1,75 +1,54 @@
-# Printing
+# 打印
 
-CUPS (Common Unix Printing System) is the supported mechanism for connecting to
-printers on Void Linux.
+CUPS（Common Unix Printing System）是 Void Linux 上支持的连接到打印机的机制。
 
-As prerequisites, install the `cups` package and enable the `cupsd` service.
-Wait until the service is marked available.
+作为先决条件，安装 `cups` 软件包并启用 `cupsd` 服务。等到该服务被标记为可用。
 
-## Installing Printing Drivers
+## 安装打印机驱动程序
 
-If the printer is being accessed over the network and supports PostScript or
-PCL, CUPS alone should be sufficient. However, additional driver packages are
-necessary for local printer support. The `cups-filters` package provides driver
-support for CUPS.
+如果打印机是通过网络访问的，并且支持 PostScript 或 PCL，仅 CUPS 就足够了。然而，额外的驱动包对于本地打印机的支持是必要的。`cups-filters` 软件包为CUPS提供驱动支持。
 
-Depending on the hardware in question, additional drivers may be necessary.
+根据有关硬件的情况，可能需要额外的驱动程序。
 
-Some CUPS drivers contain proprietary or binary-only extensions. These are
-available only in the nonfree repository, and sometimes only for specific
-architectures.
+一些 CUPS 驱动包含专有的或仅有的二进制扩展。这些只在非免费软件库中提供，有时只针对特定的架构。
 
-### Driverless printing
+### 无驱动打印
 
-Most modern network printers support printing driverlessly using the IPP
-Everywhere standard. See <https://www.pwg.org/printers/> for a list of
-self-certified printers supporting this standard. Even if a printer is not on
-this list, there is still a high chance it is supported.
+大多数现代网络打印机都支持使用 IPP Everywhere 标准进行无驱动打印。请参阅 https://www.pwg.org/printers/ ，了解支持该标准的自我认证的打印机列表。即使某台打印机不在这个名单上，它仍有很大可能被支持。
 
-Do note that `cups-filters` is still required for driverless printing.
+请注意，无驱动打印仍然需要 `cups-filters`。
 
-### Gutenprint drivers
+### Gutenprint 驱动
 
-Gutenprint provides support for many printers. These drivers are contained in
-the `gutenprint` package.
+Gutenprint 为许多打印机提供了支持。 这些驱动程序包含在 `gutenprint` 软件包。 
 
-### HP drivers
+### HP 驱动
 
-Printers from Hewlett-Packard require the `hplip` package.
+惠普的打印机需要 `hplip` 软件包。
 
-Running the following command will guide you through the driver installation
-process. The default configuration selections it suggests are typically
-sufficient.
+运行以下命令将指导你完成驱动安装过程。它所建议的默认配置选择通常是足够的。
 
 ```
 # hp-setup -i
 ```
 
-### Brother drivers
+### Brother 驱动
 
-For Brother printer support, install the foomatic drivers, which are contained
-in the `foomatic-db` and `foomatic-db-nonfree` packages. Support for various
-laser models is provided by the `brother-brlaser` package.
+对于 Brother 打印机的支持，请安装 foomatic 驱动程序，它包含在 `foomatic-db` 和 `foomatic-db-nonfree` 软件包中。对各种激光打印机型号的支持是由 `brother-brlaser` 软件包提供的。
 
-## Configuring a New Printer
 
-CUPS provides a web interface and command line tools that can be used to
-configure printers. Additionally, various native GUI options are available and
-may be better suited, depending on the use-case.
+## 配置新打印机
 
-### Automatically
+CUPS 提供了一个 Web 界面和命令行工具，可用于配置打印机。 此外，还提供各种本机 GUI 选项，并且 可能更适合，具体取决于用例。 
 
-Printers with support for IPP Everywhere can be discovered and configured
-automatically using [ZeroConf](http://www.zeroconf.org/). To enable this,
-install the `avahi` and `nss-mdns` package and enable the `avahi-daemon`
-service.
 
-### Web interface
+### 自动地
 
-To configure the printer using the CUPS web interface, navigate to
-<http://localhost:631> in a browser. Under the "Administration" tab, select
-"Printers > Add Printer". When asked to log in, use an account that is in the
-`lpadmin` group.
+可以发现和配置支持 IPP Everywhere 的打印机 自动使用 [ZeroConf](http://www.zeroconf.org/)。 要启用此功能， 安装 `avahi` 和 `nss-mdns` 打包并启用 `avahi-daemo`n 服务。 
+
+### Web 界面
+
+要使用 CUPS 网络界面配置打印机，请在浏览器中导航到 http://localhost:63 1。在 "Administration" 标签下，选择 "Printers > Add Printer"。当被要求登录时，使用 `lpadmin` 用户组中的账户。
 
 ### Command line
 
@@ -93,11 +72,11 @@ While `system-config-printer` is shown here, your desktop environment may have a
 native printer dialog, which may be found by consulting the documentation for
 your DE.
 
-## Troubleshooting
+## 故障排除
 
-### USB printer not shown
+### 未显示 USB 打印机
 
-The device URI can be found manually by running:
+可以通过运行以下命令手动找到设备 URI： 
 
 ```
 # /usr/lib/cups/backend/usb
