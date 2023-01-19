@@ -35,19 +35,12 @@ Void Linux 为几种 ARM 设备提供了软件包和镜像。在这些设备上�
 ARM 设备的常用分区方案需要至少两个分区，在使用 MS-DOS 分区表格式化的驱动器上：
 
 - 一个格式化为 `FAT32`，分区类型为 `0c`，将挂载在 `/boot`；
-- one that can be formatted as any file system that Linux can boot from, such as
-   ext4, which will be mounted on `/`. If you're using an SD card, you can
-   create the ext4 file system with the `^has_journal` option - this disables
-   journaling, which might increase the drive's life, at the cost of a higher
-   chance of data loss.
+-  一个可以被格式化为任何 Linux 可以启动的文件系统，例如 ext4，它将被挂载到 `/` 。如果你使用的是 SD 卡，你可以用 `^has_journal` 选项创建 ext4 文件系统 - 这可以禁用日志，这可能会增加硬盘的寿命，但代价是数据丢失的可能性更高。
 
-There are a variety of tools available for partitioning, e.g.
+有各种各样的工具可用于分区，比如
 [cfdisk(8)](https://man.voidlinux.org/cfdisk.8).
 
-To access the newly created file systems, it is necessary to mount them. This
-guide will assume that the second partition will be mounted on `/mnt`, but you
-may mount it elsewhere. To mount these filesystems, you can use the commands
-below, replacing the device names with the appropriate ones for your setup:
+为了访问新创建的文件系统，有必要对其进行挂载。本指南假定第二个分区将被挂载在 `/mnt` 上，但你也可以把它挂载在其他地方。要挂载这些文件系统，你可以使用下面的命令，将设备名称替换为适合你的设置的名称:
 
 ```
 # mount /dev/mmcblk0p2 /mnt
@@ -57,10 +50,7 @@ below, replacing the device names with the appropriate ones for your setup:
 
 #### Tarball 安装
 
-First, [download and verify](../../index.md#downloading-installation-media) a
-PLATFORMFS or ROOTFS tarball for your desired platform and [prepare your storage
-medium](#custom-partition-layout). Then, unpack the tarball onto the file system
-using [tar(1)](https://man.voidlinux.org/tar.1):
+首先，为你想要的平台[下载并验证](../../index.md) PLATFORMFS 或 ROOTFS tarball，并准备好你的存储介质。然后，使用 [tar(1)](https://man.voidlinux.org/tar.1) 将 tarball 解压到文件系统中：
 
 ```
 # tar xvfp <image>.tar.xz -C /mnt
@@ -68,23 +58,12 @@ using [tar(1)](https://man.voidlinux.org/tar.1):
 
 #### Chroot 安装
 
-It is also possible to perform a chroot installation, which can require the
-`qemu-user-static` package together with either the `binfmt-support` or `proot`
-package if a computer with an incompatible architecture (such as i686) is being
-used. This guide explains how to use the `qemu-<platform>-static` program from
-`qemu-user-static` with [proot(1)](https://man.voidlinux.org/proot.1).
+也可以进行 chroot 安装，如果使用的是不兼容的架构（如 i686）的计算机，这可能需要 `qemu-user-static` 软件包与 `binfmt-support` 或 `proot` 软件包一起进行。本指南解释了如何使用 `qemu-<platform>-static` 程序和[proot(1)](https://man.voidlinux.org/proot.1) 的 `qemu-user-static`。
 
-First, [prepare your storage medium](#custom-partition-layout). Then, follow
-either the [XBPS chroot installation](../chroot.md#the-xbps-method) or the
-[ROOTFS chroot installation](../chroot.md#the-rootfs-method) steps, using the
-appropriate architecture and base packages, some of which are listed in the
-"[Supported Platforms](./platforms.md)" section.
+首先，准备好你的存储介质。然后，按照 XBPS chroot 安装或 ROOTFS chroot 安装步骤，使用适当的架构和基础包，其中一些在 "[支持的平台](./platforms.md)" 部分列出。
 
-Finally, follow the [chroot configuration steps](../chroot.md#configuration)
-steps, but instead of using the [chroot(1)](https://man.voidlinux.org/chroot.1)
-command to [enter the chroot](../chroot.md#entering-the-chroot), use the
-following command, replacing `<platform>` with `arm` for armv6l and armv7l
-devices, and with `aarch64` for aarch64 devices:
+最后，按照 [chroot 配置步骤](../chroot.md#配置)进行操作，但不要使用 [chroot(1)](https://man.voidlinux.org/chroot.1) 命令[进入 chroot](../chroot.md#进入-chroot)，而是使用下面的命令，对于 armv6l 和 armv7l 设备，将 `<platform>` 替换为 `arm` ，对于 aarch64 设备，替换为`aarch64`。
+   
 
 ```
 # proot -q qemu-<platform>-static -r /mnt -w /
