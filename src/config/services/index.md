@@ -62,7 +62,7 @@ Void 使用 [runit(8)](https://man.voidlinux.org/runit.8) 监督组件来运行�
 
 #### 引导不同的 runsvdir
 
-要启动 `default` 以外的 runsvdir，可以在[内核 comand-line]((../kernel.md#cmdline))中加入所需的 runsvdir 的名称。作为一个例子，在内核命令行中加入 `single` 将启动 `single runsvdir`。
+要启动 `default` 以外的 runsvdir，可以在[内核 comand-line](../kernel.md#cmdline)中加入所需的 runsvdir 的名称。作为一个例子，在内核命令行中加入 `single` 将启动 `single runsvdir`。
 
 ### 基本用法
 
