@@ -1,8 +1,7 @@
-# Session and Seat Management
+# Session 和 Seat 管理
 
-Session and seat management is not necessary for every setup, but it can be used
-to safely create temporary runtime directories, provide access to hardware
-devices and multi-seat capabilities, and control system shutdown.
+Session 和 Seat 管理不是每个设置都需要的，但它可以用来安全地创建临时的运行时目录，提供对硬件设备和 multi-seat 功能的访问，并控制系统关闭。
+
 
 ## D-Bus
 
