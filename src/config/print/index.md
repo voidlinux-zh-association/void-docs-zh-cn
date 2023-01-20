@@ -52,25 +52,20 @@ CUPS 提供了一个 Web 界面和命令行工具，可用于配置打印机。 
 
 ### Command line
 
-The [lpadmin(8)](https://man.voidlinux.org/lpadmin.8) tool may be used to
-configure a printer using the command line.
+[lpadmin(8)](https://man.voidlinux.org/lpadmin.8)  工具可用于使用命令行配置打印机.
 
-### Graphical interface
+### 图形化界面
 
-The `system-config-printer` package offers simple and robust configuration of
-new printers. Install and invoke it:
+`system-config-printer` 软件包提供了简单而强大的新打印机配置。安装并调用它：
 
 ```
 # system-config-printer
 ```
 
-Normally this tool requires root privileges. However, if you are using
-PolicyKit, you can install the `cups-pk-helper` package to allow unprivileged
-users to use `system-config-printer`.
+通常情况下，这个工具需要 root 权限。然而，如果你使用 PolicyKit，你可以安装 `cups-pk-helper` 包，以允许无特权用户使用 `system-config-printer`。
 
-While `system-config-printer` is shown here, your desktop environment may have a
-native printer dialog, which may be found by consulting the documentation for
-your DE.
+虽然这里显示的是 `system-config-printer`，但你的桌面环境可能有一个本地的打印机对话框，可以通过查阅你的桌面环境的文档找到。
+
 
 ## 故障排除
 
@@ -81,3 +76,4 @@ your DE.
 ```
 # /usr/lib/cups/backend/usb
 ```
+
