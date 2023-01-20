@@ -2,53 +2,33 @@
 
 ## 树莓派
 
-The `rpi-kernel` packages for all Raspberry Pi variants are built from the
-Raspberry Pi Foundation's kernel tree, which should enable all special
-functionality that isn't available with mainline kernels. The RPi kernel
-packages also have their own header packages, `rpi-kernel-headers`. These
-packages should be installed if you want to use any DKMS packages. Void ships
-`rpi-base` meta-packages that install the relevant `rpi-kernel` and
-`rpi-firmware` packages. Together, these packages enable Wi-Fi and Bluetooth
-functionality.
+所有 Raspberry Pi 变种的 `rpi-kernel` 包都是由 Raspberry Pi 基金会的内核树构建的，它应该可以实现所有主线内核所没有的特殊功能。RPi 内核包也有自己的头文件包，`rpi-kernel-headers` 。如果你想使用任何 DKMS 包，就应该安装这些包。Void 提供的 `rpi-base` 元包可以安装相关的 `rpi-kernel` 和 `rpi-firmware` 包。这些包一起实现了 Wi-Fi 和蓝牙功能。
 
-The [command line](../../../config/kernel.md#cmdline) parameters passed to the
-kernel are in the `rootfs/boot/cmdline.txt` file. Some of the relevant
-parameters are documented in the [official
-documentation](https://www.raspberrypi.org/documentation/configuration/cmdline-txt.md).
+传递给内核的 [command line](../../../config/kernel.md#cmdline) 参数在 `rootfs/boot/cmdline.txt` 文件中。一些相关的参数在[官方文档](https://www.raspberrypi.org/documentation/configuration/cmdline-txt.md)中有所记载。
 
-### Supported Models
 
-| Model                                       | Architecture |
+### 支持的机型
+
+| 机型                                         |  架构         |
 |---------------------------------------------|--------------|
 | 1 A, 1 B, 1 A+, 1 B+, Zero, Zero W, Zero WH | armv6l       |
 | 2 B                                         | armv7l       |
 | 3 B, 3 A+, 3 B+, Zero 2W, 4 B, 400          | aarch64      |
 
-> It is possible to run the armv7l images on an RPi 3, as the RPi 3's CPU
-> supports both the Armv8 and Armv7 instruction sets. The difference between
-> these images is that the armv7l image provides a 32-bit system while the
-> aarch64 image provides a 64-bit system.
+> 可以在 RPi 3 上运行 armv7l 图像，因为 RPi 3 的 CPU 同时支持 Armv8 和 Armv7 指令集。这些图像的区别在于，armv7l 图像提供了一个32位系统，而 arch64 图像提供了一个 64 位系统。
 
-### Enabling hardware RNG device
+### 启用硬件 RNG 设备
 
-By default, the
-[HWRNG](https://en.wikipedia.org/wiki/Hardware_random_number_generator) device
-is not used by the system, which may result in the random devices taking long to
-seed on boot. This can be annoying if you want to start `sshd` and expect to be
-able to connect immediately.
+默认情况下，[HWRNG](https://en.wikipedia.org/wiki/Hardware_random_number_generator) 设备不被系统使用，which may result in the random devices taking long to seed on boot。如果你想启动 sshd 并期望能够立即连接，这可能会很烦人。
 
-In order to fix this, install the `rng-tools` package and
-[enable](../../../config/services/index.md#enabling-services) the `rngd`
-service, which uses the `/dev/hwrng` device to seed `/dev/random`.
+为了解决这个问题，请安装 `rng-tools` 软件包，并[启用](../../../config/services/index.md#enabling-services) `rngd` 服务，它使用 `/dev/hwrng` 设备作为 `/dev/random` 的 seed。
 
-### Graphical session
+### 图形 session
 
-The `mesa-dri` package contains drivers for all the Raspberry Pi variants, and
-can be used with the [modesetting Xorg
-driver](../../../config/graphical-session/xorg.md#modesetting) or
-[Wayland](../../../config/graphical-session/wayland.md).
+`mesa-dri` 软件包包含了所有 Raspberry Pi 变种的驱动，可以与 [modesetting Xorg
+driver](../../../config/graphical-session/xorg.md#modesetting) 驱动或 [Wayland](../../../config/graphical-session/wayland.md) 一起使用。
 
-### Hardware
+### 硬件
 
 More configuration information can be found in the Raspberry Pi Foundation's
 [official
@@ -56,7 +36,7 @@ documentation](https://www.raspberrypi.org/documentation/configuration/). The
 `raspi-config` utility isn't available for Void Linux, so editing the
 `/boot/config.txt` file is usually required.
 
-#### Audio
+#### 声音
 
 To enable the soundchip, add `dtparam=audio=on` to `/boot/config.txt`.
 
