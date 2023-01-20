@@ -22,41 +22,25 @@
 
 ### 网络配置
 
-Network configuration, including examples, is documented in
-[iwd.network(5)](https://man.voidlinux.org/iwd.network.5). IWD stores
-information on known networks, and reads information on pre-provisioned networks
-from network configuration files located in `/var/lib/iwd`; IWD monitors the
-directory for changes. Network configuration filenames consist of the encoding
-of the SSID followed by `.open`, `.psk`, or `.8021x` as determined by the
-security type.
+网络配置，包括例子，在 [iwd.network(5)](https://man.voidlinux.org/iwd.network.5) 中有记载。IWD 存储已知网络的信息，并从位于 `/var/lib/iwd` 的网络配置文件中读取预置网络的信息；IWD 监控该目录的变化。网络配置文件由 SSID 的编码组成，后面是`.open` 、`.psk` 或 `.8021x` ，由安全类型决定。
 
-As an example, a basic configuration file for a WPA2/PSK secured network would
-be called `<ssid>.psk`, and it would contain the plain text password:
+作为一个例子，一个 WPA2/PSK 安全网络的基本配置文件将被称为 `<ssid>.psk`，它将包含纯文本密码:
 
 ```
 [Security]
 Passphrase=<password>
 ```
 
-## Troubleshooting
+## 故障排除
 
-By default, IWD will create and destroy the wireless interfaces (e.g. `wlan0`)
-that it manages. This can interfere with `udevd`, which may attempt to rename
-the interface using its rules for persistent network interface names. The
-following messages may be printed to your screen as a symptom of this
-interference:
+默认情况下，IWD 会创建和销毁它所管理的无线接口（例如 `wlan0`）。这可能会干扰 `udevd`，它可能会试图用它的持久性网络接口名称规则来重命名接口。作为这种干扰的症状，以下信息可能被打印到你的屏幕上：
 
 ```
 [   39.441723] udevd[1100]: Error changing net interface name wlan0 to wlp59s0: Device or resource busy
 [   39.442472] udevd[1100]: could not rename interface '3' from 'wlan0' to 'wlp59s0': Device or resource busy
 ```
 
-A simple fix is to prevent IWD from manipulating the network interfaces in this
-way by adding `UseDefaultInterface=true` to the `[General]` section of
-`/etc/iwd/main.conf`.
+一个简单的解决方法是在 `/etc/iwd/main.conf` 的 `[General]` 部分添加 `UseDefaultInterface=true`，以防止 IWD 以这种方式操纵网络接口。
 
-An alternative approach is to disable the use of persistent network interface
-names by `udevd`. This may be accomplished either by adding `net.ifnames=0` to
-your kernel [cmdline](../kernel.md#cmdline) or by creating a symbolic link to
-`/dev/null` at `/etc/udev/rules.d/80-net-name-slot.rules` to mask the renaming
-rule. This alternative approach will affect the naming of all network devices.
+另一种方法是禁止 `udevd` 使用持久的网络接口名称。 这可以通过在你的内核 [cmdline](../kernel.md#cmdline) 中添加 `net.ifnames=0` 或者在 `/etc/udev/rules.d/80-net-name-slot.rules` 中创建一个符号链接到 `/dev/null` 来实现，以屏蔽重命名规则。这种替代方法将影响所有网络设备的命名。
+
