@@ -30,52 +30,36 @@ driver](../../../config/graphical-session/xorg.md#modesetting) 驱动或 [Waylan
 
 ### 硬件
 
-More configuration information can be found in the Raspberry Pi Foundation's
-[official
-documentation](https://www.raspberrypi.org/documentation/configuration/). The
-`raspi-config` utility isn't available for Void Linux, so editing the
-`/boot/config.txt` file is usually required.
+更多配置信息可以在 Raspberry Pi 基金会的[官方文档](https://www.raspberrypi.org/documentation/configuration/)中找到。`raspi-config` 工具不适用于 Void Linux，所以通常需要编辑 `/boot/config.txt` 文件。
+
 
 #### 声音
 
-To enable the soundchip, add `dtparam=audio=on` to `/boot/config.txt`.
+要启用声音，请添加 `dtparam=audio=on` 到 `/boot/config.txt`. 
 
-#### Serial
+#### 串口
 
-To enable serial console logins,
-[enable](../../../config/services/index.md#enabling-services) the
-`agetty-ttyAMA0` service. See
-[securetty(5)](https://man.voidlinux.org/securetty.5) for interfaces that allow
-root login. For configuration of the serial port at startup, refer to the kernel
-command line in `/boot/cmdline.txt` - in particular, the
-`console=ttyAMA0,115200` parameter.
+要启用串口控制台登录，请[启用](../../../config/services/index.md) `agetty-ttyAMA0` 服务。关于允许 root 登录的接口，见 [securetty(5)](https://man.voidlinux.org/securetty.5)。关于启动时串口的配置，参考 `/boot/cmdline.txt` 中的内核命令行 - 特别是 `console=ttyAMA0,115200` 参数。
 
 ### I2C
 
-To enable [I2C](https://en.wikipedia.org/wiki/I%C2%B2C), add
-`device_tree_param=i2c_arm=on` to `/boot/config.txt`, and
-`bcm2708.vc_i2c_override=1` to `/boot/cmdline.txt`. Then create a
-[modules-load(8)](https://man.voidlinux.org/modules-load.8) `.conf` file with
-the following content:
+为了启用 [I2C](https://en.wikipedia.org/wiki/I%C2%B2C) ，在 `/boot/config.txt` 中加入`device_tree_param=i2c_arm=on`，在 `/boot/cmdline.txt` 中加入 `bcm2708.vc_i2c_override=1` 。然后创建一个 [modules-load(8)](https://man.voidlinux.org/modules-load.8) `.conf` 文件，内容如下:
+
 
 ```
 i2c-dev
 ```
 
-Finally, install the `i2c-tools` package and use
-[i2cdetect(8)](https://man.voidlinux.org/i2cdetect.8) to verify your
-configuration. It should show:
+最后，安装 `i2c-tools` 包并使用 [i2cdetect(8)](https://man.voidlinux.org/i2cdetect.8) 来验证你的配置。它应该显示:
 
 ```
 $ i2cdetect -l
 i2c-1i2c          bcm2835 I2C adapter                 I2C adapter
 ```
 
-### Memory cgroup
+### 内存 cgroup
 
-The kernel from the `rpi-kernel` package [disables the memory cgroup by
-default](https://github.com/raspberrypi/linux/commit/9b0efcc1ec497b2985c6aaa60cd97f0d2d96d203#diff-f1d702fa7c504a2b38b30ce6bb098744).
+`rpi-kernel` 软件包的内核[默认禁用了内存 cgroup](https://github.com/raspberrypi/linux/commit/9b0efcc1ec497b2985c6aaa60cd97f0d2d96d203#diff-f1d702fa7c504a2b38b30ce6bb098744)。
 
-This breaks workloads which use containers. Therefore, if you want to use
-containers on your Raspberry Pi, you need to enable memory cgroups by adding
-`cgroup_enable=memory` to `/boot/cmdline.txt`.
+这破坏了使用容器的工作负载。因此，如果你想在 Raspberry Pi 上使用容器，你需要在 `/boot/cmdline.txt` 中加入`cgroup_enable=memory` 来启用内存 cgroups 。
+
