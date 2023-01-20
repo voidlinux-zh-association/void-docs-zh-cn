@@ -71,23 +71,17 @@ ARM 设备的常用分区方案需要至少两个分区，在使用 MS-DOS 分�
 
 ## 配置
 
-Some additional configuration steps need to be followed to guarantee a working
-system. Configuring a [graphical
-session](../../../config/graphical-session/index.md) should work as normal.
+需要遵循一些额外的配置步骤，以保证系统的工作。配置一个[图形 session](../../../config/graphical-session/index.md)应该正常工作。
 
-### Logging in
 
-For the pre-built images and tarball installations, the `root` user password is
-`voidlinux`.
+### 登录
+
+对于预先建立的镜像和 tarball 安装，`root` 用户密码是 `voidlinux` 。
 
 ### fstab
 
-The `/boot` partition should be added to `/etc/fstab`, with an entry similar to
-the one below. It is possible to boot without that entry, but updating the
-kernel package in that situation can lead to breakage, such as being unable to
-find kernel modules, which are essential for functionality such as wireless
-connectivity. If you aren't using an SD card, replace `/dev/mmcblk0p1` with the
-appropriate device path.
+`/boot` 分区应该被添加到 `/etc/fstab` 中，并有一个类似于下面的条目。没有这个条目也可以启动，但是在这种情况下更新内核包可能会导致故障，比如无法找到内核模块，而这些模块对于无线连接等功能是必不可少的。如果你没有使用SD卡，用适当的设备路径替换 `/dev/mmcblk0p1`。
+
 
 ```
 /dev/mmcblk0p1 /boot vfat defaults 0 0
@@ -95,36 +89,19 @@ appropriate device path.
 
 ### 系统时间
 
-Several of the ARM devices supported by Void Linux don't have battery powered
-real time clocks (RTCs), which means they won't keep track of time once powered
-off. This issue can present itself as HTTPS errors when browsing the Web or
-using the package manager. It is possible to set the time manually using the
-[date(1)](https://man.voidlinux.org/date.1) utility. In order to fix this issue
-for subsequent boots, install and enable [an NTP
-client](../../../config/date-time.md#ntp). Furthermore, it is possible to
-install the `fake-hwclock` package, which provides the `fake-hwclock` service.
-[fake-hwclock(8)](https://man.voidlinux.org/fake-hwclock.8) periodically stores
-the current time in a configuration file and restores it at boot, leading to a
-better initial approximation of the current time, even without a network
-connection.
+Void Linux 支持的一些 ARM 设备没有电池供电的实时时钟（RTC），这意味着一旦断电，它们将无法跟踪时间。在浏览网页或使用软件包管理器时，这个问题可能表现为 HTTPS 错误。可以使用 [date(1)](https://man.voidlinux.org/date.1) 工具手动设置时间。为了在以后的启动中解决这个问题，请安装并启用一个 [NTP 客户端](../../../config/date-time.md#ntp)。此外，还可以安装 `fake-hwclock` 软件包，它提供了 `fake-hwclock` 服务。[fake-hwclock(8)](https://man.voidlinux.org/fake-hwclock.8) 定期在配置文件中存储当前时间，并在启动时恢复它，从而导致对当前时间更好的初始近似，即使没有网络连接。
 
-**Warning**: Images from before 2020-03-16 might have an issue where the
-installation of the `chrony` package, the default NTP daemon, is incomplete, and
-the system will be missing the `chrony` user. This can be checked in the output
-of the [getent(1)](https://man.voidlinux.org/getent.1) command, which will be
-empty if it doesn't exist:
+**警告**: 2020-03-16 之前的镜像可能有一个问题，即默认的 NTP 守护程序 `chrony` 包的安装不完整，系统将缺少`chrony` 用户。这可以从 [getent(1)](https://man.voidlinux.org/getent.1) 命令的输出中检查出来，如果它不存在，将是空的。
+
 
 ```
 $ getent group chrony
 chrony:x:997
 ```
 
-In order to fix this, it is necessary to reconfigure the `chrony` package using
+为了解决这个问题，有必要重新配置 `chrony` 包装使用 
 [xbps-reconfigure(1)](https://man.voidlinux.org/xbps-reconfigure).
 
 ### 图形 session
 
-The `xf86-video-fbturbo` package ships a modified version of the [DDX Xorg
-driver](../../../config/graphical-session/xorg.md#ddx) found in the
-`xf86-video-fbdev` package, which is optimized for ARM devices. This can be used
-for devices which lack more specific drivers.
+`xf86-video-fbturbo` 软件包提供了 `xf86-video-fbdev` 软件包中的 [DDX Xorg 驱动程序](../../../config/graphical-session/xorg.md#ddx)的修改版本，该版本针对 ARM 设备进行了优化。这可以用于那些缺乏更多特定驱动程序的设备。
