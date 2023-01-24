@@ -1,102 +1,80 @@
-# Advanced Usage
+# 高级用法
 
-## Downgrading
+## 降级
 
-XBPS allows you to downgrade a package to a specific package version.
+XBPS 允许你将一个软件包降级到一个特定的软件包版本。
 
-### Via xdowngrade
+### 通过 xdowngrade
 
-The easiest way to downgrade is to use `xdowngrade` from the `xtools` package,
-specifying the package version to which you wish to downgrade:
+最简单的降级方法是使用 `xtools` 软件包中的 `xdowngrade`，指定你想降级的软件包版本：
 
 ```
 # xdowngrade /var/cache/xbps/pkg-1.0_1.xbps
 ```
 
-### Via XBPS
+### 通过 XBPS
 
-XBPS can be used to downgrade to a package version that is no longer available
-in the repository index.
+XBPS 可用于降级到不再可用的软件包版本 在存储库索引中。
 
-If the package version had been installed previously, it will be available in
-`/var/cache/xbps/`. If not, it will need to be obtained from elsewhere; for the
-purposes of this example, it will be assumed that the package version has been
-added to `/var/cache/xbps/`.
+如果该软件包的版本以前已经安装过，它将在 `/var/cache/xbps/` 中可用。如果没有，它将需要从其他地方获得；在这个例子中，将假定软件包的版本已经被添加到 `/var/cache/xbps/`。
 
-First add the package version to your local repository:
+首先将包版本添加到本地存储库： 
 
 ```
 # xbps-rindex -a /var/cache/xbps/pkg-1.0_1.xbps
 ```
 
-Then downgrade with `xbps-install`:
+然后降级 `xbps-install`: 
 
 ```
 # xbps-install -R /var/cache/xbps/ -f pkg-1.0_1
 ```
 
-The `-f` flag is necessary to force downgrade/re-installation of an already
-installed package.
+为了强制降级/重新安装一个已经安装的软件包，`-f` 标志是必要的。
 
-## Holding packages
+## 保留当前的软件包
 
-To prevent a package from being updated during a system update, use
-[xbps-pkgdb(1)](https://man.voidlinux.org/xbps-pkgdb.1):
+要防止软件包在系统更新时被更新， 请使用 [xbps-pkgdb(1)](https://man.voidlinux.org/xbps-pkgdb.1)：
 
 ```
 # xbps-pkgdb -m hold <package>
 ```
 
-The hold can be removed with:
+可以通过以下方式删除保留： 
 
 ```
 # xbps-pkgdb -m unhold <package>
 ```
 
-## Repository-locking packages
+## 储存库锁定的软件包
 
-If you've used `xbps-src` to build and install a package from a customized
-template, or with custom build options, you may wish to prevent system updates
-from replacing that package with a non-customized version. To ensure that a
-package is only updated from the same repository used to install it, you can
-*repolock* it via [xbps-pkgdb(1)](https://man.voidlinux.org/xbps-pkgdb.1):
+如果你使用 `xbps-src` 从一个定制的模板或定制的构建选项来构建和安装一个软件包，你可能希望防止系统更新用一个非定制的版本来替换该软件包。为了确保一个软件包只从安装它的同一个仓库更新，你可以通过 [xbps-pkgdb(1)](https://man.voidlinux.org/xbps-pkgdb.1) **重新锁定**它：
 
 ```
 # xbps-pkgdb -m repolock <package>
 ```
 
-To remove the repolock:
+撤销锁定：
 
 ```
 # xbps-pkgdb -m repounlock <package>
 ```
 
-## Ignoring Packages
+## 忽略软件包
 
-Sometimes you may wish to remove a package whose functionality is being provided
-by another package, but will be unable to do so due to dependency issues. For
-example, you may wish to use [doas(1)](https://man.voidlinux.org/doas.1) instead
-of [sudo(8)](https://man.voidlinux.org/sudo.8), but will be unable to remove the
-`sudo` package due to it being a dependency of the `base-system` package. To
-remove it, you will need to *ignore* the `sudo` package.
+有时，你可能希望删除一个由另一个软件包提供功能的软件包，但由于依赖关系的问题，你将无法这样做。例如， 你可能希望使用 [doas(1)](https://man.voidlinux.org/doas.1) 而不是 [sudo(8)](https://man.voidlinux.org/sudo.8)， 但由于 `sudo` 软件包是对 `base-system` 软件包的依赖， 因此无法删除它。要删除它，你需要*忽略* `sudo` 包。
 
-To ignore a package, add an appropriate `ignorepkg` entry in an
-[xbps.d(5)](https://man.voidlinux.org/xbps.d.5) configuration file. For example:
+要忽略一个软件包， 请在 [xbps.d(5)](https://man.voidlinux.org/xbps.d.5) 配置文件中添加一个适当的 ignorepkg 项。例如:
 
 ```
 ignorepkg=sudo
 ```
 
-You will then be able to remove the `sudo` package using
-[xbps-remove(1)](https://man.voidlinux.org/xbps-remove.1).
+然后你将能够使用 [xbps-remove(1)](https://man.voidlinux.org/xbps-remove.1) 删除 `sudo` 软件包。
 
-## Virtual Packages
+## 虚拟软件包
 
-Virtual packages can be created with
-[xbps.d(5)](https://man.voidlinux.org/xbps.d.5) `virtualpkg` entries. Any
-request to the virtual package will be resolved to the real package. For
-example, to create a `linux` virtual package which will resolve to the
-`linux5.6` package, create an `xbps.d` configuration file with the contents:
+虚拟包可以通过 [xbps.d(5)](https://man.voidlinux.org/xbps.d.5) `virtualpkg` 项来创建。任何对虚拟包的请求都会被解析为真实的包。例如，要创建一个 `linux` 虚拟包，它将被解析为 `linux5.6` 包，创建一个 `xbps.d` 配置文件，其内容如下：
 
 ```
 virtualpkg=linux:linux5.6
