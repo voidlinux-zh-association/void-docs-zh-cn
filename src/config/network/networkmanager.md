@@ -1,6 +1,6 @@
 # NetworkManager
 
-[NetworkManager(8)]是一个管理以太网、Wi-Fi 和移动宽带网络连接的守护程序。安装 `NetworkManager` 软件包以获得基本的 NetworkManager 实用程序。
+[NetworkManager(8)](https://man.voidlinux.org/NetworkManager.8) 是一个管理以太网、Wi-Fi 和移动宽带网络连接的守护程序。安装 `NetworkManager` 软件包以获得基本的 NetworkManager 实用程序。
 
 ## 启动 NetworkManager
 
