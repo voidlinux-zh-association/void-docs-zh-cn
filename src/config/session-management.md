@@ -5,30 +5,18 @@ Session 和 Seat 管理不是每个设置都需要的，但它可以用来安全
 
 ## D-Bus
 
-D-Bus is an IPC (inter-process communication) mechanism used by userspace
-software in Linux. D-Bus can provide a system bus and/or a session bus, the
-latter being specific to a user session.
+D-Bus 是一种 IPC（进程间通信）机制，由 Linux 中的用户空间软件使用。D-Bus 可以提供一个 system bus 和/或 session bus ，后者是针对用户 session 的。
 
-- To provide a system bus, you should [enable](./services/index.md) the `dbus`
-   service. This might require a system reboot to work properly.
-- To provide a session bus, you can start a given program (usually a window
-   manager or interactive shell) with
-   [dbus-run-session(1)](https://man.voidlinux.org/dbus-run-session.1). Most
-   desktop environments, if launched through an adequate display manager, will
-   launch a D-Bus session themselves.
+- 要提供 system bus,你应该[启用](./services/index.md) `dbus` 服务。这可能需要重新启动系统才能正常工作。 
+- 要提供 session bus，你可以用 [dbus-run-session(1)](https://man.voidlinux.org/dbus-run-session.1) 启动一个指定的程序（通常是一个窗口管理器或交互式外壳）。大多数桌面环境，如果通过一个适当的显示管理器启动，将自己启动一个 D-Bus session。
 
-Note that some software assumes the presence of a system bus, while other
-software assumes the presence of a session bus.
+请注意，有些软件假定存在 system bus，也有其他软件则假定存在 session bus。
 
 ## elogind
 
-[elogind(8)](https://man.voidlinux.org/elogind.8) manages user logins and system
-power, as a standalone version of `systemd-logind`. elogind provides necessary
-features for most desktop environments and Wayland compositors. It can also be
-one of the mechanisms for rootless [Xorg](./graphical-session/xorg.md).
+[elogind(8)](https://man.voidlinux.org/elogind.8) 管理用户登录和系统电源，是 `systemd-logind` 的独立版本。elogind 为大多数桌面环境和 Wayland 合成器提供必要的功能。它也可以成为不用 root 的 [Xorg](./graphical-session/xorg.md)的机制之一。
 
-Please read the "[Power Management](./power-management.md)" section for things
-to consider before installing elogind.
+请阅读 "[电源管理](./power-management.md)" 部分，了解安装 elogind 前需要考虑的事项。
 
 To make use of its features, install the `elogind` package and make sure the
 [system D-Bus](#d-bus) is enabled. You might need to log out and in again.
