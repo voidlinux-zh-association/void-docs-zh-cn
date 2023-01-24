@@ -1,46 +1,36 @@
 # NetworkManager
 
-[NetworkManager(8)](https://man.voidlinux.org/NetworkManager.8) is a daemon that
-manages Ethernet, Wi-Fi, and mobile broadband network connections. Install the
-`NetworkManager` package for the basic NetworkManager utilities.
+[NetworkManager(8)]是一个管理以太网、Wi-Fi 和移动宽带网络连接的守护程序。安装 `NetworkManager` 软件包以获得基本的 NetworkManager 实用程序。
 
-## Starting NetworkManager
+## 启动 NetworkManager
 
-Before enabling the NetworkManager daemon, [disable](../services/index.md) any
-other network management services, such as [dhcpcd](./index.md#dhcpcd),
-[wpa_supplicant](./wpa_supplicant.md), or `wicd`. These services all control
-network interface configuration, and will interfere with NetworkManager.
+在启用 NetworkManager 守护进程之前，请[禁用](../services/index.md)任何其他网络管理服务，如 [dhcpcd](./index.md#dhcpcd)、[wpa_supplicant](./wpa_supplicant.md) 或 `wicd`。这些服务都控制着网络接口的配置，并且会干扰 NetworkManager。
 
-Also ensure that the `dbus` service is [enabled](../services/index.md) and
-running. NetworkManager uses `dbus` to expose networking information and a
-control interface to clients, and will fail to start without it.
 
-Finally, enable the `NetworkManager` service.
+还要确保 `dbus` 服务被[启用](../services/index.md)和运行。NetworkManager 使用 `dbus` 向客户公开网络信息和控制接口，如果没有它，将无法启动。
 
-## Configuring NetworkManager
+最后，启用 `NetworkManager` 服务。
+
+## 配置 NetworkManager
 
 Users of NetworkManager must belong to the `network` group.
 
-The `NetworkManager` package includes a command line tool,
-[nmcli(1)](https://man.voidlinux.org/nmcli.1), and a text-based user interface,
-[nmtui(1)](https://man.voidlinux.org/nmtui.1), to control network settings.
+NetworkManager 的用户必须属于 `network` 用户组。
 
-There are many other front-ends to NetworkManager, including `nm-applet` for
-system trays, `nm-plasma` for KDE Plasma, and a built-in network configuration
-tool in GNOME.
+`NetworkManager` 软件包包括一个命令行工具 [nmcli(1)](https://man.voidlinux.org/nmcli.1) 和一个基于文本的用户界面 [nmtui(1)](https://man.voidlinux.org/nmtui.1) ，用于控制网络设置.
 
-## Eduroam with NetworkManager
+NetworkManager 还有许多其他的前端，包括用于系统托盘的 `nm-applet`，用于 KDE Plasma 的 `nm-plasma`，以及GNOME 中的一个内置网络配置工具。
 
-Eduroam is a roaming service providing international, secure Internet access at
-universities and other academic institutions. More information can be found
-[here](https://eduroam.org/).
 
-### Dependencies
+## Eduroam 和 NetworkManager
 
-Install the `python3-dbus` package.
+Eduroam 是一项漫游服务，在大学和其他学术机构提供国际安全互联网接入。更多信息可以在[这里](https://eduroam.org/)找到。
 
-### Installation
 
-Download the correct eduroam_cat installer for your institution from
-[here](https://cat.eduroam.org/) and execute it. It will provide a user
-interface guiding you through the process.
+### 依赖关系
+
+安装 `python3-dbus` 软件包
+
+### 安装
+
+从[这里](https://cat.eduroam.org/)为你的机构下载正确的 eduroam_cat 安装程序，并执行它。它将提供一个用户界面，指导你完成这一过程。
