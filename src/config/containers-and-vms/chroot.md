@@ -1,32 +1,29 @@
-# Creating and using chroots and containers
+# 创建和使用 chroots 和容器
 
-chroots and containers can be set up and used for many purposes, including:
+chroots 和容器的设置和使用有很多目的，包括：
 
-- running glibc software on musl (and vice versa)
-- running software in a more controlled or sandboxed environment
-- creating a rootfs for bootstrapping a system
+- 在 musl 上运行 glibc 软件（反之亦然） 
+- 在一个更受控制的环境中运行软件或沙盒环境
+- 创建一个用于引导系统的 rootfs
 
-## Chroot Creation
+## 创建 Chroot 
 
 ### xvoidstrap
 
-[`xvoidstrap(1)`](https://man.voidlinux.org/xvoidstrap.1) (from `xtools`) can be
-used to create the chroot:
+[`xvoidstrap(1)`](https://man.voidlinux.org/xvoidstrap.1) (来自 `xtools`)可以用于创建 chroot。
 
 ```
 # mkdir <chroot_dir>
 # XBPS_ARCH=<chroot_arch> xvoidstrap <chroot_dir> base-voidstrap <other_pkgs>
 ```
 
-`<other_pkgs>` is only needed if you want to pre-install other packages in the
-chroot.
+`<other_pkgs>` 只有在你想在 chroot 中预装其他软件包时才需要。
 
-### Manual Method
+### 手动方式
 
-Alternatively, this process can be done manually.
+另外，这个过程也可以手动完成。
 
-Create a directory that will contain the chroot, then install a base system in
-it via the `base-voidstrap` package:
+创建一个包含 chroot 的目录，然后通过 `base-voidstrap` 包在其中安装一个基础系统。
 
 ```
 # mkdir -p "<chroot_dir>/var/db/xbps/keys"
@@ -34,27 +31,23 @@ it via the `base-voidstrap` package:
 # XBPS_ARCH=<chroot_arch> xbps-install -S -r <chroot_dir> -R <repository> base-voidstrap <other_pkgs>
 ```
 
-The `<repository>` may [vary depending on
-architecture](../../xbps/repositories/index.md#the-main-repository).
+`<repository>` 可能因[架构不同而不同](../../xbps/repositories/index.md#the-main-repository)。
 
-`<other_pkgs>` is only needed if you want to pre-install other packages in the
-chroot.
+`<other_pkgs>` 只有在你想在 chroot 中预装其他软件包时才需要。
 
-## Chroot Usage
+## Chroot 使用方法
 
 ### xchroot
 
-[`xchroot(1)`](https://man.voidlinux.org/xchroot.1) (from `xtools`) can be used
-to automatically set up and enter the chroot.
+[`xchroot(1)`](https://man.voidlinux.org/xchroot.1) (来自 `xtools`）可以用来自动设置和进入 chroot。
 
-### Manual Method
+### 手动方式
 
-Alternatively, this process can be done manually.
+另外，这个过程也可以手动完成。
 
-If network access is required, copy `/etc/resolv.conf` into the chroot;
-`/etc/hosts` may need to be copied as well.
+如果需要网络访问，将 `/etc/resolv.conf` 复制到 chroot 中；`/etc/hosts` 可能也需要复制。
 
-Several directories then need to be mounted as follows:
+然后需要挂载几个目录，如下所示：
 
 ```
 # mount -t proc none <chroot_dir>/proc
@@ -63,21 +56,16 @@ Several directories then need to be mounted as follows:
 # mount --rbind /run <chroot_dir>/run
 ```
 
-Use [chroot(1)](https://man.voidlinux.org/chroot.1) to change to the new root,
-then run programs and do tasks as usual. Once finished with the chroot, unmount
-the chroot using [umount(8)](https://man.voidlinux.org/umount.8). If any
-destructive actions are taken on the chroot directory without unmounting first,
-you may need to reboot to repopulate the affected directories.
+使用 [chroot(1)](https://man.voidlinux.org/chroot.1) 切换到新的 root，然后像往常一样运行程序和做任务。一旦完成了 chroot，使用 [umount(8)](https://man.voidlinux.org/umount.8) 卸载 chroot。如果在没有卸载的情况下对 chroot 目录进行了任何破坏性的操作，你可能需要重新启动以重新填充受影响的目录。
 
-### Alternatives
+
+### 替代品
 
 #### Bubblewrap
 
-[bwrap(1)](https://man.voidlinux.org/bwrap.1) (from the `bubblewrap` package)
-has additional features like the ability for sandboxing and does not require
-root access.
+[bwrap(1)](https://man.voidlinux.org/bwrap.1) (来自 `bubblewrap` 软件包）有额外的功能，如沙箱能力，不需要root 权限。
 
-`bwrap` is very flexible and can be used in many ways, for example:
+`bwrap` 非常灵活，可以用在很多方面，比如说:
 
 ```
 $ bwrap --bind <chroot_dir> / \
@@ -91,24 +79,16 @@ $ bwrap --bind <chroot_dir> / \
 	<command>
 ```
 
-In this example, you will not be able to add or edit users or groups. When
-running graphical applications with Xorg, you may need to also bind-mount
-`~/.Xauthority` or other files or directories.
+在这个例子中，你将不能添加或编辑用户或用户组。当用 Xorg 运行图形应用程序时，你可能还需要绑定挂载  `~/.Xauthority` 或其他文件或目录。
 
-The [bwrap(1) manpage](https://man.voidlinux.org/bwrap.1) and the [Arch Wiki
-article](https://wiki.archlinux.org/title/Bubblewrap#Usage_examples) contain
-more examples of `bwrap` usage.
+[bwrap(1) manpage](https://man.voidlinux.org/bwrap.1) 手册和[Arch Wiki文章](https://wiki.archlinux.org/title/Bubblewrap#Usage_examples)中包含了更多关于 `bwrap` 使用的例子
+
 
 #### Flatpak
 
-[Flatpak](../external-applications.md#flatpak) is a convenient option for
-running many applications, including graphical or proprietary ones, on both
-glibc and musl systems.
+[Flatpak](../external-applications.md#flatpak) 是一个方便的选择，可以在 glibc 和 musl 系统上运行许多应用程序，包括图形或专有应用程序。
 
-#### Application Containers
+#### 应用容器
 
-If a more integrated and polished solution is desired, Void also [provides OCI
-containers](https://github.com/void-linux/void-docker/pkgs/container/void-linux)
-that work with tools like [docker](https://www.docker.com) and
-[podman](https://man.voidlinux.org/podman.1). These containers do not require
-the creation of a chroot directory before usage.
+如果需要一个更加集成和完善的解决方案，Void 还提供了与 [docker](https://www.docker.com) 和 [podman](https://man.voidlinux.org/podman.1) 等[工具一起工作的OCI容器](https://github.com/void-linux/void-docker/pkgs/container/void-linux)。这些容器在使用前不需要创建一个 chroot 目录。
+
