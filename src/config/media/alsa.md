@@ -1,24 +1,17 @@
 # ALSA
 
-To use ALSA, install the `alsa-utils` package and make sure your user is a
-member of the `audio` group.
+要使用 ALSA，请安装 `alsa-utils` 软件包，并确保你的用户是 `audio` 用户组的成员。
 
-The `alsa-utils` package provides the `alsa` service. When enabled, this service
-saves and restores the state of ALSA (e.g. volume) at shutdown and boot,
-respectively.
+`alsa-utils` 软件包提供了 `alsa` 服务。启用后，该服务在关机和启动时分别保存和恢复ALSA的状态。
 
-To allow use of software requiring PulseAudio, install the `apulse` package.
-`apulse` provides part of the PulseAudio interface expected by applications,
-translating calls to that interface into calls to ALSA. For details about using
-`apulse`, consult [the project
-README](https://github.com/i-rinat/apulse/blob/master/README.md).
+为了允许使用需要 PulseAudio 的软件，安装 `apulse` 包。`apulse` 提供了应用程序所期望的 PulseAudio 接口的一部分，将对该接口的调用转化为对 ALSA 的调用。关于使用 `apulse` 的细节，请查阅[项目的README](https://github.com/i-rinat/apulse/blob/master/README.md)。
 
-## Configuration
 
-The default sound card can be specified via ALSA configuration files or via
-kernel module options.
+## 配置
 
-To obtain information about the order of loaded sound card modules:
+默认声卡可以通过 ALSA 配置文件或内核模块选项来指定。
+
+要获得关于加载声卡模块的顺序的信息：
 
 ```
 $ cat /proc/asound/modules
@@ -27,15 +20,15 @@ $ cat /proc/asound/modules
  2 snd_usb_audio
 ```
 
-To set a different card as the default, edit `/etc/asound.conf` or the per-user
-configuration file `~/.asoundrc`:
+要将不同的卡设置为默认，请编辑 `/etc/asound.conf` 或每个用户的配置文件 `~/.asoundrc`:
+
 
 ```
 defaults.ctl.card 2;
 defaults.pcm.card 2;
 ```
 
-or specify sound card module order in `/etc/modprobe.d/alsa.conf`:
+或在 `/etc/modprobe.d/alsa.conf` 中指定声卡模块顺序：
 
 ```
 options snd_usb_audio index=0
@@ -43,9 +36,7 @@ options snd_usb_audio index=0
 
 ## Dmix
 
-The `dmix` ALSA plugin allows playing sound from multiple sources. `dmix` is
-enabled by default for soundcards which do not support hardware mixing. To
-enable it for digital output, edit `/etc/asound.conf`:
+`dmix` ALSA 插件允许从多个来源播放声音。对于不支持硬件混音的声卡，默认情况下启用 `dmix`。要为数字输出启用它，请编辑 `/etc/asound.conf`:
 
 ```
 pcm.dsp {
