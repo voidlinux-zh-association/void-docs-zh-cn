@@ -1,9 +1,8 @@
 # PipeWire
 
-To use PipeWire, install the `pipewire` package.
+要使用 PipeWire，请安装 `pipewire` 软件包。
 
-[pipewire(1)](https://man.voidlinux.org/pipewire.1) should be started as a user.
-Run the pipewire command in a terminal emulator in your session.
+[pipewire(1)](https://man.voidlinux.org/pipewire.1) 应以用户身份启动。在你的 session 中用终端模拟器运行 pipewire 命令。
 
 ```
 $ pipewire
