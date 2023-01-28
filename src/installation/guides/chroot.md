@@ -94,24 +94,10 @@ Live 镜像上可以使用 [cfdisk(8)](https://man.voidlinux.org/cfdisk.8) 和 [
 
 ### 进入 Chroot
 
-挂载 chroot 需要的伪文件系统：
+[xchroot(1)](https://man.voidlinux.org/xchroot.1)  (来自 `xtools`) 可以用来设置和进入 chroot。另外，这也可以[手动完成](../../config/containers-and-vms/chroot.md#manual-method).。
 
 ```
-# mount --rbind /sys /mnt/sys && mount --make-rslave /mnt/sys
-# mount --rbind /dev /mnt/dev && mount --make-rslave /mnt/dev
-# mount --rbind /proc /mnt/proc && mount --make-rslave /mnt/proc
-```
-
-为了使 XBPS 在 chroot 中也能下载软件包，拷贝 DNS 配置到新根目录中：
-
-```
-# cp /etc/resolv.conf /mnt/etc/
-```
-
-Chroot 到新系统中：
-
-```
-# PS1='(chroot) # ' chroot /mnt/ /bin/bash
+# xchroot /mnt /bin/bash
 ```
 
 ### 安装基础系统（仅限 ROOTFS 方法）
@@ -119,10 +105,10 @@ Chroot 到新系统中：
 因为 ROOTFS 镜像是其构建时的快照，其中的软件包一般都有所滞后，而且不包含完整的 `base-system`，需要更新包管理器并安装 `base-system`：
 
 ```
-# xbps-install -Su xbps
-# xbps-install -u
-# xbps-install base-system
-# xbps-remove base-voidstrap
+[xchroot /mnt] # xbps-install -Su xbps
+[xchroot /mnt] # xbps-install -u
+[xchroot /mnt] # xbps-install base-system
+[xchroot /mnt] # xbps-remove base-voidstrap
 ```
 
 ### 安装配置
@@ -135,7 +121,7 @@ Chroot 到新系统中：
 对于 glibc 构建，使用以下命令生成语言环境文件： 
 
 ```
-(chroot) # xbps-reconfigure -f glibc-locales
+[xchroot /mnt] # xbps-reconfigure -f glibc-locales
 ```
 
 ### 设置 Root 密码
@@ -145,7 +131,7 @@ Chroot 到新系统中：
 要设置 root 密码，请运行： 
 
 ```
-(chroot) # passwd
+[xchroot /mnt] # passwd
 ```
 
 ### 配置 fstab
@@ -153,7 +139,7 @@ Chroot 到新系统中：
 可以通过拷贝 `/proc/mounts` 文件，从当前已挂载的文件系统，自动生成 [fstab(5)](https://man.voidlinux.org/fstab.5) 文件：
 
 ```
-(chroot) # cp /proc/mounts /etc/fstab
+[xchroot /mnt] # cp /proc/mounts /etc/fstab
 ```
 
 删掉 `/etc/fstab` 中代表 `proc`、`sys`、`devtmpfs`、`pts` 的行。.
@@ -196,15 +182,15 @@ UUID=1cb4[...]  swap        swap    rw,noatime,discard      0 0
 
 **在 BIOS 电脑上**，安装软件包 `grub`。然后运行 `grub-install /dev/sdX`，`/dev/sdX` 是你要安装 GRUB 的硬盘（不是分区），例如：
 ```
-(chroot) # xbps-install grub
-(chroot) # grub-install /dev/sda
+[xchroot /mnt] # xbps-install grub
+[xchroot /mnt] # grub-install /dev/sda
 ```
 
 **在 UEFI 电脑上**，根据你的架构,安装 `grub-x86_64-efi` 或 `grub-i386-efi` 或 `grub-arm64-efi`，然后运行 `grub-install`，可以指定一个引导器标签（手动选择引导设备时，你的电脑固件可能会使用这个标签）：
 
 ```
-(chroot) # xbps-install grub-x86_64-efi
-(chroot) # grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="Void"
+[xchroot /mnt] # xbps-install grub-x86_64-efi
+[xchroot /mnt] # grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="Void"
 ```
 
 ### GRUB 安装疑难解答
@@ -218,15 +204,15 @@ UUID=1cb4[...]  swap        swap    rw,noatime,discard      0 0
 另外，用 [mkdir(1)](https://man.voidlinux.org/mkdir.1) 创建 `/boot/efi/EFI/boot` 目录，将安装好的 GRUB 可执行文件拷贝到新创建的目录中，GRUB 可执行文件一般在 `/boot/efi/void/grubx64.efi`（可执行文件的地址可以用 [efibootmgr(8)](https://man.voidlinux.org/efibootmgr.8) 找到）：
 
 ```
-(chroot) # mkdir -p /boot/efi/EFI/boot
-(chroot) # cp /boot/efi/EFI/Void/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
+[xchroot /mnt] # mkdir -p /boot/efi/EFI/boot
+[xchroot /mnt] # cp /boot/efi/EFI/Void/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
 ```
 ## 善后
 
 用 [xbps-reconfigure(1)](https://man.voidlinux.org/xbps-reconfigure.1) 确保所有安装的软件包都正确配置了：
 
 ```
-(chroot) # xbps-reconfigure -fa
+[xchroot /mnt] # xbps-reconfigure -fa
 ```
 
 这会使 [dracut(8)](https://man.voidlinux.org/dracut.8) 生成 initramfs，使 GRUB 生成配置。
@@ -234,7 +220,8 @@ UUID=1cb4[...]  swap        swap    rw,noatime,discard      0 0
 至此，安装已经完成。退出 chroot 并重启电脑：
 
 ```
-(chroot) # exit
+[xchroot /mnt] # exit
+# umount -R /mnt
 # shutdown -r now
 ```
 首次引导进入 Void 系统后，[更新系统](../../xbps/index.md#updating)。
