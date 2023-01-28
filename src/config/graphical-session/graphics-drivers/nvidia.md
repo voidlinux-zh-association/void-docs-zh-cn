@@ -48,11 +48,6 @@
 
 ### 保留两个驱动程序
 
-It is possible to use the `nouveau` driver while still having the `nvidia`
-driver installed. To do so, remove the blacklisting of `nouveau` in
-`/etc/modprobe.d/nouveau_blacklist.conf`, `/usr/lib/modprobe.d/nvidia.conf`, or
-`/usr/lib/modprobe.d/nvidia-dkms.conf` by commenting it out:
-
 可以使用 `nouveau` 驱动同时还有 `nvidia` 驱动程序。 为此，请删除 `nouveau` 在 `/etc/modprobe.d/nouveau_blacklist.conf` , `/usr/lib/modprobe.d/nvidia.conf`， 或者 `/usr/lib/modprobe.d/nvidia-dkms.conf` 的黑名单注释掉： 
 
 ```
