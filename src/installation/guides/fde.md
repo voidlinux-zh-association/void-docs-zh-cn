@@ -104,7 +104,6 @@ Setting up swapspace version 1, size = 2 GiB (2147479552 bytes)
 
 ```
 # mount /dev/voidvm/root /mnt
-# for dir in dev proc sys run; do mkdir -p /mnt/$dir ; mount --rbind /$dir /mnt/$dir ; mount --make-rslave /mnt/$dir ; done
 # mkdir -p /mnt/home
 # mount /dev/voidvm/home /mnt/home
 ```
@@ -140,22 +139,22 @@ UEFI 系统的软件包选择略有不同。UEFI 系统的安装命令将如下�
 # xbps-install -Sy -R https://repo-default.voidlinux.org/current -r /mnt base-system cryptsetup grub-x86_64-efi lvm2
 ```
 
-当它完成后，我们就可以进入 `chroot` 并完成配置。
+完成后，我们可以用 [`xchroot(1)`](https://man.voidlinux.org/xchroot.1)（来自 `xtools`）进入chroot，完成配置。另外，也可以[手动 chroot](../../config/containers-and-vms/chroot.md#manual-method)。
 
 ```
-# chroot /mnt
-# chown root:root /
-# chmod 755 /
-# passwd root
-# echo voidvm > /etc/hostname
+# xchroot /mnt
+[xchroot /mnt] # chown root:root /
+[xchroot /mnt] # chmod 755 /
+[xchroot /mnt] # passwd root
+[xchroot /mnt] # echo voidvm > /etc/hostname
 ```
 
 以及，仅适用于 glibc 系统的配置：
 
 ```
-# echo "LANG=en_US.UTF-8" > /etc/locale.conf
-# echo "en_US.UTF-8 UTF-8" >> /etc/default/libc-locales
-# xbps-reconfigure -f glibc-locales
+[xchroot /mnt] # echo "LANG=en_US.UTF-8" > /etc/locale.conf
+[xchroot /mnt] # echo "en_US.UTF-8 UTF-8" >> /etc/default/libc-locales
+[xchroot /mnt] # xbps-reconfigure -f glibc-locales
 ```
 
 ### 文件系统配置
@@ -187,7 +186,7 @@ GRUB_ENABLE_CRYPTODISK=y
 接下来，需要对内核进行配置以找到加密的设备。首先，找到该设备的 UUID。
 
 ```
-# blkid -o value -s UUID /dev/sda1
+[xchroot /mnt] # blkid -o value -s UUID /dev/sda1
 135f3c06-26a0-437f-a05e-287b036440a4
 ```
 
@@ -198,7 +197,7 @@ GRUB_ENABLE_CRYPTODISK=y
 为了避免在启动时输入两次密码，将配置一个密钥，在启动时自动解锁加密的卷。首先，生成一个随机密钥。
 
 ```
-# dd bs=1 count=64 if=/dev/urandom of=/boot/volume.key
+[xchroot /mnt] # dd bs=1 count=64 if=/dev/urandom of=/boot/volume.key
 64+0 records in
 64+0 records out
 64 bytes copied, 0.000662757 s, 96.6 kB/s
@@ -207,15 +206,15 @@ GRUB_ENABLE_CRYPTODISK=y
 接下来，将密钥添加到加密卷中。
 
 ```
-# cryptsetup luksAddKey /dev/sda1 /boot/volume.key
+[xchroot /mnt] # cryptsetup luksAddKey /dev/sda1 /boot/volume.key
 Enter any existing passphrase:
 ```
 
 改变权限以保护生成的密钥。
 
 ```
-# chmod 000 /boot/volume.key
-# chmod -R g-rwx,o-rwx /boot
+[xchroot /mnt] # chmod 000 /boot/volume.key
+[xchroot /mnt] # chmod -R g-rwx,o-rwx /boot
 ```
 
 这个密钥文件也需要被添加到 `/etc/crypttab`。同样，在 EFI 系统上这将是 `/dev/sda2`。
@@ -235,19 +234,19 @@ install_items+=" /boot/volume.key /etc/crypttab "
 接下来，将引导程序安装到磁盘上。
 
 ```
-# grub-install /dev/sda
+[xchroot /mnt] # grub-install /dev/sda
 ```
 
 确保生成一个 initramfs。
 
 ```
-# xbps-reconfigure -fa
+[xchroot /mnt] # xbps-reconfigure -fa
 ```
 
 退出 `chroot`，卸载文件系统，并重新启动系统。
 
 ```
-# exit
+[xchroot /mnt] # exit
 # umount -R /mnt
 # reboot
 ```
