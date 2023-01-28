@@ -104,13 +104,13 @@ ZFS 池上的文件系统布局是灵活的。 但是，通常将操作系统根
 section](https://docs.voidlinux.org/installation/guides/chroot.html#base-installation) 部分进行。然而，在按照 ["Finalization" instructions](https://docs.voidlinux.org/installation/guides/chroot.html#finalization) 的说明进行安装之前，要确保已经安装了zfs包，并且dracut被配置可以识别ZFS根文件系统：
 
 ```
-(chroot) # mkdir -p /etc/dracut.conf.d
-(chroot) # cat > /etc/dracut.conf.d/zol.conf <<EOF
+[xchroot /mnt] # mkdir -p /etc/dracut.conf.d
+[xchroot /mnt] # cat > /etc/dracut.conf.d/zol.conf <<EOF
 nofsck="yes"
 add_dracutmodules+=" zfs "
 omit_dracutmodules+=" btrfs resume "
 EOF
-(chroot) # xbps-install zfs
+[xchroot /mnt] # xbps-install zfs
 ```
 
 最后，按照 "Finalization" instructions 并重新启动进入您的新系统。
