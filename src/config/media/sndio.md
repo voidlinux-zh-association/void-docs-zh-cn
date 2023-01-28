@@ -8,34 +8,27 @@
 
 ### 默认设备
 
-[sndiod(8)](https://man.voidlinux.org/sndiod.8) 默认使用第一个alsa设备。欲将另外的alsa设备设为默认的 `snd/0` ，向配置文件中添加标志：
+[sndiod(8)](https://man.voidlinux.org/sndiod.8) 默认使用第一个 alsa 设备。欲将另外的 alsa 设备设为默认的 `snd/0` ，向配置文件中添加标志：
 
 ```
 # echo 'OPTS="-f rsnd/Speaker"' >/etc/sv/sndiod/conf
 ```
 
-使用 `-f` Use the `-f` flag to chooses a device by its ALSA device index or its ALSA
-device name.
+使用 `-f` 标志，通过 ALSA 设备索引或 ALSA 设备名称选择一个设备。
 
-## Volume control
+## 音量控制
 
-The master and per application volume controls are controlled with MIDI messages
-by hardware or software.
+主控和每个应用程序的音量控制是通过硬件或软件的 MIDI 信息来控制的。
 
-[aucatctl(1)](https://man.voidlinux.org/aucatctl.1) is a tool specific to sndio
-to send MIDI control messages to the
-[sndiod(8)](https://man.voidlinux.org/sndiod.8) daemon. It can be found in the
-`aucatctl` package.
+[aucatctl(1)](https://man.voidlinux.org/aucatctl.1) 是一个专门针对 sndio 的工具，用来向 [sndiod(8)](https://man.voidlinux.org/sndiod.8) 守护程序发送 MID I控制信息。它可以在 `aucatctl` 软件包中找到。
 
-## Application specific configurations
+## 特定的应用配置
 
 ### Firefox
 
-Firefox is built with sndio support and should work out of the box since version
-71 if libsndio is installed and the `snd/0` device is available.
+火狐浏览器在构建时支持 sndio，如果安装了 libsndio 并且有 `snd/0` 设备，那么从 71 版开始就应该可以使用。
 
-The following `about:config` changes are required for versions prior to 71 and
-should be removed when using version 71 or later:
+以下 `about:config` 的修改对于 71 之前的版本是必须的，当使用 71 或更高版本时，应该被删除:
 
 ```
 media.cubeb.backend;sndio
@@ -46,9 +39,7 @@ security.sandbox.content.write_path_whitelist;/home/<username>/.sndio/cookie
 
 ### OpenAL
 
-libopenal comes with sndio support, but prioritizes ALSA over sndio by default.
-You can configure this behavior per user in `~/.alsoftrc` or system wide in
-`/etc/openal/alsoft.conf` by adding the following lines:
+libopenal 支持 sndio，但默认情况下 ALSA 优先于 sndio。你可以在 `~/.alsoftrc` 中为每个用户配置这一行为，也可以在 `/etc/openal/alsoft.conf` 中通过添加以下几行来为整个系统配置：
 
 ```
 [general]
