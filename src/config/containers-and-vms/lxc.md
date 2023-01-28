@@ -1,47 +1,34 @@
 # LXC
 
-The [Linux Containers project](https://linuxcontainers.org/) includes three
-subprojects: [LXC](https://linuxcontainers.org/lxc/introduction/),
-[LXD](https://linuxcontainers.org/lxd/introduction/) and
-[LXCFS](https://linuxcontainers.org/lxcfs/introduction/). The project also
-included the CGManager project, which has been deprecated in favor of the CGroup
-namespace in recent kernels.
+[Linux 容器项目](https://linuxcontainers.org/) 包括三个子项目: [LXC](https://linuxcontainers.org/lxc/introduction/)、[LXD](https://linuxcontainers.org/lxd/introduction/) 和[LXCFS](https://linuxcontainers.org/lxcfs/introduction/)。该项目还包括CGManager项目，该项目在最近的内核中已被弃用，而改用 CGroup 命名空间。
 
-## Configuring LXC
 
-Install the `lxc` package.
+## 配置 LXC
 
-Creating and running privileged containers as `root` does not require any
-configuration; simply use the various `lxc-*` commands, such as
-[lxc-create(1)](https://man.voidlinux.org/lxc-create.1),
-[lxc-start(1)](https://man.voidlinux.org/lxc-start.1),
-[lxc-attach(1)](https://man.voidlinux.org/lxc-attach.1), etc.
+安装 `lxc` 软件包.
 
-### Creating unprivileged containers
+以 `root` 身份创建和运行特权容器不需要任何配置，只需使用各种 `lxc-*` 命令，如 [lxc-create(1)](https://man.voidlinux.org/lxc-create.1), [lxc-start(1)](https://man.voidlinux.org/lxc-start.1), [lxc-attach(1)](https://man.voidlinux.org/lxc-attach.1)等。
 
-User IDs (UIDs) and group IDs (GIDs) normally range from 0 to 65535.
-Unprivileged containers enhance security by mapping UID and GID ranges inside
-each container to ranges not in use by the host system. The unused host ranges
-must be *subordinated* to the user who will be running the unprivileged
-containers.
 
-Subordinate UIDs and GIDs are assigned in the
-[subuid(5)](https://man.voidlinux.org/subuid.5) and
-[subgid(5)](https://man.voidlinux.org/subgid.5) files, respectively.
+### 创建无特权的容器
 
-To create unprivileged containers, first edit `/etc/subuid` and `/etc/subgid` to
-delegate ranges. For example:
+用户 ID（UID）和组 ID（GID）的范围通常是 0 到 65535。非特权容器通过将每个容器内的 UID 和 GID 范围映射到主机系统不使用的范围来增强安全性。未使用的主机范围必须 *从属于* 将运行无特权容器的用户。
+
+下级 UID 和 GID 分别在 [subuid(5)](https://man.voidlinux.org/subuid.5) 和 [subgid(5)](https://man.voidlinux.org/subgid.5) 文件中分配。
+
+要创建无特权的容器，首先编辑 `/etc/subuid` 和 `/etc/subgid` 来委托范围。比如说。
+
 
 ```
 root:1000000:65536
 user:2000000:65536
 ```
 
-In each colon-delimited entry:
+在每个冒号分隔的条目中： 
 
-- the first field is the user to which a subordinate range will be assigned;
-- the second field is the smallest numeric ID defining a subordinate range; and
-- the third field is the number of consecutive IDs in the range.
+- 第一个字段是下级范围将被分配给的用户；
+- 第二个字段是最小的数字 ID，定义了一个从属的范围; 和
+- 第三个字段是该范围内连续 ID 的数量。
 
 The [usermod(8)](https://man.voidlinux.org/usermod.8) program may also be used
 to manipulate suborinated IDs.
