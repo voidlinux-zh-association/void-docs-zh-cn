@@ -18,38 +18,25 @@ D-Bus 是一种 IPC（进程间通信）机制，由 Linux 中的用户空间软
 
 请阅读 "[电源管理](./power-management.md)" 部分，了解安装 elogind 前需要考虑的事项。
 
-To make use of its features, install the `elogind` package and make sure the
-[system D-Bus](#d-bus) is enabled. You might need to log out and in again.
+为了使用它的功能，请安装 `elogind` 包并确保 [系统 D-Bus](#d-bus)被启用。你可能需要退出并重新登录.
 
-If you're having any issues with elogind, [enable](./services/index.md) its
-service, as waiting for a D-Bus activation can lead to issues.
+如果你在使用 elogind 时有任何问题，请[启用](./services/index.md)其服务，因为等待 D-Bus 的激活会导致问题。
 
-There is an alternative D-Bus configuration which takes advantage of elogind for
-features such as seat detection. It requires installing the `dbus-elogind`,
-`dbus-elogind-libs` and `dbus-elogind-x11` packages.
+有一种替代的 D-Bus 配置，它利用 elogind 的功能，如 seat 检测。它需要安装 `dbus-elogind`、`dbus-elogind-libs` 和 `dbus-elogind-x11` 软件包。
 
 ## seatd
 
-[seatd(1)](https://man.voidlinux.org/seatd.1) is a minimal seat management
-daemon and an alternative to elogind primarily for [wlroots
-compositors](./graphical-session/wayland.md#standalone-compositors).
+[seatd(1)](https://man.voidlinux.org/seatd.1)  是一个最小的 seat 管理守护程序，是 elogind 的替代品，主要用于 [wlroots 合成器](./graphical-session/wayland.md#standalone-compositors)。
 
-To use it, install the `seatd` package and enable its service. If you want
-non-root users to be able to access the seatd session, add them to the `_seatd`
-group.
+要使用它，请安装 `seatd` 软件包并启用其服务。如果你想让非 root 用户能够访问 seatd 会话，请将他们加入 `_seatd` 组。
 
-Note that, unlike elogind, seatd doesn't do anything besides managing seats.
+请注意，与 elogind 不同，seatd 除了管理 seats 之外，不做任何事情。
+
 
 ## XDG_RUNTIME_DIR
 
-`XDG_RUNTIME_DIR` is an environment variable defined by the [XDG Base Directory
-Specification](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html).
-Its value sets the path to the base directory where programs should store
-user-specific runtime files.
+`XDG_RUNTIME_DIR` 是一个由 [XDG 基本目录规范定义](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)的环境变量。它的值设置了基本目录的路径，程序应该在这个目录下存储用户特定的运行时文件。
 
-Install [elogind](#elogind) as your session manager to automatically set up
-`XDG_RUNTIME_DIR`.
+安装 [elogind](#elogind) 作为你的 session 管理器来自动设置 `XDG_RUNTIME_DIR`。
 
-Alternatively, manually set the environment variable through the shell. Make
-sure to create a dedicated user directory and set its permissions to `700`. A
-good default location is `/run/user/$(id -u)`.
+或者，通过 shell 手动设置环境变量。请确保创建一个专门的用户目录，并将其权限设置为 `700`。一个好的默认位置是 `/run/user/$（id -u）`。
