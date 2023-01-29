@@ -30,86 +30,46 @@ user:2000000:65536
 - 第二个字段是最小的数字 ID，定义了一个从属的范围; 和
 - 第三个字段是该范围内连续 ID 的数量。
 
-The [usermod(8)](https://man.voidlinux.org/usermod.8) program may also be used
-to manipulate suborinated IDs.
+[usermod(8)](https://man.voidlinux.org/usermod.8) 程序也可以用来操作 suborinated ID。
 
-Generally, the number of consecutive IDs should be an integer multiple of 65536;
-the starting value is not important, except to ensure that the various ranges
-defined in the file do not overlap. In this example, `root` controls UIDs (or,
-from `subgid`, GIDs) ranging from 1000000 to 1065535, inclusive; `user` controls
-IDs ranging from 2000000 to 2065535.
+一般来说，连续 ID 的数量应该是 65536 的整数倍；起始值并不重要，只是为了确保文件中定义的各种范围不重叠。在这个例子中，`root` 控制的 UID（或者，从 `subgid`，GID）范围是 1000000 到 1065535，包括在内；`user` 控制的 ID 范围是 2000000 到 2065535。
 
-Before creating a container, the user owning the container will need an
-[lxc.conf(5)](https://man.voidlinux.org/lxc.conf.5) file specifying the subuid
-and subgid range to use. For root-owned containers, this file resides at
-`/etc/lxc/default.conf`; for unprivileged users, the file resides at
-`~/.config/lxc/default.conf`. Mappings are described in lines of the form
+在创建一个容器之前，拥有该容器的用户将需要一个 [lxc.conf(5)](https://man.voidlinux.org/lxc.conf.5) 文件来指定要使用的 subuid 和 subgid 范围。对于根用户的容器，这个文件位于 `/etc/lxc/default.conf`；对于非特权用户，这个文件位于 `~/.config/lxc/default.conf`。
 
 ```
 lxc.idmap = u 0 1000000 65536
 lxc.idmap = g 0 1000000 65536
 ```
 
-The isolated `u` character indicates a UID mapping, while the isolated `g`
-indicates a GID mapping. The first numeric value should generally always be 0;
-this indicates the start of the UID or GID range *as seen from within the
-container*. The second numeric value is the start of the corresponding range *as
-seen from outside the container*, and may be an arbitrary value within the range
-delegated in `/etc/subuid` or `/etc/subgid`. The final value is the number of
-consecutive IDs to map.
+孤立的 `u` 字符表示一个 UID 映射，而孤立的 `g` 表示一个 GID 映射。第一个数字值一般应始终为 0；这表示从容器内看到的 UID 或 GID 范围的开始。第二个数值是 *从容器外看到的* 相应范围的开始，可以是 `/etc/subuid` 或 `/etc/subgid` 中委托的范围内的一个任意值。最后一个值是要映射的连续ID的数量。
 
-Note that, although the external range start is arbitrary, care must be taken to
-ensure that the end of the range implied by the start and number does not extend
-beyond the range of IDs delegated to the user.
+请注意，尽管外部范围的起始点是任意的，但必须注意确保起始点和数字所暗示的范围的终点不会超出委托给用户的 ID 范围。
 
-If configuring a non-root user, edit `/etc/lxc/lxc-usernet` as root to specify a
-network device quota. For example, to allow the user named `user` to create up
-to 10 `veth` devices connected to the `lxcbr0` bridge:
+如果配置的是非 root 用户，请以 root 身份编辑 `/etc/lxc/lxc-usernet`，指定一个网络设备配额。例如，允许名为 `user` 的用户创建最多 10 个连接到 `lxcbr0` 网桥的 `veth` 设备:
 
 ```
 user veth lxcbr0 10
 ```
 
-The user can now create and use unprivileged containers with the `lxc-*`
-utilities. To create a simple Void container named `mycontainer`, use a command
-similar to:
+用户现在可以使用 `lxc-*` 工具创建和使用无特权的容器。要创建一个简单的名为 `mycontainer` 的 Void 容器，使用类似的命令:
 
 ```
 lxc-create -n mycontainer -t download -- \
 	--dist voidlinux --release current --arch amd64
 ```
 
-You may substitute another architecture for `amd64`, and you may specify a
-`musl` image by adding `--variant musl` to the end of the command. See the [LXC
-Image Server](http://images.linuxcontainers.org) for a list of available
-containers.
+您可以用其他架构代替 `amd64`，也可以在命令末尾添加 `--variant musl` 来指定一个 musl 镜像。可用的容器列表见[LXC镜像服务器](http://images.linuxcontainers.org)。
 
-By default, configurations and mountpoints for system containers are stored in
-`/var/lib/lxc`, while configurations for user containers and mountpoints are
-stored in `~/.local/share/lxc`. Both of these values can be modified by setting
-`lxc.lxcpath` in the
-[lxc.system.conf(5)](https://man.voidlinux.org/lxc.system.conf.5) file. The
-superuser may launch unprivileged containers in the system `lxc.lxcpath` defined
-in `/etc/lxc/lxc.conf`; regular users may launch unprivileged containers in the
-personal `lxc.lxcpath` defined in `~/.config/lxc/lxc.conf`.
+默认情况下，系统容器的配置和挂载点存储在 `/var/lib/lxc`，而用户容器的配置和挂载点则存储在 `~/.local/share/lxc` 。这两个值都可以通过在 [lxc.system.conf(5)](https://man.voidlinux.org/lxc.system.conf.5) 文件中设置 `lxc.lxcpath` 来修改。特权用户可以在 `/etc/lxc/lxc.conf` 中定义的系统`lxc.lxcpath` 中启动非特权容器；普通用户可以在 `~/.config/lxc/lxc.conf` 中定义的个人 `lxc.lxcpath` 中启动非特权容器。
 
-All containers will share the same subordinate UID and GID maps by default. This
-is permissible, but it means that an attacker who gains elevated access within
-one container, and can somehow break out of that container, will have similar
-access to other containers. To isolate containers from each other, alter the
-`lxc.idmap` ranges in `default.conf` to point to a unique range *before* you
-create each container. Trying to fix permissions on a container created with the
-wrong map is possible, but inconvenient.
+默认情况下，所有容器将共享相同的下级 UID 和 GID 地图。这是允许的，但这意味着攻击者如果在一个容器中获得了高等级的访问权限，并能以某种方式突破该容器，就会对其他容器有类似的访问权限。为了将容器相互隔离，在你创建每个容器之前，改变 `default.conf` 中的 `lxc.idmap` 范围，使其指向一个唯一的范围。试图修复用错误的地图创建的容器的权限是可能的，但很不方便。
 
 ## LXD
 
-LXD provides an alternative interface to LXC's `lxc-*` utilities. However, it
-does not require the configuration described in [the previous section](#lxc).
+LXD 提供了 LXC 的 `lxc-*` 工具的替代接口。然而，它不需要上一节中描述的配置。
 
-Install the `lxd` package, and [enable](../services/index.md#enabling-services)
-the `lxd` service.
+安装 `lxd` 软件包，并[启用](../services/index.md#enabling-services) `lxd` 服务。
 
-LXD users must belong to the `lxd` group.
+LXD 用户必须属于 `lxd` 用户组。
 
-Use the `lxc` command to manage instances, as described
-[here](https://linuxcontainers.org/lxd/getting-started-cli/#lxd-client).
+使用 `lxc` 命令来管理实例，如[这里](https://linuxcontainers.org/lxd/getting-started-cli/#lxd-client)所述。
