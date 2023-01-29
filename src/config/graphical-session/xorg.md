@@ -1,70 +1,51 @@
 # Xorg
 
-This section details the manual installation and configuration of the Xorg
-display server and common related services and utilities. If you would just like
-to install a full desktop environment, it is recommended to try the [xfce
-image](../../installation/live-images/index.md#xfce-image).
+本节详细介绍了手动安装和配置 Xorg 显示服务器以及常见的相关服务和工具。如果你只想安装一个完整的桌面环境，建议尝试 [xfce 镜像](../../installation/live-images/index.md#xfce-image)。
 
-## Installation
 
-Void provides a comprehensive `xorg` package which installs the server and all
-of the free video drivers, input drivers, fonts, and base applications. This
-package is a safe option, and should be adequate for most systems which don't
-require proprietary video drivers.
+## 安装
 
-If you would like to select only the packages you need, the `xorg-minimal`
-package contains the base xorg server *only*. If you install only
-`xorg-minimal`, you will likely need to install a font package (like
-`xorg-fonts`), a terminal emulator (like `xterm`), and a window manager to have
-a usable graphics system.
+Void 提供了一个全面的 `xorg` 包，它安装了服务器和所有免费的视频驱动、输入驱动、字体和基本应用程序。这个软件包是一个安全的选择，对于大多数不需要专有视频驱动程序的系统来说应该是足够的。
 
-## Video Drivers
+如果你想只选择你需要的软件包，`xorg-minimal` 软件包 *只包含* 基本的 xorg 服务器。只安装 `xorg-minimal`，你可能需要安装一个字体包（如 `xorg-fonts`），一个终端模拟器（如 `xterm`），以及一个窗口管理器，以拥有一个可用的图形系统。
 
-Void provides both open-source and proprietary (non-free) video drivers.
 
-### Open Source Drivers
+## 显卡驱动
 
-Xorg can use two categories of open source drivers: DDX or modesetting.
+Void同时提供开源和专有（non-free）视频驱动。
+
+### 开源驱动
+
+Xorg 可以使用两类开源的驱动程序。DDX 或 modesetting。
 
 #### DDX
 
-The DDX drivers are installed with the `xorg` package by default, or may be
-installed individually if the `xorg-minimal` package was installed. They are
-provided by the `xf86-video-*` packages.
+DDX 驱动默认与 `xorg` 包一起安装，如果安装了 `xorg-minimal` 包，也可以单独安装。它们是由 `xf86-video-*` 软件包提供的。
 
-For advanced configuration, see the man page corresponding to the vendor name,
-like [intel(4)](https://man.voidlinux.org/intel.4).
+
+对于高级配置，请参见与厂商名称相对应的手册页，如
+ [intel(4)](https://man.voidlinux.org/intel.4).
 
 #### Modesetting
 
-Modesetting requires the `mesa-dri` package, and no additional vendor-specific
-driver package.
+Modesetting  需要 `mesa-dri` 软件包，而没有额外的供应商特定的驱动软件包。
 
-Xorg defaults to DDX drivers if they are present, so in this case modesetting
-must be explicitly selected: see [Forcing the modesetting
-driver](#forcing-the-modesetting-driver).
+如果存在 DDX 驱动，Xorg 默认为 DDX 驱动，所以在这种情况下，必须明确选择 modeetting：请看[强制设置 modesetting 驱动程序](#强制设置-modesetting-驱动程序)。
 
-For advanced configuration, see
+有关高级配置，请参阅 
 [modesetting(4)](https://man.voidlinux.org/modesetting.4).
 
-### Proprietary Drivers
+### 专有驱动程序
 
-Void also provides [proprietary NVIDIA drivers](./graphics-drivers/nvidia.md),
-which are available in the [nonfree
-repository](../../xbps/repositories/index.md#nonfree).
+Void 还提供专有的 [NVIDIA 驱动程序](./graphics-drivers/nvidia.md)， 中可用在[非自由存储库](../../xbps/repositories/index.md#nonfree)。 
 
-## Input Drivers
+## 输入驱动
 
-A number of input drivers are available for Xorg. If `xorg-minimal` was
-installed and a device is not responding, or behaving unexpectedly, a different
-driver may correct the issue. These drivers can grab everything from power
-buttons to mice and keyboards. They are provided by the `xf86-input-*` packages.
+Xorg 有许多可用的输入驱动。如果安装了 `xorg-minimal`，而某一设备没有响应，或者表现得出乎意料，那么不同的驱动程序可能会纠正这一问题。这些驱动可以抓取从电源按钮到鼠标和键盘的一切。它们是由 `xf86-input-*` 软件包提供的。
 
-## Xorg Configuration
+## Xorg 配置
 
-Although Xorg normally auto-detects drivers and configuration is not needed, a
-config for a specific keyboard driver may look something like a file
-`/etc/X11/xorg.conf.d/30-keyboard.conf` with the contents:
+虽然 Xorg 通常会自动检测驱动程序，而且不需要配置，但特定键盘驱动程序的配置可能看起来像一个文件 `/etc/X11/xorg.conf.d/30-keyboard.conf` ，其内容是这样的:
 
 ```
 Section "InputClass"
@@ -74,9 +55,9 @@ Section "InputClass"
 EndSection
 ```
 
-### Forcing the modesetting driver
+### 强制设置 modesetting 驱动程序
 
-Create the file `/etc/X11/xorg.conf.d/10-modesetting.conf`:
+创建文件 `/etc/X11/xorg.conf.d/10-modesetting.conf` ：
 
 ```
 Section "Device"
@@ -85,44 +66,34 @@ Section "Device"
 EndSection
 ```
 
-and restart Xorg. Verify that the configuration has been picked up with:
+并重新启动Xorg。验证配置是否实践过了：
 
 ```
 $ grep -m1 '(II) modeset([0-9]+):' /var/log/Xorg.0.log
 ```
 
-If there is a match, modesetting is being used.
+如果有匹配的，就说明正在使用 modesetting 。
 
-## Starting X Sessions
+## 启动 X Sessions
 
 ### startx
 
-The `xinit` package provides the [startx(1)](https://man.voidlinux.org/startx.1)
-script as a frontend to [xinit(1)](https://man.voidlinux.org/xinit.1), which can
-be used to start X sessions from the console. For example, to start
-[i3(1)](https://man.voidlinux.org/i3.1), edit `~/.xinitrc` to contain `exec
-/bin/i3` on the last line.
+`xinit` 包提供了 [startx(1)](https://man.voidlinux.org/startx.1) 脚本作为 [xinit(1)](https://man.voidlinux.org/xinit.1) 前端，它可以用来从控制台启动 X 会话。例如，要启动 [i3(1)](https://man.voidlinux.org/i3.1)，编辑 `~/.xinitrc`，在最后一行包含 `exec /bin/i3`。
 
-To start arbitrary programs together with an X session, add them in `~/.xinitrc`
-before the last line. For example, to start
-[pipewire(1)](https://man.voidlinux.org/pipewire.1) before starting i3, add
-`pipewire &` before the last line.
+要在 X 会话中同时启动任意程序，请在 `~/.xinitrc` 中的最后一行之前添加它们。例如，要在启动 i3 之前启动[pipewire(1)](https://man.voidlinux.org/pipewire.1) ，在最后一行之前添加 `pipewire &`。
 
-A `~/.xinitrc` file which starts `pipewire` and `i3` is shown below:
+下面是一个启动 `pipewire` 和 `i3` 的 `~/.xinitrc` 文件:
 
 ```
 pipewire &
 exec /bin/i3
 ```
 
-Then call `startx` to start a session.
+然后调用 `startx` 来启动 session 。
 
-If a D-Bus session bus is required, you can [manually start
-one](../session-management.md#d-bus).
+如果需要一个 D-Bus 会话总线，你可以[手动启动一个](../session-management.md#d-bus)。
 
-### Display Managers
+### 显示管理器
 
-Display managers (DMs) provide a graphical login UI. A number of DMs are
-available in the Void repositories, including `gdm` (the GNOME DM), `sddm` (the
-KDE DM) and `lightdm`. When setting up a display manager, be sure to [test the
-service](../services/index.md#testing-services) before enabling it.
+显示管理器（DMs）提供了一个图形化的登录界面。Void 仓库中有许多 DM，包括 `gdm`（GNOME 的 DM）、`sddm`（KDE 的 DM）和 `lightdm`。当设置一个显示管理器时，一定要在启用前[测试该服务](../services/index.md#testing-services)。
+
