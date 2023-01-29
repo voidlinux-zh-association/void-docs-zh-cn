@@ -1,35 +1,19 @@
 # Static XBPS
 
-In rare cases, it is possible to break the system sufficiently that XBPS can no
-longer function. This usually happens while trying to do unsupported things with
-libc, but can also happen when an update contains a corrupt glibc archive or
-otherwise fails to unpack and configure fully.
+在极少数情况下，有可能破坏系统，使 XBPS 不能再运行。这通常发生在试图对 libc 做不支持的事情时，但也可能发生在更新包含一个损坏的 glibc 归档文件或其他未能完全解压和配置的情况下。
 
-Another issue that can present itself is in systems with a XBPS version before
-`0.54` (released June 2019). These systems will be impossible to update from the
-official repositories using the regular update procedure, due a change in the
-compression format used for repository data, which was made in March 2020.
+另一个可能出现的问题是在 XBPS `0.54`（2019 年 6 月发布）之前的版本的系统。这些系统将无法使用常规的更新程序从官方软件源中进行更新，这是因为用于软件源数据的压缩格式在 2020 年 3 月发生了变化。
 
-In these cases it is possible to recover your system with a separate, statically
-compiled copy of XBPS.
+在这些情况下，有可能用一个单独的、静态编译的 XBPS 副本来恢复你的系统。
 
-## Obtaining static XBPS
+## 获取 static XBPS
 
-Statically compiled versions of XBPS are available on all mirrors in the
-`static/` directory. The link below points to the static copies on the primary
-mirror in the EU:
+XBPS 的静态编译版本可以在所有镜像的 `static/` 目录中找到。下面的链接指向欧洲的主镜像上的静态副本。
 
 <https://repo-default.voidlinux.org/static>
 
-Download and unpack the latest version, or the version that matches the broken
-copy on your system (with a preference for the latest copy).
+下载并解压最新版本，或与你系统中的破损副本相匹配的版本（优先选择最新副本）。
 
-## Using static XBPS
+## 使用 static XBPS
 
-The tools in the static set are identical to the normal ones found on most
-systems. The only difference is that these tools are statically linked to the
-musl C library, and should work on systems where nothing else does. On systems
-that can no longer boot, it is recommended to chroot in using a Void
-installation medium and use the static tools from there, as it is unlikely that
-even a shell will work correctly on those systems. When using static XBPS with a
-glibc installation, the environment variable `XBPS_ARCH` needs to be set.
+静态组中的工具与大多数系统中的普通工具是相同的。唯一的区别是，这些工具是静态链接到 musl C 库的，并且应该在没有其他工具的系统上工作。在那些不能再启动的系统上，建议使用 Void 安装介质进行 chroot，并从那里使用静态工具，因为即使是 shell 也不可能在这些系统上正确工作。当使用 static XBPS 与 glibc 安装时，环境变量 `XBPS_ARCH` 需要被设置。
