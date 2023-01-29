@@ -1,10 +1,8 @@
-# Troubleshooting XBPS
+# XBPS 的故障排除
 
-Sometimes the package manager gets in a weird spot and can't fix itself without
-help. This section documents important fixes and things that can go wrong when
-working with XBPS.
+有时，软件包管理器会进入一个奇怪的地方，没有帮助就不能自我修复。本节记录了重要的修复和使用 XBPS 时可能出错的事情。
 
-## Section Contents
+## 部分内容
 
-- [Common Issues](./common-issues.md)
+- [常见问题](./common-issues.md)
 - [Static XBPS](./static.md)
