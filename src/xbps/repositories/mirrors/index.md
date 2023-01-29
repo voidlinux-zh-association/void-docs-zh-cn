@@ -58,21 +58,12 @@ Void Linux 在几个地理区域都有镜像供你使用。一个新的安装将
 
 ## Tor 镜像
 
-Void Linux is also mirrored on the Tor network. See [Using Tor
-Mirrors](./tor.md) for more information.
+Void Linux 也在 Tor 网络上做了镜像。更多信息请参见使用 [Tor 镜像](./tor.md)。
 
-## Creating a mirror
+## 创建镜像
 
-If you'd like to set up a mirror, and are confident you can keep it reasonably
-up-to-date, follow one of the many guides available for mirroring with
-[rsync(1)](https://man.voidlinux.org/rsync.1), then submit a pull request to
-[the void-docs repository](https://github.com/void-linux/void-docs) to add your
-mirror to the appropriate mirror table on this page.
+如果你想建立一个镜像，并且确信你能保持它的合理更新，请遵循许多关于用 [rsync(1)](https://man.voidlinux.org/rsync.1),做镜像的指南之一，然后向 [void-docs 仓库](https://github.com/void-linux/void-docs) 提交一个请求，将你的镜像添加到本页的相应镜像表中。
 
-A full mirror requires around 1TB of storage. It is also possible to mirror only
-part of the repositories. Excluding debug packages is one way of decreasing the
-load on the Tier 1 mirrors, with low impact on users.
+一个完整的镜像需要大约 1TB 的存储空间。也可以只镜像部分软件库。不包括调试包是减少一级镜像负载的一种方法，对用户的影响很小。
 
-Please keep in mind that we pay bandwidth for all data sent out from the Tier 1
-mirrors. You can respect this by only mirroring if your use case for your mirror
-will offset the network throughput consumed by your mirror syncing.
+请记住，我们为所有从一级镜像发出的数据支付带宽。您可以尊重这一点，只有当您的镜像的使用情况能够抵消镜像同步所消耗的网络吞吐量时，才会进行镜像。
