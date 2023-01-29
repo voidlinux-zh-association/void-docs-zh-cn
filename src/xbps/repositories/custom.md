@@ -1,32 +1,26 @@
-# Custom Repositories
+# 自定义软件源
 
-Void supports user-created repositories, both local and remote. This is only
-recommended for serving custom packages created personally, or packages from
-another trusted source. The Void project does not support *any* third-party
-package repositories - the use of third-party software packages poses very
-serious security concerns, and risks serious damage your system.
+Void 支持用户创建的本地和远程软件源。 这只是推荐用于提供个人创建的自定义包或来自另一个值得信赖的来源。 Void 项目不支持 **任何** 第三方软件源 - 第三方软件包的使用构成非常严重的安全问题，并有可能严重损坏您的系统。 
 
-## Adding custom repositories
+## 添加自定义存储困
 
-To add a custom repository, create a file in `/etc/xbps.d`, with the contents:
+要添加自定义存储库，请在中 `/etc/xbps.d` 创建一个文件 ，内容为：
 
 ```
 repository=<URL>
 ```
 
-where `<URL>` is either a local directory or a URL to a remote repository.
+其中 `<URL>` 是一个本地目录或一个指向远程资源库的 URL。
 
-For example, to define a remote repository:
+例如，要定义一个远程存储库：
 
 ```
 # echo 'repository=http://my.domain.com/repo' > /etc/xbps.d/my-remote-repo.conf
 ```
 
-Remote repositories need to be [signed](./signing.md).
-[xbps-install(1)](https://man.voidlinux.org/xbps-install.1) refuses to install
-packages from remote repositories if they are not signed.
+[xbps-install(1)](https://man.voidlinux.org/xbps-install.1) 拒绝安装来自远程仓库的软件包，如果它们没有被[签名](./signing.md)。
 
-To define a local repository:
+要定义本地存储库： 
 
 ```
 # echo 'repository=/path/to/repo' > /etc/xbps.d/my-local-repo.conf
