@@ -8,34 +8,21 @@
 $ pipewire
 ```
 
-When pipewire works as expected, use the autostarting mechanism of your desktop
-environment or [startx](../graphical-session/xorg.md#startx). The `pipewire`
-package provides `pipewire` and `pipewire-pulse` system services, but they are
-not recommended for a typical setup.
+当 pipewire 按预期工作时，使用你的桌面环境或 [startx](../graphical-session/xorg.md#startx) 的自动启动机制。`pipewire` 软件包提供了 `pipewire` 和`pipewire-pulse` 系统服务，但在典型的设置中不推荐使用。
 
-The `pipewire` package ships [Desktop
-Entry](https://specifications.freedesktop.org/desktop-entry-spec/latest/) files
-for `pipewire` and `pipewire-pulse` in `/usr/share/applications`. If your
-environment supports the [Desktop Application Autostart
-Specification](https://specifications.freedesktop.org/autostart-spec/autostart-spec-latest.html),
-you can enable pipewire by symlinking the desktop files to the autostart
-directory:
+`pipewire` 软件包在 `/usr/share/applications` 中为 `pipewire` 和 `pipewire-pulse` 提供桌面入口文件。如果你的环境支持桌面应用[自动启动规范](https://specifications.freedesktop.org/autostart-spec/autostart-spec-latest.html)，你可以通过符号链接桌面文件到自动启动目录来启用 `pipewire`：
 
 ```
 # ln -s /usr/share/applications/pipewire.desktop /etc/xdg/autostart/pipewire.desktop
 ```
 
-## PulseAudio replacement
+## PulseAudio 替代品
 
-Before starting `pipewire-pulse`, make sure that the PulseAudio service is
-[disabled](../services/index.md#disabling-services) and that no other PulseAudio
-server instance is running.
+在启动 `pipewire-pulse` 之前，确保 PulseAudio 服务被[禁用](../services/index.md#disabling-services)，并且没有其他 PulseAudio 服务实例在运行。
 
-Start the PulseAudio server by running `pipewire-pulse` in a terminal emulator.
+通过在终端仿真器中运行 `pipewire-pulse` 来启动 PulseAudio 服务器。
 
-To check if the replacement is working correctly, use
-[pactl(1)](https://man.voidlinux.org/pactl.1) (provided by the
-`pulseaudio-utils` package):
+为了检查替换是否正常工作，使用 [pactl(1)](https://man.voidlinux.org/pactl.1)（由 `pulseaudio-utils` 包提供）。
 
 ```
 $ pactl info
@@ -45,20 +32,15 @@ Server Name: PulseAudio (on PipeWire 0.3.18)
 [...]
 ```
 
-Once you confirmed that `pipewire-pulse` works as expected, it's recommended to
-autostart it from the same place where you start PipeWire. It is possible to
-modify [pipewire.conf(5)](https://man.voidlinux.org/pipewire.conf.5) for
-auto-starting the PulseAudio server, but it's not recommended keep the PipeWire
-configuration file unmodified for smoother future upgrades.
+一旦你确认 `pipewire-pulse` 如预期般工作，建议在启动 PipeWire 的地方自动启动它。可以修改 [pipewire.conf(5)](https://man.voidlinux.org/pipewire.conf.5) 来自动启动 PulseAudio 服务器，但不建议保持 PipeWire 配置文件不被修改，以便将来更顺利地升级。
 
-## Bluetooth audio
+## 蓝牙音频
 
-For bluetooth audio to work, install the `libspa-bluetooth` package.
+为了使蓝牙音频工作，请安装 `libspa-Bluetooth` 软件包。
 
-## ALSA integration
+## ALSA 集成
 
-Install `alsa-pipewire`, then enable the PipeWire ALSA device and make it the
-default:
+安装 `alsa-pipewire` ，然后启用 PipeWire ALSA 设备并使其成为默认设备:
 
 ```
 # mkdir -p /etc/alsa/conf.d
@@ -68,26 +50,22 @@ default:
 
 ## JACK replacement
 
-Install `libjack-pipewire`.
+安装`libjack-pipewire`.
 
-Use [pw-jack(1)](https://man.voidlinux.org/pw-jack.1) to launch JACK clients
-manually:
+使用 [pw-jack(1)](https://man.voidlinux.org/pw-jack.1) 来手动启动 JACK 客户端:
 
 ```
 $ pw-jack <application>
 ```
 
-Alternatively, override the library provided by `libjack` (see
-[ld.so(8)](https://man.voidlinux.org/ld.so.8)). The following approach will work
-on glibc-based systems:
+或者，覆盖 `libjack` 提供的库（见 [ld.so(8)](https://man.voidlinux.org/ld.so.8)）。下面的方法将在基于glibc 的系统上工作:
 
 ```
 # echo "/usr/lib/pipewire-0.3/jack" > /etc/ld.so.conf.d/pipewire-jack.conf
 # ldconfig
 ```
 
-## Troubleshooting
+## 故障
 
-The Pulseaudio replacement requires the
-[`XDG_RUNTIME_DIR`](../session-management.html#xdg_runtime_dir) environment
-variable to work correctly.
+替换 Pulseaudio 需要 [`XDG_RUNTIME_DIR`](../session-management.html#xdg_runtime_dir) 环境变量才能正确工作。
+
