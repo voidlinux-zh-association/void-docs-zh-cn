@@ -20,7 +20,7 @@ repository=<URL>
 
 [xbps-install(1)](https://man.voidlinux.org/xbps-install.1) 拒绝安装来自远程软件源的软件包，如果它们没有被[签名](./signing.md)。
 
-要定义本地存储库： 
+要定义本地软件源： 
 
 ```
 # echo 'repository=/path/to/repo' > /etc/xbps.d/my-local-repo.conf
