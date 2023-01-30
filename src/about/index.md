@@ -15,3 +15,11 @@ Void 是独立的, [滚动](https://en.wikipedia.org/wiki/Rolling_release) Linux
 通常，Void 的稳定性足以应对日常使用。Void 由少数开发者在空闲时间里开发，我们以此为乐，希望我们的工作可以帮助到其他人。
 
 “Void”之名来自 C 语言关键字 void，没有什么特殊含义。
+
+## 关于其汉化版本
+
+此汉化版本是非官方汉化的，第一部分参考了 [void-docs-zh-hans](https://github.com/fenprace/void-docs-zh-hans) ，其他部分参考了 [deepl](https://deepl.com) 的翻译对其进行了增删改。
+
+如有什么翻译漏洞请提交 `issue` 或 `fork` 之后合并提交。还可以进群交流： [Telegram 群](https://t.me/voidlinux_zh)、[Matrix 群](#voidlinux-zh:mozilla.org)
+
+其仓库链接是 [这里](https://github.com/voidlinux-zh-association/void-docs-zh-cn/) 
