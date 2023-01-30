@@ -20,6 +20,6 @@ Void 是独立的, [滚动](https://en.wikipedia.org/wiki/Rolling_release) Linux
 
 此汉化版本是非官方汉化的，第一部分参考了 [void-docs-zh-hans](https://github.com/fenprace/void-docs-zh-hans) ，其他部分参考了 [deepl](https://deepl.com) 的翻译对其进行了增删改。
 
-如有什么翻译漏洞请提交 `issue` 或 `fork` 之后合并提交。还可以进群交流： [Telegram 群](https://t.me/voidlinux_zh)、[Matrix 群](#voidlinux-zh:mozilla.org)
+如有什么翻译漏洞请提交 `issue` 或 `fork` 之后合并提交。还可以进群交流： [Telegram 群](https://t.me/voidlinux_zh)、[Matrix 群](https://matrix.to/#/#voidlinux-zh:mozilla.org)
 
 其仓库链接是 [这里](https://github.com/voidlinux-zh-association/void-docs-zh-cn/) 
