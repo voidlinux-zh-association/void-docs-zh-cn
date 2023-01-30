@@ -1,195 +1,107 @@
-# Kernel
+# 内核
 
-## Kernel series
+## 内核系列
 
-Void Linux provides many kernel series in the default repository. These are
-named `linux<x>.<y>`: for example, `linux4.19`. You can query for all available
-kernel series by running:
+Void Linux 在默认版本库中提供了许多内核系列。这些被命名为 `linux<x>.<y>`：例如，`linux4.19`。你可以通过运行以下命令查询所有可用的内核系列：
 
 ```
 $ xbps-query --regex -Rs '^linux[0-9.]+-[0-9._]+'
 ```
 
-The `linux` meta package, installed by default, depends on one of the kernel
-packages, usually the package containing the latest mainline kernel that works
-with all DKMS modules. Newer kernels might be available in the repository, but
-are not necessarily considered stable enough to be the default; use these at
-your own risk. If you wish to use a more recent kernel and have DKMS modules
-that you need to build, install the relevant `linux<x>.<y>-headers` package,
-then use [xbps-reconfigure(1)](https://man.voidlinux.org/xbps-reconfigure.1) to
-reconfigure the `linux<x>.<y>` package you installed. This will build the DKMS
-modules.
+默认安装的 `linux` 元包依赖于其中一个内核包，通常是包含最新的主线内核的包，可以与所有 DKMS 模块一起工作。较新的内核可能在资源库中可用，但不一定被认为稳定到可以作为默认的内核；使用这些内核的风险由你自己承担。如果你希望使用一个较新的内核，并且有需要构建的 DKMS 模块，请安装相关的 `linux<x>.<y>-headers` 软件包，然后使用 [xbps-reconfigure(1)](https://man.voidlinux.org/xbps-reconfigure.1) 重新配置你安装的 `linux<x>.<y>` 软件包。这将构建 DKMS 模块。
 
-## Removing old kernels
+## 删除旧内核
 
-When updating the kernel, old versions are left behind in case it is necessary
-to roll back to an older version. Over time, old kernel versions can accumulate,
-consuming disk space and increasing the time taken by DKMS module updates.
-Furthermore, if `/boot` is a separate partition and fills up with old kernels,
-updating can fail or result in incomplete initramfs filesystems to be generated
-and result in kernel panics if they are being booted. Thus, it may be advisable
-to clean old kernels from time to time.
+当更新内核时，旧的版本会被留下，以防有必要回滚到旧的版本。随着时间的推移，旧的内核版本会积累起来，消耗磁盘空间，增加 DKMS 模块更新的时间。此外，如果 `/boot` 是一个独立的分区，并且被旧的内核填满，更新可能会失败，或者导致生成不完整的 initramfs 文件系统，如果它们被启动，会导致内核恐慌(kernel panics)。因此，建议定时地清理旧内核。
 
-Removing old kernels is done using the
-[vkpurge(8)](https://man.voidlinux.org/vkpurge.8) utility. `vkpurge` comes
-pre-installed on every Void Linux system. This utility runs the necessary
-[hooks](#kernel-hooks) when removing old kernels. Note that `vkpurge` does not
-remove kernel *packages*, only particular *kernels*.
+`vkpurge` 预先安装在每个 Void Linux 系统上，删除旧内核是通过 [vkpurge(8)](https://man.voidlinux.org/vkpurge.8) 工具完成的。这个工具在移除旧内核时运行必要的 hooks。注意，`vkpurge` 不会删除内核 *软件包*，只删除特定的 *内核*。
 
-## Removing the default kernel series
+## 移除默认的内核系列
 
-If you've installed a kernel package for a series other than the default, and
-want to remove the default kernel packages, you should install the `linux-base`
-package or [mark it as a manual package](https://man.voidlinux.org/xbps-pkgdb.1)
-in case it is already installed. After this procedure, you can remove the
-default kernel packages with
-[xbps-remove(1)](https://man.voidlinux.org/xbps-remove.1). It might be necessary
-to add `linux` and `linux-headers` to an `ignorepkg` entry in
-[xbps.d(5)](https://man.voidlinux.org/xbps.d.5), since base packages can depend
-on them.
+如果你已经安装了默认之外的系列内核包，并且想移除默认的内核包，你应该安装 `linux-base` 包，或者在已经安装的情况下将其[标记为手动软件包](https://man.voidlinux.org/xbps-pkgdb.1)。在这个过程之后，你可以用 [xbps-remove(1)](https://man.voidlinux.org/xbps-remove.1) 删除默认的内核包。可能有必要在 [xbps.d(5)](https://man.voidlinux.org/xbps.d.5) 中的 `ignorepkg` 条目中加入 `linux` 和 `linux-headers`，因为基础包可能依赖于它们。
 
-## Changing the default initramfs generator
+## 改变默认的 initramfs 生成器
 
-By default, Void Linux uses [dracut](https://man.voidlinux.org/dracut.8) to
-prepare initramfs images for installed kernels. Alternatives such as
-[mkinitcpio](https://man.voidlinux.org/mkinitcpio.8) are available. Each
-initramfs generator registers an [XBPS
-alternative](https://man.voidlinux.org/xbps-alternatives.1) in the `initramfs`
-group to link its [kernel hooks](#kernel-hooks) to be used when creating or
-removing initramfs images for a given kernel.
+默认情况下，Void Linux 使用 [dracut](https://man.voidlinux.org/dracut.8) 为安装的内核准备 initramfs 镜像。替代品如 [mkinitcpio](https://man.voidlinux.org/mkinitcpio.8) 是可用的。每个 initramfs 生成器都在 initramfs 组中注册了一个 [XBPS alternative](https://man.voidlinux.org/xbps-alternatives.1) ，以链接其[内核 hooks](#内核-hooks)，在为特定内核创建或移除 initramfs 镜像时使用。
 
-To replace dracut with, *e.g.*, mkinitcpio, install the `mkinitcpio` package;
-confirm that `mkinitcpio` appears in the list of available alternatives by
-running
+要用 mkinitcpio *等等* 替换 dracut，请安装 `mkinitcpio` 软件包；确认 `mkinitcpio` 出现在可用的替代品列表中，方法是运行:
 
 ```
 $ xbps-alternatives -l -g initramfs
 ```
 
-Issue the command
+执行指令
 
 ```
 # xbps-alternatives -s mkinitcpio
 ```
 
-to replace the dracut kernel hooks with those provided by mkinitcpio. With
-subsequent kernel updates (or updates to DKMS packages that trigger initramfs
-regeneration), mkinitcpio will be used instead of dracut to prepare initramfs
-images. To force images to regenerate, reconfigure your kernel packages by
-invoking
+用 mkinitcpio 提供的钩子替换 dracut 的内核 hooks。在随后的内核更新中（或对 DKMS 包的更新触发了 initramfs 的再生），mkinitcpio 将被用来代替 dracut 来准备 initramfs 镜像。要强迫镜像重新生成，请重新配置你的内核包，运行：
 
 ```
 # xbps-reconfigure -f linux<x>.<y>
 ```
 
-for each `linux<x>.<y>` package that is currently installed.
+对于当前安装的每个 `linux<x>.<y>` 软件包。
 
 ## cmdline
 
-The kernel, the initial RAM disk (initrd) and some system programs can be
-configured at boot by kernel command line arguments. The parameters understood
-by the kernel are explained in the [kernel-parameters
-documentation](https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html)
-and by [bootparam(7)](https://man.voidlinux.org/bootparam.7). Parameters
-understood by dracut can be found in
-[dracut.cmdline(7)](https://man.voidlinux.org/dracut.cmdline.7).
+内核、初始 RAM 磁盘（initrd）和一些系统程序可以在启动时通过内核命令行参数进行配置。内核理解的参数在 [kernel-parameters](https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html)文档和[bootparam(7)](https://man.voidlinux.org/bootparam.7) 中解释。dracut 理解的参数可以在[dracut.cmdline(7)](https://man.voidlinux.org/dracut.cmdline.7) 中找到。
 
-Once the system is booted, the current kernel command line parameters can be
-found in the `/proc/cmdline` file. Some system programs can change their
-behavior based on the parameters passed in the command line, which is what
-happens when [booting a different
-runsvdir](./services/index.md#booting-a-different-runsvdir), for example.
+一旦系统被启动，当前的内核命令行参数可以在 `/proc/cmdline` 文件中找到。一些系统程序可以根据命令行中传递的参数来改变它们的行为，例如，在[启动不同的 runtvdir](./services/index.md#booting-a-different-runsvdir) 时就会发生这种情况。
 
-There are different ways of setting these parameters, some of which are
-explained below.
+有不同的方法来设置这些参数，下面将解释其中一些方法。
 
 ### GRUB
 
-Kernel command line arguments can be added through the GRUB bootloader by
-editing `/etc/default/grub`, changing the `GRUB_CMDLINE_LINUX_DEFAULT` variable
-and then running `update-grub`.
+内核命令行参数可以通过编辑 `/etc/default/grub`，改变 `GRUB_CMDLINE_LINUX_DEFAULT` 变量，然后运行`update-grub`，通过 GRUB 引导程序添加。
 
 ### dracut
 
-Dracut offers a [`kernel_cmdline` configuration
-option](https://man.voidlinux.org/dracut.conf.5) and [`--kernel-cmdline`
-command-line option](https://man.voidlinux.org/dracut.8) that will encode
-command-line arguments directly in the initramfs image. When dracut is used to
-create a UEFI executable, arguments set with these options will be passed to the
-kernel. However, when an ordinary initramfs is produced, these options will
-*not* be passed to the kernel at boot. Instead, they will be written to a
-configuration file in `/etc/cmdline.d` within the image. While dracut parses
-this configuration to control its own boot-time behavior, the kernel itself will
-not be aware of anything set via this mechanism.
+Dracut 提供了一个 [`kernel_cmdline` 配置选项](https://man.voidlinux.org/dracut.conf.5) 和[`--kernel-cmdline`命令行选项](https://man.voidlinux.org/dracut.8)，将直接在 initramfs 镜像中编码命令行参数。当 dracut 被用来创建一个 UEFI 可执行文件时，用这些选项设置的参数将被传递给内核。然而，当产生一个普通的 initramfs 时，这些选项在启动时不会被传递给内核。相反，它们将被写入镜像中的 `/etc/cmdline.d` 中的一个配置文件。虽然 dracut 解析这个配置来控制它自己的启动时行为，但内核本身不会知道通过这个机制设置的任何东西。
 
-After modifying a dracut configuration, [regenerate](#kernel-hooks) the
-initramfs to ensure that it includes the changes.
+在修改 dracut 配置后，重新生成 initramfs，以确保它包括这些变化。
 
-## Kernel hardening
+## 内核加固
 
-Void Linux ships with some kernel security options enabled by default. This was
-originally provided by kernel command line arguments `slub_debug=P
-page_poison=1`, but since kernel series 5.3, these have been replaced with
-`init_on_alloc` and `init_on_free` (see [this
-commit](https://github.com/torvalds/linux/commit/6471384af)).
+Void Linux在默认时启用了一些内核安全选项。这最初是由内核命令行参数 `slub_debug=P page_poison=1` 提供的，但从内核 5.3 系列开始，这些参数被 `init_on_alloc` 和 `init_on_free` 取代（见[此提交](https://github.com/torvalds/linux/commit/6471384af)）。
 
-Void's kernels come with the `init_on_alloc` option enabled by default where
-available (i.e. `linux5.4` and greater). In most cases you should usually not
-disable it, as it has a fairly minimal impact on performance (within 1%). The
-`init_on_free` option is more expensive (around 5% on average) and needs to be
-enabled manually by passing `init_on_free=1` on the kernel command line. If you
-need to disable `init_on_alloc`, you can do that similarly by passing
-`init_on_alloc=0`.
+Void 的内核在可用的情况下默认启用 `init_on_alloc` 选项（即 `linux5.4` 及以上版本）。在大多数情况下，你通常不应该禁用它，因为它对性能的影响相当小（1% 以内）。`init_on_free` 选项更加昂贵（平均 5% 左右），需要通过在内核命令行传递 `init_on_free=1` 来手动启用。如果你需要禁用 `init_on_alloc`，你可以通过传递 `init_on_alloc=0` 来实现。
 
-There is a chance that your existing system still has the old options enabled.
-They still work in newer kernels, but have a performance impact more in line
-with `init_on_free=1`. On older hardware this can be quite noticeable. If you
-are running a kernel series older than 5.4, you can keep them (or add them) for
-extra security at the cost of speed; otherwise you should remove them.
+有可能你现有的系统仍然启用了旧的选项。它们在较新的内核中仍然有效，但对性能的影响与 `init_on_free=1` 更为接近。在较老的硬件上，这可能是相当明显的。如果你运行的内核系列早于 5.4，你可以保留它们（或者增加它们），以牺牲速度为代价获得额外的安全性；否则你应该删除它们。
 
-## Kernel modules
+## 内核模块
 
-Kernel modules are typically drivers for devices or filesystems.
+内核模块通常是文件系统或设备驱动程序。
 
-### Loading kernel modules during boot
+###  在启动过程中加载内核模块
 
-Normally the kernel automatically loads required modules, but sometimes it may
-be necessary to explicitly specify modules to be loaded during boot.
+通常情况下，内核会自动加载所需的模块，但有时可能需要明确指定启动时要加载的模块。
 
-To load kernel modules during boot, a `.conf` file like
-`/etc/modules-load.d/virtio.conf` needs to be created with the contents:
+为了在启动过程中加载内核模块，需要创建一个像 `/etc/modules-load.d/virtio.conf` 这样的 `.conf` 文件，其内容是：
 
 ```
 # load virtio-net
 virtio-net
 ```
 
-### Blacklisting kernel modules
+### 把内核模块禁用 
 
-Blacklisting kernel modules is a method for preventing modules from being loaded
-by the kernel. There are two different methods for blacklisting kernel modules,
-one for modules loaded by the initramfs and one for modules loaded after the
-initramfs process is done. Modules loaded by the initramfs have to be
-blacklisted in the initramfs configuration.
+将内核模块禁用是一种防止模块被内核加载的方法。有两种不同的方法将内核模块禁用，一种是由 initramfs 加载的模块，另一种是 initramfs 进程结束后加载的模块。由 initramfs 加载的模块必须在 initramfs 配置中禁用。
 
-To blacklist modules loaded after the initramfs process, create a `.conf` file,
-like `/etc/modprobe.d/radeon.conf`, with the contents:
+要将 initramfs 过程后加载的模块列入黑名单，创建一个 `.conf` 文件，如 `/etc/modprobe.d/radeon.conf`，其内容为：
 
 ```
 blacklist radeon
 ```
 
-#### Blacklisting modules in the initramfs
+#### 在 initramfs 中禁用模块 
 
-After making the necessary changes to the configuration files, the initramfs
-needs to be [regenerated](#kernel-hooks) for the changes to take effect on the
-next boot.
+在对配置文件进行必要的修改后，需要重新生成 initramfs，以便在下一次启动时使修改生效。
 
 ##### dracut
 
-Dracut can be configured to not include kernel modules through a configuration
-file. To blacklist modules from being included in a dracut initramfs, create a
-`.conf` file, like `/etc/dracut.conf.d/radeon.conf`, with the contents:
+Dracut 可以通过一个配置文件配置为不包括内核模块。要把模块列入 dracut initramfs 的黑名单，可以创建一个`.conf` 文件，如 `/etc/dracut.conf.d/radeon.conf`，其内容如下：
 
 ```
 omit_drivers+=" radeon "
@@ -200,43 +112,34 @@ omit_drivers+=" radeon "
 To blacklist modules from being included in a mkinitcpio initramfs a `.conf`
 file needs to be created like `/etc/modprobe.d/radeon.conf` with the contents:
 
+为了将模块禁用，需要创建一个 `.conf` 文件，如 `/etc/modprobe.d/radeon.conf`，以防止模块被包含在 mkinitcpio initramfs 中。
+
 ```
 blacklist radeon
 ```
 
-## Kernel hooks
+## 内核 hooks
 
-Void Linux provides directories for kernel hooks in
-`/etc/kernel.d/{pre-install,post-install,pre-remove,post-remove}`.
+Void Linux 在 `/etc/kernel.d/{pre-install,post-install,pre-remove,post-remove}` 中为内核 hooks 提供了目录。
 
-These hooks are used to update the boot menus for bootloaders like `grub`,
-`gummiboot` and `lilo`.
+这些 hooks 被用来更新像 `grub`、`gummiboot` 和 `lilo` 等引导程序的引导菜单。
 
-### Install hooks
+### 安装 hooks
 
-The `{pre,post}-install` hooks are executed by
-[xbps-reconfigure(1)](https://man.voidlinux.org/xbps-reconfigure.1) when
-configuring a Linux kernel, such as building its initramfs. This happens when a
-kernel series is installed for the first time or updated, but can also be run
-manually:
+`{pre,post}-install` hooks 是由 [xbps-reconfigure(1)](https://man.voidlinux.org/xbps-reconfigure.1) 在配置 Linux 内核时执行的，比如构建其 initramfs。这发生在第一次安装或更新内核系列时，但也可以手动运行：
 
 ```
 # xbps-reconfigure --force linux<x>.<y>
 ```
 
-If run manually, they serve to apply initramfs configuration changes to the next
-boot.
+如果手动运行，它们的作用是将 initramfs 的配置变化应用于下一次启动。
 
-### Remove hooks
+### 删除 hooks
 
-The `{pre,post}-remove` hooks are executed by
-[vkpurge(8)](https://man.voidlinux.org/vkpurge.8) when removing old kernels.
+[vkpurge(8)](https://man.voidlinux.org/vkpurge.8) 在删除旧内核时执行 `{pre,post}-remove` hooks。
 
-## Dynamic Kernel Module Support (DKMS)
+## 动态内核模块支持 (DKMS)
 
-There are kernel modules that are not part of the Linux source tree that are
-built at install time using DKMS and [kernel hooks](#kernel-hooks). The
-available modules can be listed by searching for `dkms` in the package
-repositories.
+有一些不属于 Linux 源码树的内核模块，在安装时使用 DKMS 和内核 hooks 构建。可用的模块可以通过在软件包库中搜索`dkms` 来列出。
 
-DKMS build logs are available in `/var/lib/dkms/`.
+DKMS 构建日志在 `/var/lib/dkms/`.
