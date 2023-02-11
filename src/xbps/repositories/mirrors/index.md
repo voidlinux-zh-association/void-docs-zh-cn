@@ -16,7 +16,7 @@ Void Linux 在几个地理区域都有镜像供你使用。一个新的安装将
 | <https://repo-fi.voidlinux.org/>               | Europe        | Helsinki, Finland  |
 | <https://repo-de.voidlinux.org/>               | Europe        | Frankfurt, Germany |
 | <https://mirrors.servercentral.com/voidlinux/> | North America | Chicago, USA       |
-| <https://repo-us.voidlinux.org/>               | North America | Kansas City, USA   |
+
 
 
 ## 二级镜像
