@@ -13,6 +13,7 @@ Void Linux 在几个地理区域都有镜像供你使用。一个新的安装将
 
 | Repository                                     | Region        | Location           |
 |------------------------------------------------|---------------|--------------------|
+| <https://repo-fastly.voidlinux.org/>           | Global        | Fastly Global CDN  |
 | <https://repo-fi.voidlinux.org/>               | Europe        | Helsinki, Finland  |
 | <https://repo-de.voidlinux.org/>               | Europe        | Frankfurt, Germany |
 | <https://mirrors.servercentral.com/voidlinux/> | North America | Chicago, USA       |
