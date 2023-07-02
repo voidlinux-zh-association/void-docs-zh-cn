@@ -20,6 +20,10 @@ $ xbps-query --regex -Rs '^linux[0-9.]+-[0-9._]+'
 
 如果你已经安装了默认之外的系列内核包，并且想移除默认的内核包，你应该安装 `linux-base` 包，或者在已经安装的情况下将其[标记为手动软件包](https://man.voidlinux.org/xbps-pkgdb.1)。在这个过程之后，你可以用 [xbps-remove(1)](https://man.voidlinux.org/xbps-remove.1) 删除默认的内核包。可能有必要在 [xbps.d(5)](https://man.voidlinux.org/xbps.d.5) 中的 `ignorepkg` 条目中加入 `linux` 和 `linux-headers`，因为基础包可能依赖于它们。
 
+## 换成其他内核系列
+
+如果你想使用 `linux-lts` 或 `linux-mainline` 内核系列而不是默认的 `linux`，首先安装所需的系列元包（及 `linux-lts-headers` 或`linux-mainline-headers` 元包）。然后，你可以将 `linux` 和 `linux-headers` 添加到 [xbps.d(5)](https://man.voidlinux.org/xbps.d.5) 中的 `ignorepkg` 条目中，并卸载这些包。
+
 ## 改变默认的 initramfs 生成器
 
 默认情况下，Void Linux 使用 [dracut](https://man.voidlinux.org/dracut.8) 为安装的内核准备 initramfs 镜像。替代品如 [mkinitcpio](https://man.voidlinux.org/mkinitcpio.8) 是可用的。每个 initramfs 生成器都在 initramfs 组中注册了一个 [XBPS alternative](https://man.voidlinux.org/xbps-alternatives.1) ，以链接其[内核 hooks](#内核-hooks)，在为特定内核创建或移除 initramfs 镜像时使用。

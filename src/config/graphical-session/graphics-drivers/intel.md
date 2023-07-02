@@ -23,7 +23,7 @@ OpenGL 需要 `mesa-dri`包。这是由 `xorg` 元包提供的，但在使用 `x
 
 ## 故障排除
 
-Void 打包的内核被配置为 `CONFIG_INTEL_IOMMU_DEFAULT_ON=y`，这可能导致其图形驱动的问题，正如[内核文档](https://www.kernel.org/doc/html/latest/x86/intel-iommu.html#graphics-problems)所报告的。为了解决这个问题，有必要禁用集成 GPU 的 IOMMU。这可以通过在你的[内核 cmdline](../../kernel.md#cmdline) 中添加 `intel_iommu=igfx_off`来完成。这个问题预计会发生在 Broadwell 一代的内部 GPU 上。如果你有另一个内部 GPU，而你的问题被这个内核选项修复了，你应该提交一个 bug，向内核开发者报告这个问题。
+Void 打包的内核被配置为 `CONFIG_INTEL_IOMMU_DEFAULT_ON=y`，这可能导致其图形驱动的问题，正如[内核文档](https://www.kernel.org/doc/html/latest/x86/iommu.html#graphics-problems)所报告的。为了解决这个问题，有必要禁用集成 GPU 的 IOMMU。这可以通过在你的[内核 cmdline](../../kernel.md#cmdline) 中添加 `intel_iommu=igfx_off`来完成。这个问题预计会发生在 Broadwell 一代的内部 GPU 上。如果你有另一个内部 GPU，而你的问题被这个内核选项修复了，你应该提交一个 bug，向内核开发者报告这个问题。
 
 对于较新的英特尔芯片组，[DDX](../xorg.md#ddx) 驱动程序可能会干扰正确的操作。表现为图形加速不工作和一般图形不稳定。如果是这种情况，请尝试删除所有 `xf86-video-*` 软件包。
 

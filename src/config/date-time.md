@@ -10,6 +10,10 @@
 # ln -sf /usr/share/zoneinfo/<timezone> /etc/localtime
 ```
 
+
+> 注意: 如果在 `/etc/rc.conf`　中设置了　`TIMEZONE` 变量, 应该将其删除或注释掉。因为这将覆盖在 `ln` 中设置的内容。
+> 然后重启.
+
 要在每个用户的基础上改变时区，可以从你的 shell 的配置文件中导出 `TZ` 变量。
 
 ```

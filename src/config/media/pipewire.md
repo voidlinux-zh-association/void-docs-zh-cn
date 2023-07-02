@@ -20,43 +20,25 @@ $ pipewire
 
 在 PipeWire 中，会话管理器承担了媒体源的互连以及执行路由策略的责任。没有 Session 管理器，PipeWire 将无法运行。参考 [`pipewire-media-session`](https://gitlab.freedesktop.org/pipewire/media-session) 最初在 Void `pipewire` 包中提供，并配置为默认运行以满足这一要求。然而，`pipewire-media-session` 已被废弃，作者建议使用 [WirePlumber](https://pipewire.pages.freedesktop.org/wireplumber/) 代替它。安装 `wireplumber` 软件包，以便在 PipeWire 中使用这个 session 管理器。
 
-标准的 Void 配置会使 `pipewire` 自动启动 `pipewire-media-session`，必须重写以使用 `wireplumber`。唯一需要改变的是，在 `context.exec` 部分注释掉 `pipewire-media-session` 的调用，这可以通过一个 `sed` 的替换来完成。为了使所有用户都能看到这一配置变化，将新的配置文件放在 `/etc/pipewire` 中：
+> 如果您安装了早期版本的 Void `pipewire` 封装，确保更新您的系统以消除任何陈旧的系统配置可能会尝试启动 `pipewire-media-session`。 之前覆盖的用户要使用的系统配置 `wireplumber`， 例如,通过放置自定义 `pipewire.conf` 文件输入 `/etc/pipewire` 或者 `${XDG_CONFIG_HOME}/pipewire`， 可能希望将这些覆盖与 `/usr/share/pipewire/pipewire.conf` 由最新安装的 `pipewire` 包裹。 如果想禁用之前的覆盖 `pipewire-media-session`，删除自定义配置可能就足够了。
 
-```
-# mkdir -p /etc/pipewire
-# sed '/path.*=.*pipewire-media-session/s/{/#{/' \
-    /usr/share/pipewire/pipewire.conf > /etc/pipewire/pipewire.conf
-```
-
-或者，将新的配置文件放置在单个用户的预期位置：
-
-```
-$ : "${XDG_CONFIG_HOME:=${HOME}/.config}"
-$ mkdir -p "${XDG_CONFIG_HOME}/pipewire"
-$ sed '/path.*=.*pipewire-media-session/s/{/#{/' \
-    /usr/share/pipewire/pipewire.conf > "${XDG_CONFIG_HOME}/pipewire/pipewire.conf"
-```
-
-> 在 `/etc/pipewire` 或 `${XDG_CONFIG_HOME}/pipewire` 中的自定义 `pipewire.conf` 将完全阻止使用默认的系统配置。鼓励覆盖默认配置以启用 `wireplumber` 的用户监控默认配置，并在每次 `pipewire` 更新时核对任何变化。
-
-现在，配置 `wireplumber`，使之与 `pipewire` 同时启动。如果你的窗口管理器或桌面环境的自动启动机制是用来启动`pipewire` 的，建议使用同样的机制来启动 `wireplumber`。`wireplumber` 软件包包括一个`wireplumber.desktop` Desktop Entry 文件，在这种情况下可能有用。
+有几种方法可以同时启动 `wireplumber` 和 `pipewire`。如果你的窗口管理器或桌面环境的自动启动机制被用来启动 `pipewire`，建议使用相同的机制来启动`wireplumber`。`wireplumber` 软件包包括一个 `wireplumber.desktop` 桌面文件，在这种情况下可能很有用。
 
 > 请注意，`wireplumber` 必须在 `pipewire` 可执行文件之后启动。桌面应用程序自动启动规范没有规定通过桌面入口文件启动的服务的顺序。当依靠这些文件来启动 `pipewire` 和 `wireplumber` 时，请查阅你的窗口管理器或桌面环境的文档，以确定是否可以实现服务的正确排序。
 
-如果对独立的 `pipewire` 和 `wireplumber` 服务进行适当的排序是不可行的，可以配置 `pipewire` 来直接启动会话管理器。这可以通过运行:
+如果对独立的 `pipewire` 和 `wireplumber` 服务进行适当排序是不可行的，可以配置 `pipewire` 来直接启动会话管理器。这可以通过运行
 
 ```
 # mkdir -p /etc/pipewire/pipewire.conf.d
-# echo 'context.exec = [ { path = "/usr/bin/wireplumber" args = "" } ]' \
-    > /etc/pipewire/pipewire.conf.d/10-wireplumber.conf
+# ln -s /usr/share/examples/wireplumber/10-wireplumber.conf /etc/pipewire/pipewire.conf.d/
 ```
 
-系统配置，或对于每个用户的配置，运行
+系统配置，或者，对于每个用户的配置，运行
 
 ```
-$ mkdir -p "${XDG_CONFIG_HOME}/pipewire/pipewire.conf.d
-$ echo 'context.exec = [ { path = "/usr/bin/wireplumber" args = "" } ]' \
-    > "${XDG_CONFIG_HOME}/pipewire/pipewire.conf.d/10-wireplumber.conf"
+$ true "${XDG_CONFIG_HOME:=${HOME}/.config}"
+$ mkdir -p "${XDG_CONFIG_HOME}/pipewire/pipewire.conf.d"
+# ln -s /usr/share/examples/wireplumber/10-wireplumber.conf "${XDG_CONFIG_HOME}/pipewire/pipewire.conf.d/"
 ```
 
 在这些配置中，启动 `pipewire` 应该足以建立一个使用 `wireplumber` 进行会话管理的工作的 PipeWire session。

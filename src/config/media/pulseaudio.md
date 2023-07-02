@@ -4,7 +4,7 @@
 
 对于直接使用 ALSA 而不支持 PulseAudio 的应用程序， `alsa-plugins-pulseaudio` 包可以使它们通过 ALSA 使用 PulseAudio。
 
-PulseAudio 软件包带有服务文件，这在大多数设置中是不必要的,PulseAudio维护者[不鼓励](https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/SystemWide/)使用全系统的设置。相反，PulseAudio 会在需要时自动启动。如果它没有自动启动，可以通过在终端调用 [pulseaudio(1)](https://man.voidlinux.org/pulseaudio.1) 来手动启动它，方法如下。
+PulseAudio 会在需要时自动启动。如果它没有自动启动，可以通过从终端调用 [pulseaudio(1)](https://man.voidlinux.org/pulseaudio.1) 来手动启动它，方法如下：
 
 ```
 $ pulseaudio --daemonize=no --exit-idle-time=-1

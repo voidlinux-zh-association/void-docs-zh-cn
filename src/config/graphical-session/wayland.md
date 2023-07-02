@@ -20,6 +20,7 @@ Void Linux 目前打包了以下 Wayland 混成器:
 - Hikari：基于 wlroots 并受 cwm 启发开发，在 FreeBSD 上开发很活跃，但也支持 Linux
 - Cage: 显示单个全屏应用程序（就像自助取款机的显示界面那样）
 - River：动态平铺 Wayland 混成器，受 dwm 和 bspwm 启发
+- labwc: 是一个堆叠式混成器，灵感来自　OpenBox
 
 ### 显卡驱动
 

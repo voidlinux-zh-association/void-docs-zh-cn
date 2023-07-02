@@ -21,19 +21,19 @@ Void 支持的方法的摘要，这些方法是相互排斥的。
 
 [PRIME Render Offload](#prime-render-offload)
 
-- 只适用于 `NVIDIA`
+- 适用于 `nvidia` 和 `nvidia470`
 - 允许在每个应用的基础上切换到英伟达 GPU。
 - 更加灵活，但省电能力取决于硬件（pre-Turing 之前的设备不会完全关闭）。
 - 
 Offloading Graphics Display with RandR 1.4
 
-- 可在 `nvidia` 和 `nvidia390` 上使用
+- 可在 `nvidia` , `nvidia470` 和 `nvidia390` 上使用
 - 允许选择在 X session 开始时使用哪个 GPU
 - 灵活性较差，但允许用户在不使用 NVIDIA GPU 时完全关闭，从而节省电力
 
 [Bumblebee](#bumblebee)
 
-- 可在 `nvidia` 和 `nvidia390` 上使用
+- 可在 `nvidia` , `nvidia470` 和 `nvidia390` 上使用
 - 允许在每个应用的基础上切换到英伟达 GPU
 - 非官方的方法，性能不佳
 

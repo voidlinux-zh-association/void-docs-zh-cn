@@ -36,6 +36,13 @@ Gutenprint 为许多打印机提供了支持。 这些驱动程序包含在 `gut
 
 对于 Brother 打印机的支持，请安装 foomatic 驱动程序，它包含在 `foomatic-db` 和 `foomatic-db-nonfree` 软件包中。对各种激光打印机型号的支持是由 `brother-brlaser` 软件包提供的。
 
+###  Epson 喷墨打印机的驱动
+
+请安装 `epson-inkjet-printer-escpr`。
+
+### Canon PIXMA/MAXIFY 驱动
+
+`cnijfilter2` 软件包包含了用于佳能 PIXMA 和 MAXIFY 各种型号的驱动程序。请注意，安装该驱动包[需要启用 "非自由" 软件源](../../xbps/repositories/index.md#nonfree)。
 
 ## 配置新打印机
 
