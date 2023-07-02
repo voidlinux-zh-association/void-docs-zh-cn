@@ -87,7 +87,7 @@ Server Name: PulseAudio (on PipeWire 0.3.18)
 
 ## 蓝牙音频
 
-为了使蓝牙音频工作，请安装 `libspa-Bluetooth` 软件包。
+为了使蓝牙音频工作，请安装 `libspa-bluetooth` 软件包。
 
 ## ALSA 集成
 
