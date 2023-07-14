@@ -58,16 +58,12 @@ ARM 设备的常用分区方案需要至少两个分区，在使用 MS-DOS 分�
 
 #### Chroot 安装
 
-也可以进行 chroot 安装，如果使用的是不兼容的架构（如 i686）的计算机，这可能需要 `qemu-user-static` 软件包与 `binfmt-support` 或 `proot` 软件包一起进行。本指南解释了如何使用 `qemu-<platform>-static` 程序和[proot(1)](https://man.voidlinux.org/proot.1) 的 `qemu-user-static`。
+也可以參考"[支持的平台](./platforms.md) "部分执行[chroot安装](./chroot.md)。确保为设备正确准备[存储介质](#ARM 设备)
 
-首先，准备好你的存储介质。然后，按照 XBPS chroot 安装或 ROOTFS chroot 安装步骤，使用适当的架构和基础包，其中一些在 "[支持的平台](./platforms.md)" 部分列出。
+如果在不兼容架构（如 x86_64）的计算机上执行此操作，请安装 `qemu-user-static` 和 `binfmt-support` 软件包，并在安装前启用 `binfmt-support` 服务。
 
 最后，按照 [chroot 配置步骤](../chroot.md#配置)进行操作，但不要使用 [chroot(1)](https://man.voidlinux.org/chroot.1) 命令[进入 chroot](../chroot.md#进入-chroot)，而是使用下面的命令，对于 armv6l 和 armv7l 设备，将 `<platform>` 替换为 `arm` ，对于 aarch64 设备，替换为`aarch64`。
-   
 
-```
-# proot -q qemu-<platform>-static -r /mnt -w /
-```
 
 ## 配置
 
