@@ -58,7 +58,7 @@ ARM 设备的常用分区方案需要至少两个分区，在使用 MS-DOS 分�
 
 #### Chroot 安装
 
-也可以參考"[支持的平台](./platforms.md) "部分执行[chroot安装](./chroot.md)。确保为设备正确准备[存储介质](#ARM 设备)
+也可以參考"[支持的平台](./platforms.md) "部分执行[chroot安装](./chroot.md)。
 
 如果在不兼容架构（如 x86_64）的计算机上执行此操作，请安装 `qemu-user-static` 和 `binfmt-support` 软件包，并在安装前启用 `binfmt-support` 服务。
 
