@@ -46,14 +46,7 @@ void-live-x86_64-musl-20170220.iso: OK
 
 强烈建议在使用镜像前，先验证镜像的签名，确保镜像文件没有被篡改。
 
-目前镜像都由用于发布的 siginfy 密钥签名。如果你已经在使用 Void 系统，你可以从 `void-release-keys` 软件包获取密钥，XBPS。你还需要 [signify(1)](https://man.voidlinux.org/signify.1) 或 [minisign(1)](https://man.voidlinux.org/minisign.1) 的拷贝；在 Void 系统上，它们分别由 `outils` 或 `minisign` 软件包提供。
-
-在不是 Void Linux 的 Linux 发行版上获取 `signify`：
-
-- 在 Arch Linux 和基于 Arch 的发行版上，安装 `signify` 软件包。
-- 在 Debian 和基于 Debian 的发行版上，安装 `signify-openbsd` 软件包。
-- 为你的的发行版安装[这里](https://repology.org/project/signify-openbsd/versions)列出的软件包。
-- 在 macOS 上，用 homebrew 安装 `signify-osx`。
+目前镜像都由用于发布的 minisign 密钥签名。如果你已经在使用 Void 系统，你可以从 `void-release-keys` 软件包获取密钥，XBPS。你还需要 [minisign(1)](https://man.voidlinux.org/minisign.1 ); 在 Void 上，由 `minisign` 软件包提供。
 
 `minisign` 可执行程序一般由同名的软件包提供，即使没有 WSL 或 MinGW 也应该可以在 Windows 上安装。
 
@@ -63,34 +56,25 @@ void-live-x86_64-musl-20170220.iso: OK
 
 
 下面的例子演示了 `sha256sum.txt` 文件的校验 
-对于 20210930 图像。   首先，使用 `signify`  ： 
+对于 20230628 图像。   首先，使用 `minisign`  ： 
 
 ```
-$ signify -V -p /etc/signify/void-release-20210930.pub -x sha256sum.sig -m sha256sum.txt
-Signature Verified
-```
-
-其次，用 `minisign`：
-
-```
-$ minisign -V -p /etc/signify/void-release-20210930.pub -x sha256sum.sig -m sha256sum.txt
+$ minisign -V -p /usr/share/void-release-keys/void-release-20230628.pub -x sha256sum.sig -m sha256sum.txt
 Signature and comment signature verified
-Trusted comment: timestamp:1634597366	file:sha256sum.txt
+Trusted comment: This key is only valid for images with date 20230628.
 ```
-最后，你需要检查镜像文件的校验和，于 `sha256sum.txt` 中的校验和做比较。你可以利用 [sha256(1)](https://man.voidlinux.org/md5.1) 工具，此程序依然来自 `outils` 软件包。下面演示如何验证 20210930 `x86_64` 镜像：
+最后，你需要检查镜像文件的校验和，于 `sha256sum.txt` 中的校验和做比较。你可以利用 [sha256(1)](https://man.voidlinux.org/md5.1) 工具，此程序依然来自 `outils` 软件包。下面演示如何验证 20230628 `x86_64` base 镜像：
 
 ```
-$ sha256 -C sha256sum.txt void-live-x86_64-20210930.iso
-(SHA256) void-live-x86_64-20210930.iso: OK
+$ sha256 -C sha256sum.txt void-live-x86_64-20230628-base.iso 
+(SHA256) void-live-x86_64-20230628-base.iso: OK
 ```
 
 另外，如果你无法使用 `sha256` 工具，你可以计算 SHA256 哈希，比如用 [  sha256sum(1)  ](https://man.voidlinux.org/sha256sum.1) 计算哈希，然后用 `sha256sum.txt` 中的值比较：
 
 ```
-$ sha256sum void-live-x86_64-20210930.iso
-45b75651eb369484e1e63ba803a34e9fe8a13b24695d0bffaf4dfaac44783294  void-live-x86_64-20210930.iso
-$ grep void-live-x86_64-20210930.iso sha256sum.txt
-SHA256 (void-live-x86_64-20210930.iso) = 45b75651eb369484e1e63ba803a34e9fe8a13b24695d0bffaf4dfaac44783294
+$ sha256sum -c sha256sum.txt --ignore-missing
+void-live-x86_64-20230628-base.iso: OK
 ```
 
 
